@@ -1,0 +1,880 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>NPU Management Interface &#8212; Ryzen AI Software 1.3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <script async="async" src="_static/code_word_breaks.js"></script>
+    <script async="async" src="_static/renameVersionLinks.js"></script>
+    <script async="async" src="_static/rdcMisc.js"></script>
+    <script async="async" src="_static/theme_mode_captions.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'xrt_smi';</script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/xrt_smi.html" />
+    <link rel="shortcut icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="AI Analyzer" href="ai_analyzer.html" />
+    <link rel="prev" title="OGA API for C++ and Python" href="hybrid_oga.html" />
+    <meta name="google-site-verification" content="ZOn0RZC0Pwzlmf2SaE0bRttWk1YzOhuslbpxUDchQ90" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+                <!-- TODO: Search icon up here maybe? -->
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime_setup.html">Runtime Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running CNNs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelcompat.html">Model Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelport.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelrun.html">Model Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OGA API for C++ and Python</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Features</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_analyzer.html">AI Analyzer</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual_installation.html">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">NPU...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NPU Management Interface</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-key-commands">Overview of Key Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-examine">xrt-smi examine</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-information">System Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-information">Platform Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-partitions">NPU Partitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-context-bindings">NPU Context Bindings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#telemetry">Telemetry</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-validate">xrt-smi validate</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-a-sanity-check-on-the-npu">Executing a Sanity Check on the NPU</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-configure">xrt-smi configure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-the-performance-level-of-the-npu">Managing the Performance Level of the NPU</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="npu-management-interface">
+<h1>NPU Management Interface<a class="headerlink" href="#npu-management-interface" title="Permalink to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">xrt-smi</span></code> utility is a command-line interface to monitor and manage the NPU integrated AMD CPUs.</p>
+<p>It is installed in <code class="docutils literal notranslate"><span class="pre">C:\Windows\System32\AMD</span></code> and it can be directly invoked from within the conda environment created by the Ryzen AI Software installer.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">xrt-smi</span></code> utility currently supports three primary commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">examine</span></code> - generates reports related to the state of the AI PC and the NPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">validate</span></code> - executes sanity tests on the NPU.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">configure</span></code> - manages the performance level of the NPU.</p></li>
+</ul>
+<p>By default, the output of the <code class="docutils literal notranslate"><span class="pre">xrt-smi</span> <span class="pre">examine</span></code> and <code class="docutils literal notranslate"><span class="pre">xrt-smi</span> <span class="pre">validate</span></code> commands goes to the terminal. It can also be written to file in JSON format as shown below:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>-f<span class="w"> </span>JSON<span class="w"> </span>-o<span class="w"> </span>&lt;path/to/output.json&gt;
+</pre></div>
+</div>
+<p>The utility also support the following options which can be used with any command:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">--help</span></code> - help to use xrt-smi or one of its sub commands</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--version</span></code> - report the version of XRT, driver and firmware</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--verbose</span></code> - turn on verbosity</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--batch</span></code> - enable batch mode (disables escape characters)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--force</span></code> - when possible, force an operation. Eg - overwrite a file in examine or validate</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">xrt-smi</span></code> utility requires <a class="reference external" href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170">Microsoft Visual C++ Redistributable</a> (version 2015 to 2022) to be installed.</p>
+</section>
+<section id="overview-of-key-commands">
+<h2>Overview of Key Commands<a class="headerlink" href="#overview-of-key-commands" title="Permalink to this heading">#</a></h2>
+<table class="table">
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Command</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>examine</p></td>
+<td><p>system config, device name</p></td>
+</tr>
+<tr class="row-odd"><td><p>examine –report platform</p></td>
+<td><p>performance mode, power</p></td>
+</tr>
+<tr class="row-even"><td><p>examine –report aie-partitions</p></td>
+<td><p>hw contexts</p></td>
+</tr>
+<tr class="row-odd"><td><p>examine –report telemetry</p></td>
+<td><p>opcode trace (Strix NPU) or stream buffer tokens (Phoenix NPU)</p></td>
+</tr>
+<tr class="row-even"><td><p>validate –run latency</p></td>
+<td><p>latency test</p></td>
+</tr>
+<tr class="row-odd"><td><p>validate –run throughput</p></td>
+<td><p>throughput test</p></td>
+</tr>
+<tr class="row-even"><td><p>validate –run gemm</p></td>
+<td><p>INT8 GEMM test TOPS. This is a full array test and it should not be run while another workload is running. <strong>NOTE</strong>: This command is not supported on PHX and HPT NPUs.</p></td>
+</tr>
+<tr class="row-odd"><td><p>validate –run aie-reconfig-overhead</p></td>
+<td><p>NPU array reconfiguration overhead</p></td>
+</tr>
+<tr class="row-even"><td><p>validate –run quick</p></td>
+<td><p>runs a small test suite</p></td>
+</tr>
+<tr class="row-odd"><td><p>configure –pmode &lt;mode&gt;</p></td>
+<td><p>set performance mode</p></td>
+</tr>
+</tbody>
+</table>
+<p>📝 <strong>NOTE</strong>: The <code class="docutils literal notranslate"><span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">aie-partition</span></code> and <code class="docutils literal notranslate"><span class="pre">examine</span> <span class="pre">--report</span> <span class="pre">telemetry</span></code> commands report runtime information. These commands should be used when a model is running on the NPU. You can run these commands in a loop to see live updates of the reported data.</p>
+</section>
+<section id="xrt-smi-examine">
+<h2>xrt-smi examine<a class="headerlink" href="#xrt-smi-examine" title="Permalink to this heading">#</a></h2>
+<section id="system-information">
+<h3>System Information<a class="headerlink" href="#system-information" title="Permalink to this heading">#</a></h3>
+<p>Reports OS/system information of the AI PC and confirm the presence of the AMD NPU.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine
+</pre></div>
+</div>
+<p>Sample Command Line Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>System Configuration
+  OS Name              : Windows NT
+  Release              : 26100
+  Machine              : x86_64
+  CPU Cores            : 16
+  Memory               : 64879 MB
+  Distribution         : Microsoft Windows 11 Pro
+  Model                : KoratPlus-KRK
+  BIOS Vendor          : AMD
+  BIOS Version         : WXC4A30N
+
+XRT
+  Version              : 2.19.0
+  Branch               : HEAD
+  Hash                 : 090e3faccd90abd21e59a4edbf7ed9d9c1016d0b
+  Hash Date            : 2024-11-08 19:54:53
+  NPU Driver Version   : 32.0.203.237
+  NPU Firmware Version : 1.0.0.63
+
+Device(s) Present
+|BDF             |Name  |
+|----------------|------|
+|[00c5:00:01.1]  |NPU   |
+</pre></div>
+</div>
+<p>Sample JSON Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+    &quot;schema_version&quot;: {
+        &quot;schema&quot;: &quot;JSON&quot;,
+        &quot;creation_date&quot;: &quot;Tue Nov  5 16:34:17 2024 GMT&quot;
+    },
+    &quot;system&quot;: {
+        &quot;host&quot;: {
+            &quot;os&quot;: {
+                &quot;sysname&quot;: &quot;Windows NT&quot;,
+                &quot;release&quot;: &quot;26100&quot;,
+                &quot;machine&quot;: &quot;x86_64&quot;,
+                &quot;distribution&quot;: &quot;Microsoft Windows 11 Pro&quot;,
+                &quot;model&quot;: &quot;BIRMANPLUS&quot;,
+                &quot;hostname&quot;: &quot;XSJSTRIX23&quot;,
+                &quot;memory_bytes&quot;: &quot;0x7d6e0a000&quot;,
+                &quot;cores&quot;: &quot;24&quot;,
+                &quot;bios_vendor&quot;: &quot;AMD&quot;,
+                &quot;bios_version&quot;: &quot;TXB1001C&quot;
+            },
+            &quot;xrt&quot;: {
+                &quot;version&quot;: &quot;2.18.0&quot;,
+                &quot;branch&quot;: &quot;HEAD&quot;,
+                &quot;hash&quot;: &quot;090e3faccd90abd21e59a4edbf7ed9d9c1016d0b&quot;,
+                &quot;build_date&quot;: &quot;2024-10-30 19:53:17&quot;,
+                &quot;drivers&quot;: [
+                    {
+                        &quot;name&quot;: &quot;NPU Driver&quot;,
+                        &quot;version&quot;: &quot;32.0.203.237&quot;
+                    }
+                ]
+            },
+            &quot;devices&quot;: [
+                {
+                    &quot;bdf&quot;: &quot;00c5:00:01.1&quot;,
+                    &quot;device_class&quot;: &quot;Ryzen&quot;,
+                    &quot;name&quot;: &quot;NPU&quot;,
+                    &quot;id&quot;: &quot;0x0&quot;,
+                    &quot;firmware_version&quot;: &quot;1.0.0.61&quot;,
+                    &quot;instance&quot;: &quot;mgmt(inst=1)&quot;,
+                    &quot;is_ready&quot;: &quot;true&quot;
+                }
+            ]
+        }
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="platform-information">
+<h3>Platform Information<a class="headerlink" href="#platform-information" title="Permalink to this heading">#</a></h3>
+<p>Reports more detailed information about the NPU, such as the performance mode and power consumption.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>--report<span class="w"> </span>platform
+</pre></div>
+</div>
+<p>Sample Command Line Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------
+[00c5:00:01.1] : NPU
+---------------------
+Platform
+  Name                   : NPU
+  Performance Mode       : Default
+
+Power                  : 1.277 Watts
+</pre></div>
+</div>
+<p>📝 <strong>NOTE</strong>: Power reporting is not supported on PHX and HPT NPUs. Power reporting is only available on STX devices and onwards.</p>
+</section>
+<section id="npu-partitions">
+<h3>NPU Partitions<a class="headerlink" href="#npu-partitions" title="Permalink to this heading">#</a></h3>
+<p>Reports details about the NPU partition and column occupancy on the NPU.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>--report<span class="w"> </span>aie-partitions
+</pre></div>
+</div>
+<p>Sample Command Line Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------
+[00c5:00:01.1] : NPU
+---------------------
+AIE Partitions
+Total Column Utilization: 50%
+  Partition Index: 0
+    Columns: [0, 1, 2, 3]
+    HW Contexts:
+      |PID    |Ctx ID  |Status  |Instr BO  |Sub  |Compl  |Migr  |Err  |Prio    |GOPS  |EGOPS  |FPS  |Latency  |
+      |-------|--------|--------|----------|-----|-------|------|-----|--------|------|-------|-----|---------|
+      |20696  |0       |Active  |64 KB     |57   |56     |0     |0    |Normal  |0     |0      |0    |0        |
+</pre></div>
+</div>
+</section>
+<section id="npu-context-bindings">
+<h3>NPU Context Bindings<a class="headerlink" href="#npu-context-bindings" title="Permalink to this heading">#</a></h3>
+<p>Reports details about the columns to NPU HW context binding.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>--report<span class="w"> </span>aie-partitions<span class="w"> </span>--verbose
+</pre></div>
+</div>
+<p>Sample Command Line Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Verbose: Enabling Verbosity
+Verbose: SubCommand: examine
+
+---------------------
+[00c5:00:01.1] : NPU
+---------------------
+AIE Partitions
+Total Column Utilization: 50%
+  Partition Index: 0
+    Columns: [0, 1, 2, 3]
+    HW Contexts:
+      |PID    |Ctx ID  |Status  |Instr BO  |Sub  |Compl  |Migr  |Err  |Prio    |GOPS  |EGOPS  |FPS  |Latency  |
+      |-------|--------|--------|----------|-----|-------|------|-----|--------|------|-------|-----|---------|
+      |20696  |0       |Active  |64 KB     |57   |56     |0     |0    |Normal  |0     |0      |0    |0        |
+
+AIE Columns
+  |Column  ||HW Context Slot  |
+  |--------||-----------------|
+  |0       ||[1]              |
+  |1       ||[1]              |
+  |2       ||[1]              |
+  |3       ||[1]              |
+</pre></div>
+</div>
+</section>
+<section id="telemetry">
+<h3>Telemetry<a class="headerlink" href="#telemetry" title="Permalink to this heading">#</a></h3>
+<p>Reports details about the ctrlcode opcode trace (on Strix NPU) or stream buffer tokens (on Phoenix NPU).</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>-r<span class="w"> </span>telemetry
+</pre></div>
+</div>
+<p>Sample Command Line Output on a STX NPU:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------
+[00c5:00:01.1] : NPU
+---------------------
+Telemetry
+  |Mailbox Opcode  |Count  |
+  |----------------|-------|
+  |0               |264    |
+  |1               |4      |
+  |2               |266    |
+  |3               |266    |
+  |4               |266    |
+  |5               |2      |
+  |6               |262    |
+  |7               |264    |
+  |8               |3      |
+  |9               |266    |
+  |10              |266    |
+  |11              |266    |
+  |12              |266    |
+  |13              |257    |
+  |14              |257    |
+  |15              |0      |
+  |16              |0      |
+  |17              |0      |
+  |18              |0      |
+  |19              |0      |
+  |20              |0      |
+  |21              |0      |
+  |22              |0      |
+  |23              |0      |
+  |24              |0      |
+  |25              |0      |
+  |26              |0      |
+  |27              |0      |
+  |28              |0      |
+  |29              |0      |
+</pre></div>
+</div>
+<p>Sample Command Line Output on a PHX NPU:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---------------------
+[00c3:00:01.1] : NPU
+---------------------
+Telemetry
+  |Stream Buffer  |Tokens  |
+  |---------------|--------|
+  |0              |194     |
+  |1              |194     |
+  |2              |194     |
+  |3              |194     |
+</pre></div>
+</div>
+</section>
+</section>
+<section id="xrt-smi-validate">
+<h2>xrt-smi validate<a class="headerlink" href="#xrt-smi-validate" title="Permalink to this heading">#</a></h2>
+<section id="executing-a-sanity-check-on-the-npu">
+<h3>Executing a Sanity Check on the NPU<a class="headerlink" href="#executing-a-sanity-check-on-the-npu" title="Permalink to this heading">#</a></h3>
+<p>Runs a set of built-in NPU sanity tests which includes verify, df-bw, tct and gemm.</p>
+<p>Note: All tests are run in performance mode.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">latency</span></code> - this test executes a no-op control code and measures the end-to-end latency on all columns</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">throughput</span></code> - this test loops back the input data from DDR through a MM2S Shim DMA channel back to DDR through a S2MM Shim DMA channel. The data movement within the AIE array follows the lowest latency path i.e. movement is restricted to just the Shim tile.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd-chain-latency</span></code> - this runs the same latency test as above but uses command chaining APIs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cmd-chain-throughput</span></code> - this runs the same throughout test as above but uses command chaining APIs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tct-one-col</span></code> - This test runs a control code with one time DMA bd config and 10K transfer iterations with token_check on one column. It then measures the average time that NPU takes to receive TCT (Task Completion Token)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tct-all-col</span></code> - This test runs a similar DPU sequence as tct-one-col on multiple concurrent contexts on different columns, It measures the of concurrent TCT processing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gemm</span></code> - An INT8 GeMM kernel is deployed on all 32 cores by the application. Each core is storing cycle count in the core data memory. The cycle count is read by the firmware. The TOPS application uses the “XBUTIL” tool to capture the IPUHCLK while the workload runs. Once all cores are executed, the cycle count from all cores will be synced back to the host. Finally, the application uses IPUHCLK, core cycle count, and GeMM kernel size to calculate the TOPS. This is a full array test and it should not be run while another workload is running. <strong>NOTE</strong>: This command is not supported on PHX and HPT NPUs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">aie-reconfig-overhead</span></code> - This test runs a DPU sequence which configures the NPU array. This test calculates the overhead for this reconfiguration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spatial-sharing-overhead</span></code> - This test calculates the time overhead it takes for context switching when a workload runs through spatial-sharing of AIE columns. This is the case, where a workload has exclusive ownership of the partition. No other workload can execute on that partition.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">temporal-sharing-overhead</span></code> - This test calculates the time overhead it takes for context switching when a workload runs through temporal sharing of AIE columns. This is the case, where multiple workloads share the same partition. When a workload is executing on the partition, no other workload sharing the same partition can be scheduled.</p></li>
+</ul>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>validate<span class="w"> </span>--run<span class="w"> </span>all
+</pre></div>
+</div>
+<p>📝 <strong>NOTE</strong>: Some sanity checks may fail if other applications (for example MEP, Microsoft Experience Package) are also using the NPU.</p>
+<p>Sample Command Line Output:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Validate Device           : [00c5:00:01.1]
+    Platform              : NPU
+    Power Mode            : Performance
+-------------------------------------------------------------------------------
+Test 1 [00c5:00:01.1]     : latency
+    Details               : Average latency: 79.8 us
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 2 [00c5:00:01.1]     : throughput
+    Details               : Average throughput: 62169.1 ops
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 3 [00c5:00:01.1]     : cmd-chain-latency
+    Details               : Average latency: 18.7 us
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 4 [00c5:00:01.1]     : cmd-chain-throughput
+    Details               : Average throughput: 50869.4 ops
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 5 [00c5:00:01.1]     : df-bw
+    Details               : Average bandwidth per shim DMA: 47.1 GB/s
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 6 [00c5:00:01.1]     : tct-one-col
+    Details               : Average TCT throughput: 374708.7 TCT/s
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 7 [00c5:00:01.1]     : tct-all-col
+    Details               : Average TCT throughput: 749150.7 TCT/s
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 8 [00c5:00:01.1]     : gemm
+    Details               : Kernel name is &#39;DPU_1x4&#39;
+                            TOPS: 51.3
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 9 [00c5:00:01.1]     : aie-reconfig-overhead
+    Details               : Array reconfiguration overhead: 3.8 ms
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 10 [00c5:00:01.1]    : spatial-sharing-overhead
+    Details               : Overhead: 1543.8 ms
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Test 11 [00c5:00:01.1]    : temporal-sharing-overhead
+    Details               : Overhead: &#39;4614.7&#39; ms
+    Test Status           : [PASSED]
+-------------------------------------------------------------------------------
+Validation completed. Please run the command &#39;--verbose&#39; option for more details
+</pre></div>
+</div>
+</section>
+</section>
+<section id="xrt-smi-configure">
+<h2>xrt-smi configure<a class="headerlink" href="#xrt-smi-configure" title="Permalink to this heading">#</a></h2>
+<section id="managing-the-performance-level-of-the-npu">
+<h3>Managing the Performance Level of the NPU<a class="headerlink" href="#managing-the-performance-level-of-the-npu" title="Permalink to this heading">#</a></h3>
+<p>To set the performance level of the NPU, you can choose from the following modes: powersaver, balanced, performance, or default. Use the command below:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>configure<span class="w"> </span>--pmode<span class="w"> </span>&lt;default<span class="w"> </span><span class="p">|</span><span class="w"> </span>powersaver<span class="w"> </span><span class="p">|</span><span class="w"> </span>balanced<span class="w"> </span><span class="p">|</span><span class="w"> </span>performance<span class="w"> </span><span class="p">|</span><span class="w"> </span>turbo&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">default</span></code> - adapts to the Windows Power Mode setting, which can be adjusted under System -&gt; Power &amp; battery -&gt; Power mode. For finer control of the NPU settings, it is recommended to use the xrt-smi mode setting, which overrides the Windows Power mode and ensures optimal results.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">powersaver</span></code> - configures the NPU to prioritize power saving, preserving laptop battery life.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">balanced</span></code> - configures the NPU to provide a compromise between power saving and performance.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">performance</span></code> - configures the NPU to prioritize performance, consuming more power.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">turbo</span></code> - configures the NPU for maximum performance performance, requires AC power to be plugged in otherwise uses <code class="docutils literal notranslate"><span class="pre">performance</span></code> mode.</p></li>
+</ul>
+<p>Example: Setting the NPU to high-performance mode</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>configure<span class="w"> </span>--pmode<span class="w"> </span>performance
+</pre></div>
+</div>
+<p>To check the current performance level, use the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>xrt-smi<span class="w"> </span>examine<span class="w"> </span>--report<span class="w"> </span>platform
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="hybrid_oga.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">OGA API for C++ and Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ai_analyzer.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">AI Analyzer</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-key-commands">Overview of Key Commands</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-examine">xrt-smi examine</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#system-information">System Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#platform-information">Platform Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-partitions">NPU Partitions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-context-bindings">NPU Context Bindings</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#telemetry">Telemetry</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-validate">xrt-smi validate</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-a-sanity-check-on-the-npu">Executing a Sanity Check on the NPU</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#xrt-smi-configure">xrt-smi configure</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-the-performance-level-of-the-npu">Managing the Performance Level of the NPU</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on July 29, 2024.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        
+                        <li><a href="">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2023 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

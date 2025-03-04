@@ -1,0 +1,719 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Model Deployment &#8212; Ryzen AI Software 1.3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <script async="async" src="_static/code_word_breaks.js"></script>
+    <script async="async" src="_static/renameVersionLinks.js"></script>
+    <script async="async" src="_static/rdcMisc.js"></script>
+    <script async="async" src="_static/theme_mode_captions.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modelrun';</script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/modelrun.html" />
+    <link rel="shortcut icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Application Development" href="app_development.html" />
+    <link rel="prev" title="Model Quantization" href="modelport.html" />
+    <meta name="google-site-verification" content="ZOn0RZC0Pwzlmf2SaE0bRttWk1YzOhuslbpxUDchQ90" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+                <!-- TODO: Search icon up here maybe? -->
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="runtime_setup.html">Runtime Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running CNNs on the NPU</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="modelcompat.html">Model Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelport.html">Model Quantization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OGA API for C++ and Python</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_analyzer.html">AI Analyzer</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual_installation.html">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Model Deployment</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Model Deployment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-with-vitis-ai-execution-provider">ONNX Runtime with Vitis AI Execution Provider</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-execution-provider-options">Vitis AI Execution Provider Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api-example">Python API Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-api-example">C++ API Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simultaneous-sessions">Simultaneous Sessions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-encryption">Model Encryption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-assignment-report">Operator Assignment Report</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="model-deployment">
+<h1>Model Deployment<a class="headerlink" href="#model-deployment" title="Permalink to this heading">#</a></h1>
+<section id="onnx-runtime-with-vitis-ai-execution-provider">
+<h2>ONNX Runtime with Vitis AI Execution Provider<a class="headerlink" href="#onnx-runtime-with-vitis-ai-execution-provider" title="Permalink to this heading">#</a></h2>
+<p>Quantized models are deployed by creating an ONNX inference session and by leveraring the Vitis AI Execution Provider (VAI EP). Both the ONNX C++ and Python APIs are supported.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">providers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">]</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">ort</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">sess_options</span> <span class="o">=</span> <span class="n">sess_opt</span><span class="p">,</span>
+                                          <span class="n">providers</span> <span class="o">=</span> <span class="n">providers</span><span class="p">,</span>
+                                          <span class="n">provider_options</span> <span class="o">=</span> <span class="n">provider_options</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="vitis-ai-execution-provider-options">
+<h3>Vitis AI Execution Provider Options<a class="headerlink" href="#vitis-ai-execution-provider-options" title="Permalink to this heading">#</a></h3>
+<p>The Vitis AI Execution Provider supports the following options:</p>
+<table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Provider Options</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>config_file</p></td>
+<td><p>Mandatory</p></td>
+<td><p>None</p></td>
+<td><p>The path and name of the runtime configuration file.
+A default version of this file can be found in the <code class="docutils literal notranslate"><span class="pre">voe-4.0-win_amd64</span></code> folder of the Ryzen AI software installation package under the name <code class="file docutils literal notranslate"><span class="pre">vaip_config.json</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>cacheDir</p></td>
+<td><p>Optional</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">C:\temp\{user}\vaip\.cache</span></code></p></td>
+<td><p>The cache directory.</p></td>
+</tr>
+<tr class="row-even"><td><p>cacheKey</p></td>
+<td><p>Optional</p></td>
+<td><p>{md5sum of onnx model}</p></td>
+<td><p>Compiled model directory generated inside the cache directory. Use string to specify the desired name of the compiler model directory.
+For example: <code class="docutils literal notranslate"><span class="pre">'cacheKey':</span> <span class="pre">'resnet50_cache'</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>encryptionKey</p></td>
+<td><p>Optional</p></td>
+<td><p>None</p></td>
+<td><p>Encryption/Decryption key for the models generated.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this heading">#</a></h3>
+<p>Additionally, the following environment variables can be used control the Ryzen AI ONNX Runtime-based deployment.</p>
+<table class="table">
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Environment Variable</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>XLNX_VART_FIRMWARE</p></td>
+<td><p>Mandatory</p></td>
+<td><p>None</p></td>
+<td><p>Set it to one of the NPU configuration binaries.
+For more details, refer to the <a class="reference internal" href="runtime_setup.html"><span class="doc">Runtime Setup</span></a> page.</p></td>
+</tr>
+<tr class="row-odd"><td><p>XLNX_ENABLE_CACHE</p></td>
+<td><p>Optional</p></td>
+<td><p>1</p></td>
+<td><p>If unset, the runtime flow ignores the cache directory and recompiles the model.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="python-api-example">
+<h2>Python API Example<a class="headerlink" href="#python-api-example" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">onnxruntime</span>
+
+<span class="c1"># Add user imports</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># Load inputs and perform preprocessing</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># Create an inference session using the Vitis AI execution provider</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+              <span class="s1">&#39;[model_file].onnx&#39;</span><span class="p">,</span>
+               <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;VitisAIExecutionProvider&quot;</span><span class="p">],</span>
+               <span class="n">provider_options</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;config_file&quot;</span><span class="p">:</span><span class="s2">&quot;/path/to/vaip_config.json&quot;</span><span class="p">}])</span>
+
+<span class="n">input_shape</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">input_name</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+
+<span class="c1"># Load inputs and do preprocessing by input_shape</span>
+<span class="n">input_data</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">([],</span> <span class="p">{</span><span class="n">input_name</span><span class="p">:</span> <span class="n">input_data</span><span class="p">})</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="c-api-example">
+<h2>C++ API Example<a class="headerlink" href="#c-api-example" title="Permalink to this heading">#</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;onnxruntime_cxx_api.h&gt;</span>
+<span class="c1">// include user header files</span>
+<span class="c1">// ...</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">xclbin_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/xclbin&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">model_path</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/model.onnx&quot;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">config_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;path/to/config.json&quot;</span><span class="p">;</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">model_name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">strconverter</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">model_path</span><span class="p">);</span>
+
+<span class="n">_putenv_s</span><span class="p">(</span><span class="s">&quot;XLNX_VART_FIRMWARE&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">xclbin_path</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span>
+
+<span class="n">Ort</span><span class="o">::</span><span class="n">Env</span><span class="w"> </span><span class="n">env</span><span class="p">(</span><span class="n">ORT_LOGGING_LEVEL_WARNING</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;quicktest&quot;</span><span class="p">);</span>
+
+<span class="c1">// create inference session</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">SessionOptions</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unordered_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">{</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;config_file&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">config_path</span><span class="p">},</span><span class="w">          </span><span class="c1">// Required</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;cacheDir&quot;</span><span class="p">,</span><span class="w">    </span><span class="s">&quot;path/to/cacheDir&quot;</span><span class="p">},</span><span class="w">   </span><span class="c1">// Optional</span>
+<span class="w">    </span><span class="p">{</span><span class="s">&quot;cacheKey&quot;</span><span class="p">,</span><span class="w">    </span><span class="s">&quot;cacheName&quot;</span><span class="p">}</span><span class="w">           </span><span class="c1">// Optional</span>
+<span class="p">};</span>
+<span class="n">session_options</span><span class="p">.</span><span class="n">AppendExecutionProvider_VitisAI</span><span class="p">(</span><span class="n">options</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="w"> </span><span class="n">model_path</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">session_options</span><span class="p">);</span>
+
+<span class="c1">// preprocess input data</span>
+<span class="c1">// ...</span>
+
+
+<span class="c1">// get input/output names from model</span>
+<span class="kt">size_t</span><span class="w">                   </span><span class="n">input_count</span><span class="p">;</span>
+<span class="kt">size_t</span><span class="w">                   </span><span class="n">output_count</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">input_names</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">output_names</span><span class="p">;</span>
+<span class="p">...</span>
+
+<span class="c1">// initialize input tensors</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Ort</span><span class="o">::</span><span class="n">Value</span><span class="o">&gt;</span><span class="w">  </span><span class="n">input_tensors</span><span class="p">;</span>
+<span class="p">...</span>
+
+<span class="c1">// run inference</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">output_tensors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">session</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span>
+<span class="w">        </span><span class="n">Ort</span><span class="o">::</span><span class="n">RunOptions</span><span class="p">(),</span>
+<span class="w">        </span><span class="n">input_names</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">input_tensors</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">input_count</span><span class="p">,</span>
+<span class="w">        </span><span class="n">output_names</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="w"> </span><span class="n">output_count</span><span class="p">);</span>
+
+<span class="c1">// postprocess output data</span>
+<span class="c1">// ...</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="simultaneous-sessions">
+<h2>Simultaneous Sessions<a class="headerlink" href="#simultaneous-sessions" title="Permalink to this heading">#</a></h2>
+<p>Up to eight simultaneous inference sessions can be run on the NPU. The runtime automatically schedules each inference session on available slots to maximize performance of the application.</p>
+<p>The performance of individual inference sessions is impacted by multiple factors, including the APU type, the NPU configuration used, the number of other inference sessions running on the NPU, and the applications running the inference sessions.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="model-encryption">
+<h2>Model Encryption<a class="headerlink" href="#model-encryption" title="Permalink to this heading">#</a></h2>
+<p>To protect developers’ intellectual property, encryption is supported as a session option.
+With this enabled, all the compiled models generated are encrypted using AES256.
+To enable encryption, you need to pass the encryption key through the VAI EP options as follows:</p>
+<p>In Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="s1">&#39;[model_file].onnx&#39;</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;VitisAIExecutionProvider&quot;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[{</span>
+        <span class="s2">&quot;config_file&quot;</span><span class="p">:</span><span class="s2">&quot;/path/to/vaip_config.json&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;encryptionKey&quot;</span><span class="p">:</span> <span class="s2">&quot;89703f950ed9f738d956f6769d7e45a385d3c988ca753838b5afbc569ebf35b2&quot;</span>
+<span class="p">}])</span>
+</pre></div>
+</div>
+<p>In C++:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">auto</span><span class="w"> </span><span class="n">onnx_model_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;resnet50_pt.onnx&quot;</span>
+<span class="n">Ort</span><span class="o">::</span><span class="n">Env</span><span class="w"> </span><span class="n">env</span><span class="p">(</span><span class="n">ORT_LOGGING_LEVEL_WARNING</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;resnet50_pt&quot;</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">SessionOptions</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unorderd_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">({});</span>
+<span class="n">options</span><span class="p">[</span><span class="s">&quot;config_file&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/path/to/vaip_config.json&quot;</span><span class="p">;</span>
+<span class="n">options</span><span class="p">[</span><span class="s">&quot;encryptionKey&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;89703f950ed9f738d956f6769d7e45a385d3c988ca753838b5afbc569ebf35b2&quot;</span><span class="p">;</span>
+
+<span class="n">session_options</span><span class="p">.</span><span class="n">AppendExecutionProvider</span><span class="p">(</span><span class="s">&quot;VitisAI&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">options</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">Experimental</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span><span class="n">env</span><span class="p">,</span><span class="w"> </span><span class="n">model_name</span><span class="p">,</span><span class="w"> </span><span class="n">session_options</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The key is a 256-bit value represented as a 64-digit string. The model generated in the cache directory cannot be opened with Netron currently. Additionally, there is a side effect: dumping is disabled to prevent the leakage of sensitive information about the model.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+<section id="operator-assignment-report">
+<h2>Operator Assignment Report<a class="headerlink" href="#operator-assignment-report" title="Permalink to this heading">#</a></h2>
+<p>Vitis AI EP generates a file named <code class="docutils literal notranslate"><span class="pre">vitisai_ep_report.json</span></code> that provides a report on model operator assignments across CPU and NPU. This file is automatically generated in the cache directory, which by default is <code class="docutils literal notranslate"><span class="pre">C:\temp\{user}\vaip\.cache\&lt;model_cache_key&gt;</span></code> if no explicit cache location is specified in the code. This report includes information such as the total number of nodes, the list of operator types in the model, and which nodes and operators runs on the NPU or on the CPU. (NOTE: Nodes and operators running on the NPU are reported under the DPU name). Additionally, the report includes node statistics, such as input to a node, the applied operation, and output from the node.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+  &quot;deviceStat&quot;: [
+  {
+    &quot;name&quot;: &quot;all&quot;,
+    &quot;nodeNum&quot;: 402,
+    &quot;supportedOpType&quot;: [
+    &quot;::Add&quot;,
+    ...
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;CPU&quot;,
+    &quot;nodeNum&quot;: 2,
+    &quot;supportedOpType&quot;: [
+    &quot;::DequantizeLinear&quot;,
+    ...
+    ]
+  },
+  {
+    &quot;name&quot;: &quot;DPU&quot;,
+    &quot;nodeNum&quot;: 400,
+    &quot;supportedOpType&quot;: [
+    &quot;::Add&quot;,
+    ...
+    ]
+  }
+  ],
+  ...
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modelport.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Model Quantization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="app_development.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Application Development</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-with-vitis-ai-execution-provider">ONNX Runtime with Vitis AI Execution Provider</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-execution-provider-options">Vitis AI Execution Provider Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-api-example">Python API Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#c-api-example">C++ API Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simultaneous-sessions">Simultaneous Sessions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-encryption">Model Encryption</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-assignment-report">Operator Assignment Report</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on July 29, 2024.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        
+                        <li><a href="">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2023 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

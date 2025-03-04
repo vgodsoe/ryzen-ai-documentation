@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Vitis AI Quantizer for ONNX &#8212; Ryzen AI Software 1.3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/llm-table.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_header.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_footer.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/llm-table.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <script async="async" src="../_static/code_word_breaks.js"></script>
+    <script async="async" src="../_static/renameVersionLinks.js"></script>
+    <script async="async" src="../_static/rdcMisc.js"></script>
+    <script async="async" src="../_static/theme_mode_captions.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'vai_quant/vai_q_onnx';</script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/vai_quant/vai_q_onnx.html" />
+    <link rel="shortcut icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="google-site-verification" content="ZOn0RZC0Pwzlmf2SaE0bRttWk1YzOhuslbpxUDchQ90" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+                <!-- TODO: Search icon up here maybe? -->
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime_setup.html">Runtime Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running CNNs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modelcompat.html">Model Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modelport.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modelrun.html">Model Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hybrid_oga.html">OGA API for C++ and Python</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ai_analyzer.html">AI Analyzer</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual_installation.html">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Vitis AI...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Vitis AI Quantizer for ONNX</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-vai-q-onnx">Running vai_q_onnx</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-float-model-and-calibration-set">1. Preparing the Float Model and Calibration Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-pre-processing-on-the-float-model">2. (Recommended) Pre-processing on the Float Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-using-the-vai-q-onnx-api">3. Quantizing Using the vai_q_onnx API</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-configurations">Recommended Configurations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnns-on-npu">CNNs on NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers-on-npu">Transformers on NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnns-on-cpu">CNNs on CPU</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-to-other-precisions">Quantizing to Other Precisions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-int16-or-int32">1. Quantizing Float32 Models to Int16 or Int32</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-float16-or-bfloat16">2. Quantizing Float32 Models to Float16 or BFloat16</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-mixed-data-formats">3. Quantizing Float32 Models to Mixed Data Formats</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float16-models">Quantizing Float16 Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-nchw-models-to-nhwc-and-quantize">Converting NCHW Models to NHWC and Quantize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-using-cross-layer-equalization">Quantizing Using Cross Layer Equalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools">Tools</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="vitis-ai-quantizer-for-onnx">
+<h1>Vitis AI Quantizer for ONNX<a class="headerlink" href="#vitis-ai-quantizer-for-onnx" title="Permalink to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Vitis AI Quantizer has been deprecated as of the Ryzen AI 1.3 release. AMD strongly recommends using the new AMD Quark Quantizer instead (please refer to the main documentation about <a class="reference internal" href="../modelport.html"><span class="doc">Model Quantization</span></a>).</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">#</a></h2>
+<p>The Vitis AI Quantizer for ONNX models supports various configuration and functions to quantize models targeting for deployment on IPU_CNN, IPU_Transformer and CPU. It is customized based on <a class="reference external" href="https://github.com/microsoft/onnxruntime/tree/main/onnxruntime/python/tools/quantization">Quantization Tool</a> in ONNX Runtime.</p>
+<p>The Vitis AI Quantizer for ONNX supports Post Training Quantization. This static quantization method first runs the model using a set of inputs called calibration data. During these runs, the flow computes the quantization parameters for each activation. These quantization parameters are written as constants to the quantized model and used for all inputs. The quantization tool supports the following calibration methods: MinMax, Entropy and Percentile, and MinMSE.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this documentation, <strong>“NPU”</strong> is used in descriptions, while <strong>“IPU”</strong> is retained in the tool’s language, code, screenshots, and commands. This intentional
+distinction aligns with existing tool references and does not affect functionality. Avoid making replacements in the code.</p>
+</div>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p>If you have prepared your working environment using the <a class="reference internal" href="../inst.html#install-bundled"><span class="std std-ref">automatic installation script</span></a>, the Vitis AI Quantizer for ONNX is already installed.</p>
+<p>Otherwise, ensure that the Vitis AI Quantizer for ONNX is correctly installed by following the <a class="reference internal" href="../manual_installation.html#install-onnx-quantizer"><span class="std std-ref">installation instructions</span></a>.</p>
+</section>
+<section id="running-vai-q-onnx">
+<h2>Running vai_q_onnx<a class="headerlink" href="#running-vai-q-onnx" title="Permalink to this heading">#</a></h2>
+<p>Quantization in ONNX refers to the linear quantization of an ONNX model. The <code class="docutils literal notranslate"><span class="pre">vai_q_onnx</span></code> tool is as a plugin for the ONNX Runtime. It offers powerful post-training quantization (PTQ) functions to quantize machine learning models. Post-training quantization (PTQ) is a technique to convert a pre-trained float model into a quantized model with little degradation in model accuracy. A representative dataset is needed to run a few batches of inference on the float model to obtain the distributions of the activations, which is also called quantized calibration.</p>
+<p>Use the following steps to run PTQ with vai_q_onnx.</p>
+<section id="preparing-the-float-model-and-calibration-set">
+<h3>1. Preparing the Float Model and Calibration Set<a class="headerlink" href="#preparing-the-float-model-and-calibration-set" title="Permalink to this heading">#</a></h3>
+<p>Before running <code class="docutils literal notranslate"><span class="pre">vai_q_onnx</span></code>, prepare the float model and calibration set, including these files:</p>
+<ul class="simple">
+<li><p>float model: Floating-point models in ONNX format.</p></li>
+<li><p>calibration dataset: A subset of the training dataset or validation dataset to represent the input data distribution; usually 100 to 1000 images are enough.</p></li>
+</ul>
+<p><strong>Exporting PyTorch Models to ONNX</strong></p>
+<p>For PyTorch models, it is recommended to use the TorchScript-based onnx exporter for exporting ONNX models. Please refer to the <a class="reference external" href="https://pytorch.org/docs/stable/onnx_torchscript.html#torchscript-based-onnx-exporte">PyTorch documentation for guidance</a></p>
+<p>Tips:</p>
+<ul class="simple">
+<li><p>Before exporting, please perform model.eval().</p></li>
+<li><p>Models with opset 17 are recommended.</p></li>
+<li><p>For CNN’s on NPU platform, dynamic input shapes are currently not supported and only a batch size of 1 is allowed. Please ensure that the shape of input is a fixed value, and the batch dimension is set to 1.</p></li>
+</ul>
+<p>Example code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>torch.onnx.export(
+   model,
+   input,
+   model_output_path,
+   opset_version=13,
+   input_names=[&#39;input&#39;],
+   output_names=[&#39;output&#39;],
+)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p><strong>Opset Versions</strong>:The ONNX models must be opset 10 or higher (recommended setting 13) to be quantized by Vitis AI ONNX Quantizer. Models with opset &lt; 10 must be reconverted to ONNX from their original framework using opset 10 or above. Alternatively, you can refer to the usage of the version converter for <a class="reference external" href="https://github.com/onnx/onnx/blob/main/docs/VersionConverter.md">ONNX Version Converter</a></p></li>
+<li><p><strong>Large Models &gt; 2GB</strong>: Due to the 2GB file size limit of Protobuf, for ONNX models exceeding 2GB, additional data will be stored separately. Please ensure that the .onnx file and the data file are placed in the same directory. Also, please set the use_external_data_format parameter to True for large models when quantizing.</p></li>
+</ul>
+</div>
+</section>
+<section id="recommended-pre-processing-on-the-float-model">
+<h3>2. (Recommended) Pre-processing on the Float Model<a class="headerlink" href="#recommended-pre-processing-on-the-float-model" title="Permalink to this heading">#</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>ONNX model optimization cannot output a model size greater than 2GB. For models larger than 2GB, the optimization step must be skipped.</p>
+</div>
+<p>Pre-processing transforms a float model to prepare it for quantization. It consists of the following three optional steps:</p>
+<ul class="simple">
+<li><p>Symbolic shape inference: It is best-suited for transformer models.</p></li>
+<li><p>Model Optimization: This step uses the ONNX Runtime native library to rewrite the computation graph, including merging computation nodes, and eliminating redundancies to improve runtime efficiency.</p></li>
+<li><p>ONNX shape inference.</p></li>
+</ul>
+<p>The goal of these steps is to improve the quantization quality. The ONNX Runtime quantization tool works best when the tensor’s shape is known. Both symbolic shape inference and ONNX shape inference help figure out tensor shapes. Symbolic shape inference works best with transformer-based models, and ONNX shape inference works with other models.</p>
+<p>Model optimization performs certain operator fusion that makes the quantization tool’s job easier. For instance, a Convolution operator followed by BatchNormalization can be fused into one during the optimization, which can be quantized very efficiently.</p>
+<p>Pre-processing API is in the Python module <code class="docutils literal notranslate"><span class="pre">onnxruntime.quantization.shape_inference</span></code>, function <code class="docutils literal notranslate"><span class="pre">quant_pre_process()</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from onnxruntime.quantization import shape_inference
+
+shape_inference.quant_pre_process(
+   input_model_path: str,
+   output_model_path: str,
+   skip_optimization: bool = False,
+   skip_onnx_shape: bool = False,
+   skip_symbolic_shape: bool = False,
+   auto_merge: bool = False,
+   int_max: int = 2**31 - 1,
+   guess_output_rank: bool = False,
+   verbose: int = 0,
+   save_as_external_data: bool = False,
+   all_tensors_to_one_file: bool = False,
+   external_data_location: str = &quot;./&quot;,
+   external_data_size_threshold: int = 1024,)
+</pre></div>
+</div>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><p><strong>input_model_path</strong>: (String) Specifies the file path of the input model that is to be pre-processed for quantization.</p></li>
+<li><p><strong>output_model_path</strong>: (String) Specifies the file path to save the pre-processed model.</p></li>
+<li><p><strong>skip_optimization</strong>: (Boolean) Indicates whether to skip the model optimization step. If set to True, model optimization is skipped, which may cause ONNX shape inference failure for some models. The default value is False.</p></li>
+<li><p><strong>skip_onnx_shape</strong>: (Boolean) Indicates whether to skip the ONNX shape inference step. The symbolic shape inference is most effective with transformer-based models. Skipping all shape inferences may reduce the effectiveness of quantization, as a tensor with an unknown shape cannot be quantized. The default value is False.</p></li>
+<li><p><strong>skip_symbolic_shape</strong>: (Boolean) Indicates whether to skip the symbolic shape inference step. Symbolic shape inference is most effective with transformer-based models. Skipping all shape inferences may reduce the effectiveness of quantization, as a tensor with an unknown shape cannot be quantized. The default value is False.</p></li>
+<li><p><strong>auto_merge</strong>: (Boolean) Determines whether to automatically merge symbolic dimensions when a conflict occurs during symbolic shape inference. The default value is False.</p></li>
+<li><p><strong>int_max</strong>: (Integer) Specifies the maximum integer value that is to be considered as boundless for operations like slice during symbolic shape inference. The default value is 2**31 - 1.</p></li>
+<li><p><strong>guess_output_rank</strong>: (Boolean) Indicates whether to guess the output rank to be the same as input 0 for unknown operations. The default value is False.</p></li>
+<li><p><strong>verbose</strong>: (Integer) Controls the level of detailed information logged during inference.</p>
+<ul>
+<li><p>0 turns off logging (default)</p></li>
+<li><p>1 logs warnings</p></li>
+<li><p>3 logs detailed information.</p></li>
+</ul>
+</li>
+<li><p><strong>save_as_external_data</strong>: (Boolean) Determines whether to save the ONNX model to external data. The default value is False.</p></li>
+<li><p><strong>all_tensors_to_one_file</strong>: (Boolean) Indicates whether to save all the external data to one file. The default value is False.</p></li>
+<li><p><strong>external_data_location</strong>: (String) Specifies the file location where the external file is saved. The default value is “./”.</p></li>
+<li><p><strong>external_data_size_threshold</strong>: (Integer) Specifies the size threshold for external data. The default value is 1024.</p></li>
+</ul>
+</section>
+<section id="quantizing-using-the-vai-q-onnx-api">
+<h3>3. Quantizing Using the vai_q_onnx API<a class="headerlink" href="#quantizing-using-the-vai-q-onnx-api" title="Permalink to this heading">#</a></h3>
+<p>The static quantization method first runs the model using a set of inputs called calibration data. During these runs, the quantization parameters for each activation are computed. These quantization parameters are written as constants to the quantized model and used for all inputs. Vai_q_onnx quantization tool has expanded calibration methods to power-of-2 scale/float scale quantization methods. Float scale quantization methods include MinMax, Entropy, and Percentile. Power-of-2 scale quantization methods include MinMax and MinMSE.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+ model_input,
+ model_output,
+ calibration_data_reader,
+ quant_format=vai_q_onnx.QuantFormat.QDQ,
+ calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+ input_nodes=[],
+ output_nodes=[],
+ op_types_to_quantize=[],
+ random_data_reader_input_shape=[],
+ per_channel=False,
+ reduce_range=False,
+ activation_type=vai_q_onnx.QuantType.QInt8,
+ weight_type=vai_q_onnx.QuantType.QInt8,
+ nodes_to_quantize=None,
+ nodes_to_exclude=None,
+ optimize_model=True,
+ use_external_data_format=False,
+ execution_providers=[&#39;CPUExecutionProvider&#39;],
+ enable_dpu=False,
+ convert_fp16_to_fp32=False,
+ convert_nchw_to_nhwc=False,
+ inclue_cle=False,
+ extra_options={},)
+</pre></div>
+</div>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><p><strong>model_input</strong>: (String) This parameter specifies the file path of the model that is to be quantized.</p></li>
+<li><p><strong>model_output</strong>: (String) This parameter specifies the file path where the quantized model will be saved.</p></li>
+<li><p><strong>calibration_data_reader</strong>: (Object or None) This parameter is a calibration data reader that enumerates the calibration data and generates inputs for the original model. If you wish to use random data for a quick test, you can set calibration_data_reader to None.</p></li>
+<li><p><strong>quant_format</strong>: (String) This parameter is used to specify the quantization format of the model. It has the following options:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.QuantFormat.QOperator</span></code>: This option quantizes the model directly using quantized operators.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.QuantFormat.QDQ</span></code>: This option quantizes the model by inserting QuantizeLinear/DeQuantizeLinear into the tensor. It supports 8-bit quantization only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.VitisQuantFormat.QDQ</span></code>: This option quantizes the model by inserting VitisQuantizeLinear/VitisDequantizeLinear into the tensor. It supports a wider range of bit-widths and precisions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.VitisQuantFormat.FixNeuron</span></code>: (Experimental) This option quantizes the model by inserting FixNeuron (a combination of QuantizeLinear and DeQuantizeLinear) into the tensor. This quant format is currently experimental and should not be used for actual deployment.</p></li>
+</ul>
+</li>
+<li><p><strong>calibrate_method</strong>: (String) The method used in calibration, default to <code class="docutils literal notranslate"><span class="pre">vai_q_onnx.PowerOfTwoMethod.MinMSE</span></code>.</p>
+<ul>
+<li><p>For CNNs running on the NPU, power-of-two methods should be used, options are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.PowerOfTwoMethod.NonOverflow</span></code>: This method get the power-of-two quantize parameters for each tensor to make sure min/max values not overflow.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.PowerOfTwoMethod.MinMSE</span></code>: This method get the power-of-two quantize parameters for each tensor to minimize the mean-square-loss of quantized values and float values. This takes longer time but usually gets better accuracy.</p></li>
+</ul>
+</li>
+<li><p>For Transformers running on the NPU, or for CNNs running on the CPU, float scale methods should be used, options are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.CalibrationMethod.MinMax</span></code>: This method obtains the quantization parameters based on the minimum and maximum values of each tensor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.CalibrationMethod.Entropy</span></code>: This method determines the quantization parameters by considering the entropy algorithm of each tensor’s distribution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vai_q_onnx.CalibrationMethod.Percentile</span></code>: This method calculates quantization parameters using percentiles of the tensor values.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>input_nodes</strong>: (List of Strings) This parameter is a list of the names of the starting nodes to be quantized. Nodes in the model before these nodes will not be quantized. For example, this argument can be used to skip some pre-processing nodes or stop the first node from being quantized. The default value is an empty list ([]).</p></li>
+<li><p><strong>output_nodes</strong>: (List of Strings) This parameter is a list of the names of the end nodes to be quantized. Nodes in the model after these nodes will not be quantized. For example, this argument can be used to skip some post-processing nodes or stop the last node from being quantized. The default value is an empty list ([]).</p></li>
+<li><p><strong>op_types_to_quantize</strong>: (List of Strings or None) If specified, only operators of the given types will be quantized (e.g., [‘Conv’] to only quantize Convolutional layers). By default, all supported operators will be quantized.</p></li>
+<li><p><strong>random_data_reader_input_shape</strong>: (List or Tuple of Int) If dynamic axes of inputs require specific value, users should provide its shapes when using internal random data reader (That is, set calibration_data_reader to None). The basic format of shape for single input is list (Int) or tuple (Int) and all dimensions should have concrete values (batch dimensions can be set to 1). For example, random_data_reader_input_shape=[1, 3, 224, 224] or random_data_reader_input_shape=(1, 3, 224, 224) for single input. If the model has multiple inputs, it can be fed in list (shape) format, where the list order is the same as the onnxruntime got inputs. For example, random_data_reader_input_shape=[[1, 1, 224, 224], [1, 2, 224, 224]] for 2 inputs. Moreover, it is possible to use dict {name : shape} to specify a certain input, for example, random_data_reader_input_shape={“image” : [1, 3, 224, 224]} for the input named “image”. The default value is an empty list ([]).</p></li>
+<li><p><strong>per_channel</strong>: (Boolean) Determines whether weights should be quantized per channel. The default value is False. For DPU/NPU devices, this must be set to False as they currently do not support per-channel quantization.</p></li>
+<li><p><strong>reduce_range</strong>: (Boolean) If True, quantizes weights with 7-bits. The default value is False. For DPU/NPU devices, this must be set to False as they currently do not support reduced range quantization.</p></li>
+<li><p><strong>activation_type</strong>: (QuantType) Specifies the quantization data type for activations, options please refer to Table 1. The default is <code class="docutils literal notranslate"><span class="pre">vai_q_onnx.QuantType.QInt8</span></code>.</p></li>
+<li><p><strong>weight_type</strong>: (QuantType) Specifies the quantization data type for weights, options please refer to Table 1. The default is <code class="docutils literal notranslate"><span class="pre">vai_q_onnx.QuantType.QInt8</span></code>. For NPU devices, this must be set to <code class="docutils literal notranslate"><span class="pre">QuantType.QInt8</span></code>.</p></li>
+<li><p><strong>nodes_to_quantize</strong>: (List of Strings or None) If specified, only the nodes in this list are quantized. The list should contain the names of the nodes, for example, [‘Conv__224’, ‘Conv__252’]. The default value is an empty list ([]).</p></li>
+<li><p><strong>nodes_to_exclude</strong>: (List of Strings or None) If specified, the nodes in this list will be excluded from quantization. The default value is an empty list ([]).</p></li>
+<li><p><strong>optimize_model</strong>: (Boolean) If True, optimizes the model before quantization. The default value is True.</p></li>
+<li><p><strong>use_external_data_format</strong>: (Boolean) This option is used for large size (&gt;2GB) model. The model proto and data will be stored in separate files. The default is False.</p></li>
+<li><p><strong>execution_providers</strong>: (List of Strings) This parameter defines the execution providers that will be used by ONNX Runtime to do calibration for the specified model. The default value <code class="docutils literal notranslate"><span class="pre">CPUExecutionProvider</span></code> implies that the model will be computed using the CPU as the execution provider. You can also set this to other execution providers supported by ONNX Runtime such as <code class="docutils literal notranslate"><span class="pre">CUDAExecutionProvider</span></code> for GPU-based computation, if they are available in your environment. The default is [‘CPUExecutionProvider’].</p></li>
+<li><p><strong>enable_dpu</strong>: (Boolean) This parameter is a flag that determines whether to generate a quantized model that is suitable for the DPU/NPU. If set to True, the quantization process will consider the specific limitations and requirements of the DPU/NPU, thus creating a model that is optimized for DPU/NPU computations. The default is False.</p></li>
+<li><p><strong>convert_fp16_to_fp32</strong>: (Boolean) This parameter controls whether to convert the input model from float16 to float32 before quantization. For float16 models, it is recommended to set this parameter to True. The default value is False.</p></li>
+<li><p><strong>convert_nchw_to_nhwc</strong>: (Boolean) This parameter controls whether to convert the input NCHW model to input NHWC model before quantization. For input NCHW models, it is recommended to set this parameter to True. The default value is False.</p></li>
+<li><p><strong>include_cle</strong>: (Boolean) This parameter is a flag that determines whether to optimize the models using CrossLayerEqualization; it can improve the accuracy of some models. The default is False.</p></li>
+<li><p><strong>extra_options</strong>: (Dictionary or None) Contains key-value pairs for various options in different cases. Current used:</p>
+<ul>
+<li><p><strong>ActivationSymmetric</strong>: (Boolean) If True, symmetrize calibration data for activations. The default is False.</p></li>
+<li><p><strong>WeightSymmetric</strong>: (Boolean) If True, symmetrize calibration data for weights. The default is True.</p></li>
+<li><p><strong>UseUnsignedReLU</strong>: (Boolean) If True, the output tensor of ReLU and Clip, whose min is 0, will be forced to be asymmetric. The default is False.</p></li>
+<li><p><strong>QuantizeBias</strong>: (Boolean) If True, quantize the Bias as a normal weights. The default is True. For DPU/NPU devices, this must be set to True.</p></li>
+<li><p><strong>RemoveInputInit</strong>: (Boolean) If True, initializer in graph inputs will be removed because it will not be treated as constant value/weight. This may prevent some of the graph optimizations, like const folding. The default is True.</p></li>
+<li><p><strong>EnableSubgraph</strong>: (Boolean) If True, the subgraph will be quantized. The default is False. More support for this feature is planned in the future.</p></li>
+<li><p><strong>ForceQuantizeNoInputCheck</strong>: (Boolean) If True, latent operators such as maxpool and transpose will always quantize their inputs, generating quantized outputs even if their inputs have not been quantized. The default behavior can be overridden for specific nodes using nodes_to_exclude.</p></li>
+<li><p><strong>MatMulConstBOnly</strong>: (Boolean) If True, only MatMul operations with a constant ‘B’ will be quantized. The default is False.</p></li>
+<li><p><strong>AddQDQPairToWeight</strong>: (Boolean) If True, both QuantizeLinear and DeQuantizeLinear nodes are inserted for weight, maintaining its floating-point format. The default is False, which quantizes floating-point weight and feeds it solely to an inserted DeQuantizeLinear node. In the PowerOfTwoMethod calibration method, this setting will also be effective for the bias.</p></li>
+<li><p><strong>OpTypesToExcludeOutputQuantization</strong>: (List of Strings or None) If specified, the output of operators with these types will not be quantized. The default is an empty list.</p></li>
+<li><p><strong>DedicatedQDQPair</strong>: (Boolean) If True, an identical and dedicated QDQ pair is created for each node. The default is False, allowing multiple nodes to share a single QDQ pair as their inputs.</p></li>
+<li><p><strong>QDQOpTypePerChannelSupportToAxis</strong>: (Dictionary) Sets the channel axis for specific operator types (e.g., {‘MatMul’: 1}). This is only effective when per-channel quantization is supported and per_channel is True. If a specific operator type supports per-channel quantization but no channel axis is explicitly specified, the default channel axis will be used. For DPU/NPU devices, this must be set to {} as per-channel quantization is currently unsupported. The default is an empty dict ({}).</p></li>
+<li><p><strong>UseQDQVitisCustomOps</strong>: (Boolean) If True, The UInt8 and Int8 quantization will be executed by the custom operations library, otherwise by the library of onnxruntime extensions. The default is True, only valid in vai_q_onnx.VitisQuantFormat.QDQ.</p></li>
+<li><p><strong>CalibTensorRangeSymmetric</strong>: (Boolean) If True, the final range of the tensor during calibration will be symmetrically set around the central point “0”. The default is False. In PowerOfTwoMethod calibration method, the default is True.</p></li>
+<li><p><strong>CalibMovingAverage</strong>: (Boolean) If True, the moving average of the minimum and maximum values will be computed when the calibration method selected is MinMax. The default is False. In PowerOfTwoMethod calibration method, this should be set to False.</p></li>
+<li><p><strong>CalibMovingAverageConstant</strong>: (Float) Specifies the constant smoothing factor to use when computing the moving average of the minimum and maximum values. The default is 0.01. This is only effective when the calibration method selected is MinMax and CalibMovingAverage is set to True. In PowerOfTwoMethod calibration method, this option is unsupported.</p></li>
+<li><p><strong>RandomDataReaderInputDataRange</strong>: (Dict or None) Specifies the data range for each inputs if used random data reader (calibration_data_reader is None). Currently, if set to None then the random value will be 0 or 1 for all inputs, otherwise range [-128,127] for unsigned int, range [0,255] for signed int and range [0,1] for other float inputs. The default is None.</p></li>
+<li><p><strong>Int16Scale</strong>: (Boolean) If True, the float scale will be replaced by the closest value corresponding to M and 2**N, where the range of M and 2**N is within the representation range of int16 and uint16. The default is False.</p></li>
+<li><p><strong>MinMSEMode</strong>: (String) When using <code class="docutils literal notranslate"><span class="pre">vai_q_onnx.PowerOfTwoMethod.MinMSE</span></code>, you can specify the method for calculating minmse. By default, minmse is calculated using all calibration data. Alternatively, you can set the mode to “MostCommon”, where minmse is calculated for each batch separately and take the most common value. The default setting is ‘All’.</p></li>
+<li><p><strong>ConvertBNToConv</strong>: (Boolean) If True, the BatchNormalization operation will be converted to Conv operation when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>ConvertReduceMeanToGlobalAvgPool</strong>: (Boolean) If True, the Reduce Mean operation will be converted to Global Average Pooling operation when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>SplitLargeKernelPool</strong>: (Boolean) If True, the large kernel Global Average Pooling operation will be split into multiple Average Pooling operation when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>ConvertSplitToSlice</strong>: (Boolean) If True, the Split operation will be converted to Slice operation when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>FuseInstanceNorm</strong>: (Boolean) If True, the split instance norm operation will be fused to InstanceNorm operation when enable_dpu is True. The default is False.</p></li>
+<li><p><strong>FuseL2Norm</strong>: (Boolean) If True, a set of L2norm operations will be fused to L2Norm operation when enable_dpu is True. The default is False.</p></li>
+<li><p><strong>ConvertClipToRelu</strong>: (Boolean) If True, the Clip operations that has a min value of 0 will be converted to ReLU operations. The default is False.</p></li>
+<li><p><strong>SimulateDPU</strong>: (Boolean) If True, a simulation transformation that replaces some operations with an approximate implementation will be applied for DPU when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>ConvertLeakyReluToDPUVersion</strong>: (Boolean) If True, the Leaky Relu operation will be converted to DPU version when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertSigmoidToHardSigmoid</strong>: (Boolean) If True, the Sigmoid operation will be converted to Hard Sigmoid operation when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertHardSigmoidToDPUVersion</strong>: (Boolean) If True, the Hard Sigmoid operation will be converted to DPU version when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertAvgPoolToDPUVersion</strong>: (Boolean) If True, the global or kernel-based Average Pooling operation will be converted to DPU version when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertReduceMeanToDPUVersion</strong>: (Boolean) If True, the ReduceMean operation will be converted to DPU version when SimulateDPU is True. The default is True.</p></li>
+<li><p><strong>ConvertSoftmaxToDPUVersion</strong>: (Boolean) If True, the Softmax operation will be converted to DPU version when SimulateDPU is True. The default is False.</p></li>
+<li><p><strong>SimulateDPU</strong>: (Boolean) If True, a simulation transformation that replaces some operations with an approximate implementation will be applied for DPU when enable_dpu is True. The default is True.</p></li>
+<li><p><strong>IPULimitationCheck</strong>: (Boolean) If True, the quantization scale will be adjust due to the limitation of DPU/NPU. The default is True.</p></li>
+<li><p><strong>AdjustShiftCut</strong>: (Boolean) If True, adjust the shift cut of nodes when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftBias</strong>: (Boolean) If True, adjust the shift bias of nodes when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftRead</strong>: (Boolean) If True, adjust the shift read of nodes when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftWrite</strong>: (Boolean) If True, adjust the shift write of nodes when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustHardSigmoid</strong>: (Boolean) If True, adjust the pos of hard sigmoid nodes when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AdjustShiftSwish</strong>: (Boolean) If True, adjust the shift swish when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AlignConcat</strong>: (Boolean) If True, adjust the quantization pos of concat when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>AlignPool</strong>: (Boolean) If True, adjust the quantization pos of pooling when IPULimitationCheck is True. The default is True.</p></li>
+<li><p><strong>ReplaceClip6Relu</strong>: (Boolean) If True, Replace Clip(0,6) with Relu in the model. The default is False.</p></li>
+<li><p><strong>CLESteps</strong>: (Int) Specifies the steps for CrossLayerEqualization execution when include_cle is set to true, The default is 1, When set to -1, an adaptive CrossLayerEqualization will be conducted. The default is 1.</p></li>
+<li><p><strong>CLETotalLayerDiffThreshold</strong>: (Float) Specifies The threshold represents the sum of mean transformations of CrossLayerEqualization transformations across all layers when utilizing CrossLayerEqualization. The default is 2e-7.</p></li>
+<li><p><strong>CLEScaleAppendBias</strong>: (Boolean) Whether the bias be included when calculating the scale of the weights, The default is True.</p></li>
+<li><p><strong>RemoveQDQConvLeakyRelu</strong>: (Boolean) If True, the QDQ between Conv and LeakyRelu will be removed for DPU when enable_dpu is True. The default is False.</p></li>
+<li><p><strong>RemoveQDQConvPRelu</strong>: (Boolean) If True, the QDQ between Conv and PRelu will be removed for DPU when enable_dpu is True. The default is False.</p></li>
+</ul>
+</li>
+</ul>
+<table class="table" id="id1">
+<caption><span class="caption-text">Table 1. Quantize Types can be selected in Quantize Formats</span><a class="headerlink" href="#id1" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>quant_format</p></th>
+<th class="head"><p>quant_type</p></th>
+<th class="head"><p>comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>QuantFormat.QDQ</p></td>
+<td><p>QuantType.QUInt8
+QuantType.QInt8</p></td>
+<td><p>Implemented by native QuantizeLinear/DequantizeLinear</p></td>
+</tr>
+<tr class="row-odd"><td><p>vai_q_onnx.VitisQuantFormat.QDQ</p></td>
+<td><p>QuantType.QUInt8
+QuantType.QInt8
+vai_q_onnx.VitisQuantType.QUInt16
+vai_q_onnx.VitisQuantType.QInt16
+vai_q_onnx.VitisQuantType.QUInt32
+vai_q_onnx.VitisQuantType.QInt32
+vai_q_onnx.VitisQuantType.QFloat16
+vai_q_onnx.VitisQuantType.QBFloat16</p></td>
+<td><p>Implemented by customized VitisQuantizeLinear/VitisDequantizeLinear</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For pure UInt8 or Int8 quantization, we recommend setting quant_format to QuantFormat.QDQ as it uses native QuantizeLinear/DequantizeLinear operations which
+may have better compatibility and performance.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In this documentation, <strong>“NPU”</strong> is used in descriptions, while <strong>“IPU”</strong> is retained in the tool’s language, code, screenshots, and commands. This intentional
+distinction aligns with existing tool references and does not affect functionality. Avoid making replacements in the code.</p>
+</div>
+</section>
+</section>
+<section id="recommended-configurations">
+<h2>Recommended Configurations<a class="headerlink" href="#recommended-configurations" title="Permalink to this heading">#</a></h2>
+<section id="cnns-on-npu">
+<h3>CNNs on NPU<a class="headerlink" href="#cnns-on-npu" title="Permalink to this heading">#</a></h3>
+<p>The recommended quantization configuration for CNN models to be deployed on the NPU is as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from onnxruntime.quantization import QuantFormat, QuantType
+import vai_q_onnx
+
+vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=vai_q_onnx.QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   activation_type=vai_q_onnx.QuantType.QUInt8,
+   weight_type=vai_q_onnx.QuantType.QInt8,
+   enable_dpu=True,
+   extra_options={&#39;ActivationSymmetric&#39;:True}
+)
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>By default, Conv + LeakyRelu/PRelu fusion is turned off in the current version. You can try to enable this feature to get better performance if the model
+contains LeakyRelu or PRelu. This default behavior may change in future versions. Here is the example configuration:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>extra_options={&quot;ActivationSymmetric&quot;:True, &#39;RemoveQDQConvLeakyRelu&#39;:True, &#39;RemoveQDQConvPRelu&#39;:True}
+</pre></div>
+</div>
+</div>
+</section>
+<section id="transformers-on-npu">
+<h3>Transformers on NPU<a class="headerlink" href="#transformers-on-npu" title="Permalink to this heading">#</a></h3>
+<p>The recommended quantization configuration for Transformer models to be deployed on the NPU is as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import vai_q_onnx
+
+vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=vai_q_onnx.QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.CalibrationMethod.MinMax,
+   activation_type=vai_q_onnx.QuantType.QInt8,
+   weight_type=vai_q_onnx.QuantType.QInt8,
+)
+</pre></div>
+</div>
+</section>
+<section id="cnns-on-cpu">
+<h3>CNNs on CPU<a class="headerlink" href="#cnns-on-cpu" title="Permalink to this heading">#</a></h3>
+<p>The recommended quantization configuration for CNN models to be deployed on the CPU is as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>import vai_q_onnx
+
+vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=vai_q_onnx.QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.CalibrationMethod.MinMax,
+   activation_type=vai_q_onnx.QuantType.QUInt8,
+   weight_type=vai_q_onnx.QuantType.QInt8
+)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="quantizing-to-other-precisions">
+<h2>Quantizing to Other Precisions<a class="headerlink" href="#quantizing-to-other-precisions" title="Permalink to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The current release of the Vitis AI Execution Provider ingests quantized ONNX models with INT8/UINT8 data types only. No support is provided for direct
+deployment of models with other precisions, including FP32.</p>
+</div>
+<p>In addition to the INT8/UINT8, the VAI_Q_ONNX API supports quantizing models to other data formats, including INT16/UINT16, INT32/UINT32, Float16 and BFloat16, which can provide better accuracy or be used for experimental purposes. These new data formats are achieved by a customized version of QuantizeLinear and DequantizeLinear named “VitisQuantizeLinear” and “VitisDequantizeLinear”, which expands onnxruntime’s UInt8 and Int8 quantization to support UInt16, Int16, UInt32, Int32, Float16 and BFloat16. This customized Q/DQ was implemented by a custom operations library in VAI_Q_ONNX using onnxruntime’s custom operation C API.</p>
+<p>The custom operations library was developed based on Linux and does not currently support compilation on Windows. If you want to run the quantized model that has the custom Q/DQ on Windows, it is recommended to switch to WSL as a workaround.</p>
+<p>To use this feature, the <code class="docutils literal notranslate"><span class="pre">`quant_format`</span></code> should be set to VitisQuantFormat.QDQ. The <code class="docutils literal notranslate"><span class="pre">`quant_format`</span></code> is set to <code class="docutils literal notranslate"><span class="pre">`QuantFormat.QDQ`</span></code> for accelerating both CNN’s and transformers on the NPU target.</p>
+<section id="quantizing-float32-models-to-int16-or-int32">
+<h3>1. Quantizing Float32 Models to Int16 or Int32<a class="headerlink" href="#quantizing-float32-models-to-int16-or-int32" title="Permalink to this heading">#</a></h3>
+<p>The quantizer supports quantizing float32 models to Int16 and Int32 data formats. To enable this, you need to set the “activation_type” and “weight_type” in the quantize_static API to the new data types. Options are <code class="docutils literal notranslate"><span class="pre">`VitisQuantType.QInt16/VitisQuantType.QUInt16`</span></code> for Int16, and <code class="docutils literal notranslate"><span class="pre">`VitisQuantType.QInt32/VitisQuantType.QUInt32`</span></code> for Int32.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   quant_format=vai_q_onnx.VitisQuantFormat.QDQ,
+   activation_type=vai_q_onnx.VitisQuantType.QInt16,
+   weight_type=vai_q_onnx.VitisQuantType.QInt16,
+)
+</pre></div>
+</div>
+</section>
+<section id="quantizing-float32-models-to-float16-or-bfloat16">
+<h3>2. Quantizing Float32 Models to Float16 or BFloat16<a class="headerlink" href="#quantizing-float32-models-to-float16-or-bfloat16" title="Permalink to this heading">#</a></h3>
+<p>Besides integer data formats, the quantizer also supports quantizing float32 models to float16 and bfloat16 data formats, by setting the “activation_type” and “weight_type” to <code class="docutils literal notranslate"><span class="pre">`VitisQuantType.QFloat16`</span></code> or <code class="docutils literal notranslate"><span class="pre">`VitisQuantType.QBFloat16`</span></code> respectively.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   quant_format=vai_q_onnx.VitisQuantFormat.QDQ,
+   activation_type=vai_q_onnx.VitisQuantType.QFloat16,
+   weight_type=vai_q_onnx.VitisQuantType.QFloat16,
+)
+</pre></div>
+</div>
+</section>
+<section id="quantizing-float32-models-to-mixed-data-formats">
+<h3>3. Quantizing Float32 Models to Mixed Data Formats<a class="headerlink" href="#quantizing-float32-models-to-mixed-data-formats" title="Permalink to this heading">#</a></h3>
+<p>The quantizer supports setting the activation and weight to different precisions. For example, activation is Int16 while weight is set to Int8. This can be used when pure Int8 quantization does not meet the accuracy requirements.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   quant_format=vai_q_onnx.VitisQuantFormat.QDQ,
+   activation_type=vai_q_onnx.VitisQuantType.QInt16,
+   weight_type=QuantType.QInt8,
+)
+</pre></div>
+</div>
+</section>
+</section>
+<section id="quantizing-float16-models">
+<h2>Quantizing Float16 Models<a class="headerlink" href="#quantizing-float16-models" title="Permalink to this heading">#</a></h2>
+<p>For models in float16, it is recommended to set “convert_fp16_to_fp32” to True. This will first convert your float16 model to a float32 model before quantization, reducing redundant nodes such as cast in the model.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   activation_type=QuantType.QUInt8,
+   weight_type=QuantType.QInt8,
+   enable_dpu=True,
+   convert_fp16_to_fp32=True,
+   extra_options={&#39;ActivationSymmetric&#39;:True}
+)
+</pre></div>
+</div>
+</section>
+<section id="converting-nchw-models-to-nhwc-and-quantize">
+<h2>Converting NCHW Models to NHWC and Quantize<a class="headerlink" href="#converting-nchw-models-to-nhwc-and-quantize" title="Permalink to this heading">#</a></h2>
+<p>NHWC input shape typically yields better acceleration performance compared to NCHW on NPU. VAI_Q_ONNX facilitates the conversion of NCHW input models to NHWC input models by setting “convert_nchw_to_nhwc” to True. Please note that the conversion steps will be skipped if the model is already NHWC or has non-convertable input shapes.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   activation_type=QuantType.QUInt8,
+   weight_type=QuantType.QInt8,
+   enable_dpu=True,
+   extra_options={&#39;ActivationSymmetric&#39;:True},
+   convert_nchw_to_nhwc=True,
+)
+</pre></div>
+</div>
+</section>
+<section id="quantizing-using-cross-layer-equalization">
+<h2>Quantizing Using Cross Layer Equalization<a class="headerlink" href="#quantizing-using-cross-layer-equalization" title="Permalink to this heading">#</a></h2>
+<p>Cross Layer Equalization (CLE) is a technique used to improve PTQ accuracy. It can equalize the weights of consecutive convolution layers, making the model weights easier to perform per-tensor quantization. Experiments show that using CLE technique can improve the PTQ accuracy of some models, especially for models with depthwise_conv layers, such as MobileNet. Here is an example showing how to enable CLE using VAI_Q_ONNX.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>vai_q_onnx.quantize_static(
+   model_input,
+   model_output,
+   calibration_data_reader,
+   quant_format=QuantFormat.QDQ,
+   calibrate_method=vai_q_onnx.PowerOfTwoMethod.MinMSE,
+   activation_type=QuantType.QUInt8,
+   weight_type=QuantType.QInt8,
+   enable_dpu=True,
+   include_cle=True,
+   extra_options={
+      &#39;ActivationSymmetric&#39;:True,
+      &#39;ReplaceClip6Relu&#39;: True,
+      &#39;CLESteps&#39;: 1,
+      &#39;CLEScaleAppendBias&#39;: True,
+      },
+)
+</pre></div>
+</div>
+<p><strong>Arguments</strong></p>
+<ul class="simple">
+<li><p><strong>include_cle</strong>: (Boolean) This parameter is a flag that determines whether to optimize the models using CrossLayerEqualization; it can improve the accuracy of some models. The default is False.</p></li>
+<li><p><strong>extra_options</strong>: (Dictionary or None) Contains key-value pairs for various options in different cases. Options related to CLE are:</p>
+<ul>
+<li><p><strong>ReplaceClip6Relu</strong>: (Boolean) If True, Replace Clip(0,6) with Relu in the model. The default value is False.</p></li>
+<li><p><strong>CLESteps</strong>: (Int) Specifies the steps for CrossLayerEqualization execution when include_cle is set to true, The default is 1, When set to -1, an adaptive CrossLayerEqualization steps will be conducted. The default value is 1.</p></li>
+<li><p><strong>CLEScaleAppendBias</strong>: (Boolean) Whether the bias be included when calculating the scale of the weights, The default value is True.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="tools">
+<h2>Tools<a class="headerlink" href="#tools" title="Permalink to this heading">#</a></h2>
+<p>Vitis AI ONNX quantizer includes a few built-in utility tools for model conversation.</p>
+<p>The list of available tools can be viewed as below</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(conda_env)dir %CONDA_PREFIX%\lib\site-packages\vai_q_onnx\tools\
+</pre></div>
+</div>
+<p>or</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>(conda_env)python
+&gt;&gt;&gt; help (&#39;vai_q_onnx.tools&#39;)
+</pre></div>
+</div>
+<p>Currently available utility tools</p>
+<ul class="simple">
+<li><p>convert_customqdq_to_qdq</p></li>
+<li><p>convert_dynamic_to_fixed</p></li>
+<li><p>convert_fp16_to_fp32</p></li>
+<li><p>convert_nchw_to_nhwc</p></li>
+<li><p>convert_onnx_to_onnxtxt</p></li>
+<li><p>convert_onnxtxt_to_onnx</p></li>
+<li><p>convert_qdq_to_qop</p></li>
+<li><p>convert_s8s8_to_u8s8</p></li>
+<li><p>random_quantize</p></li>
+<li><p>remove_qdq</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-vai-q-onnx">Running vai_q_onnx</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-float-model-and-calibration-set">1. Preparing the Float Model and Calibration Set</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-pre-processing-on-the-float-model">2. (Recommended) Pre-processing on the Float Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-using-the-vai-q-onnx-api">3. Quantizing Using the vai_q_onnx API</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#recommended-configurations">Recommended Configurations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnns-on-npu">CNNs on NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#transformers-on-npu">Transformers on NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cnns-on-cpu">CNNs on CPU</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-to-other-precisions">Quantizing to Other Precisions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-int16-or-int32">1. Quantizing Float32 Models to Int16 or Int32</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-float16-or-bfloat16">2. Quantizing Float32 Models to Float16 or BFloat16</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float32-models-to-mixed-data-formats">3. Quantizing Float32 Models to Mixed Data Formats</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-float16-models">Quantizing Float16 Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#converting-nchw-models-to-nhwc-and-quantize">Converting NCHW Models to NHWC and Quantize</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizing-using-cross-layer-equalization">Quantizing Using Cross Layer Equalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tools">Tools</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on July 29, 2024.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        
+                        <li><a href="">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2023 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

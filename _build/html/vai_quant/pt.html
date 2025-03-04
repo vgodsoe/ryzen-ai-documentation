@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Vitis AI Quantizer for PyTorch &#8212; Ryzen AI Software 1.3 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/llm-table.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_header.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/rocm_footer.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/_static/llm-table.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <script async="async" src="../_static/code_word_breaks.js"></script>
+    <script async="async" src="../_static/renameVersionLinks.js"></script>
+    <script async="async" src="../_static/rdcMisc.js"></script>
+    <script async="async" src="../_static/theme_mode_captions.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'vai_quant/pt';</script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/vai_quant/pt.html" />
+    <link rel="shortcut icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="google-site-verification" content="ZOn0RZC0Pwzlmf2SaE0bRttWk1YzOhuslbpxUDchQ90" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="../_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+                <!-- TODO: Search icon up here maybe? -->
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.3 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../runtime_setup.html">Runtime Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running CNNs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../modelcompat.html">Model Compatibility</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modelport.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../modelrun.html">Model Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hybrid_oga.html">OGA API for C++ and Python</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ai_analyzer.html">AI Analyzer</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manual_installation.html">Manual Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Vitis AI...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Vitis AI Quantizer for PyTorch</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-container">Standard Container</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-accelerated-container">GPU-Accelerated Container</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-quantization">Enabling Quantization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-training-quantization">Post-Training Quantization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-quantization-apis">Vitis AI Quantization APIs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-output">Quantization Output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-aware-quantization">Hardware-Aware Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-quantization">Partial Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-finetuning">Fast Finetuning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-aware-training">Quantization Aware Training</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="vitis-ai-quantizer-for-pytorch">
+<h1>Vitis AI Quantizer for PyTorch<a class="headerlink" href="#vitis-ai-quantizer-for-pytorch" title="Permalink to this heading">#</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Vitis AI Quantizer has been deprecated as of the Ryzen AI 1.3 release. AMD strongly recommends using the new AMD Quark Quantizer instead (please refer to the main documentation about <a class="reference internal" href="../modelport.html"><span class="doc">Model Quantization</span></a>).</p>
+</div>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h2>
+<p>The Vitis AI Quantizer for PyTorch is distributed through a Docker containers which can be installed on Ubuntu 20.04, CentOS 7.8, 7.9, 8.1, and RHEL 8.3, 8.4. For developers working on Windows 11, WSL can be used to install the Vitis AI Docker container.</p>
+<section id="standard-container">
+<h3>Standard Container<a class="headerlink" href="#standard-container" title="Permalink to this heading">#</a></h3>
+<p>To install the Docker container for the Vitis AI Quantizer for PyTorch, follow the instructions provided here: <a class="reference external" href="https://hub.docker.com/r/amdih/ryzen-ai-pytorch">https://hub.docker.com/r/amdih/ryzen-ai-pytorch</a></p>
+</section>
+<section id="gpu-accelerated-container">
+<h3>GPU-Accelerated Container<a class="headerlink" href="#gpu-accelerated-container" title="Permalink to this heading">#</a></h3>
+<p>The standard Vitis AI Docker container does not support GPU-accelerated quantization. To create a container with GPU-accelerated quantization enabled, download the following archive and follow the instructions in the README file: <a class="reference external" href="https://account.amd.com/en/forms/downloads/ryzen-ai-software-platform-xef.html?filename=ipu-rel-3.5.0-353.tar.gz">https://account.amd.com/en/forms/downloads/ryzen-ai-software-platform-xef.html?filename=ipu-rel-3.5.0-353.tar.gz</a></p>
+</section>
+</section>
+<section id="enabling-quantization">
+<h2>Enabling Quantization<a class="headerlink" href="#enabling-quantization" title="Permalink to this heading">#</a></h2>
+<p>To enable the Vitis AI Quantizer for PyTorch, activate the conda environment in the Vitis AI Pytorch Docker container:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda activate vitis-ai-pytorch
+</pre></div>
+</div>
+</section>
+<section id="post-training-quantization">
+<h2>Post-Training Quantization<a class="headerlink" href="#post-training-quantization" title="Permalink to this heading">#</a></h2>
+<p>Post-Training Quantization requires the following files:</p>
+<ol class="arabic simple">
+<li><p>model.pth : Pre-trained PyTorch model, generally a .pth file.</p></li>
+<li><p>model.py : A Python script including float model definition.</p></li>
+<li><p>calibration dataset: A subset of the training dataset containing 100 to 1000 images.</p></li>
+</ol>
+<p>A complete example of Post-Training Quantization is available in the <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/blob/v3.0/src/vai_quantizer/vai_q_pytorch/example/resnet18_quant.py">Vitis AI GitHub</a> repo.</p>
+<section id="vitis-ai-quantization-apis">
+<h3>Vitis AI Quantization APIs<a class="headerlink" href="#vitis-ai-quantization-apis" title="Permalink to this heading">#</a></h3>
+<p>Vitis AI provides <code class="docutils literal notranslate"><span class="pre">pytorch_nndct</span></code> module with Quantization related APIs.</p>
+<ol class="arabic simple">
+<li><p>Import the vai_q_pytorch module:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pytorch_nndct.apis import torch_quantizer, dump_xmodel
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Generate a quantizer with quantization needed input and get the converted model:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>input = torch.randn([batch_size, 3, 224, 224])
+quantizer = torch_quantizer(quant_mode, model, (input))
+quant_model = quantizer.quant_model
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Forward a neural network with the converted model:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>acc1_gen, acc5_gen, loss_gen = evaluate(quant_model, val_loader, loss_fn)
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Output the quantization result and deploy the model.</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>quantizer.export_quant_config()
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Export the quantized model for deployment.</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>quantizer.export_onnx_model()
+</pre></div>
+</div>
+</section>
+<section id="quantization-output">
+<h3>Quantization Output<a class="headerlink" href="#quantization-output" title="Permalink to this heading">#</a></h3>
+<p>If this quantization command runs successfully, two important files are generated in the output directory <code class="docutils literal notranslate"><span class="pre">./quantize_result</span></code>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&lt;model&gt;.onnx</span></code>: Quantized ONNX model</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Quant_info.json</span></code>: Quantization steps of tensors. Retain this file for evaluating quantized models.</p></li>
+</ul>
+</section>
+<section id="hardware-aware-quantization">
+<h3>Hardware-Aware Quantization<a class="headerlink" href="#hardware-aware-quantization" title="Permalink to this heading">#</a></h3>
+<p>To enable hardware-aware quantization provide the <code class="docutils literal notranslate"><span class="pre">target</span></code> to the NPU specific archietecture as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>quantizer = torch_quantizer(quant_mode=quant_mode,
+                            module=model,
+                            input_args=(input),
+                            device=device,
+                            quant_config_file=config_file,
+                            target=target)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">target</span></code> of current version of NPU is <code class="docutils literal notranslate"><span class="pre">AMD_AIE2_Nx4_Overlay_cfg0</span></code></p>
+</section>
+<section id="partial-quantization">
+<h3>Partial Quantization<a class="headerlink" href="#partial-quantization" title="Permalink to this heading">#</a></h3>
+<p>Partial quantization can be enabled by using <code class="docutils literal notranslate"><span class="pre">QuantStab</span></code> and <code class="docutils literal notranslate"><span class="pre">DeQuantStub</span></code> operator from the <code class="docutils literal notranslate"><span class="pre">pytorch_nndct</span></code> library. In the following example, we are quantizing the layers <code class="docutils literal notranslate"><span class="pre">subm0</span></code> and <code class="docutils literal notranslate"><span class="pre">subm2</span></code>, but not the <code class="docutils literal notranslate"><span class="pre">subm1</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pytorch_nndct.nn import QuantStub, DeQuantStub
+
+class WholeModule(torch.nn.module):
+   def __init__(self,...):
+      self.subm0 = ...
+      self.subm1 = ...
+      self.subm2 = ...
+
+      # define QuantStub/DeQuantStub submodules
+      self.quant = QuantStub()
+      self.dequant = DeQuantStub()
+
+   def forward(self, input):
+       input = self.quant(input) # begin of part to be quantized
+       output0 = self.subm0(input)
+       output0 = self.dequant(output0) # end of part to be quantized
+
+       output1 = self.subm1(output0)
+
+       output1 = self.quant(output1) # begin of part to be quantized
+       output2 = self.subm2(output1)
+       output2 = self.dequant(output2) # end of part to be quantized
+</pre></div>
+</div>
+</section>
+<section id="fast-finetuning">
+<h3>Fast Finetuning<a class="headerlink" href="#fast-finetuning" title="Permalink to this heading">#</a></h3>
+<p>After post-training quantization, there is usually a small accuracy loss. If the accuracy loss is large, a fast-finetuning approach, which is based on the <a class="reference external" href="https://arxiv.org/abs/2006.10518">AdaQuant Algorithm</a>, can be tried instead of the quantization aware training. The fast finetuning uses a small unlabeled data to calibrate the activations and finetuning the weights.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># fast finetune model or load finetuned parameter before test
+
+if fast_finetune == True:
+    ft_loader, _ = load_data(
+               subset_len=5120,
+               train=False,
+               batch_size=batch_size,
+               sample_method=&#39;random&#39;,
+               data_dir=args.data_dir,
+               model_name=model_name)
+
+if quant_mode == &#39;calib&#39;:
+    quantizer.fast_finetune(evaluate, (quant_model, ft_loader, loss_fn))
+elif quant_mode == &#39;test&#39;:
+    quantizer.load_ft_param()
+</pre></div>
+</div>
+</section>
+</section>
+<section id="quantization-aware-training">
+<h2>Quantization Aware Training<a class="headerlink" href="#quantization-aware-training" title="Permalink to this heading">#</a></h2>
+<p>An example of Quantization Aware Training is available at the <a class="reference external" href="https://github.com/Xilinx/Vitis-AI/blob/v3.0/src/vai_quantizer/vai_q_pytorch/example/resnet18_qat.py">Vitis Github</a>.</p>
+<p>General approaches are:</p>
+<ol class="arabic simple">
+<li><p>If some non-module operations are needed to be quantized, convert them into module operations. For example, ResNet18 uses the <code class="docutils literal notranslate"><span class="pre">+</span></code> operator to add two tensors, which can be replaced by <code class="docutils literal notranslate"><span class="pre">pytorch_nndct.nn.modules.functional.Add</span></code>.</p></li>
+<li><p>If some modules are called multiple times, uniqify them by defining multiple such modules and call them separately in the foward pass.</p></li>
+<li><p>Insert <code class="docutils literal notranslate"><span class="pre">QuantStub</span></code> and <code class="docutils literal notranslate"><span class="pre">DeQuantStub</span></code>. Any sub-network from QuantStub to DeQuantStub in a forward pass will be quantized. Multiple QuantStub-DeQuantStub pairs are allowed.</p></li>
+<li><p>Create Quantizer module from the <code class="docutils literal notranslate"><span class="pre">QatProcessor</span></code> library:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from pytorch_nndct import QatProcessor
+qat_processor = QatProcessor(model, inputs, bitwidth=8)
+quantized_model = qat_processor.trainable_model()
+optimizer = torch.optim.Adam(
+                  quantized_model.parameters(),
+                  lr,
+                   weight_decay=weight_decay)
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>For testing after the training, get the deployable model:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>output_dir = &#39;qat_result&#39;
+deployable_model = qat_processor.to_deployable(quantized_model,output_dir)
+validate(val_loader, deployable_model, criterion, gpu)
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Export ONNX model for prediction:</p></li>
+</ol>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>qat_processor.export_onnx_model()
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-container">Standard Container</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gpu-accelerated-container">GPU-Accelerated Container</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-quantization">Enabling Quantization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#post-training-quantization">Post-Training Quantization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-quantization-apis">Vitis AI Quantization APIs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-output">Quantization Output</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hardware-aware-quantization">Hardware-Aware Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partial-quantization">Partial Quantization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fast-finetuning">Fast Finetuning</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quantization-aware-training">Quantization Aware Training</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on July 29, 2024.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        
+                        <li><a href="">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2023 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="../_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>
