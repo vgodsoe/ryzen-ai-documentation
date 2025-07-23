@@ -51,7 +51,7 @@ Once the ONNX Runtime inference session is initialized and the model is compiled
 
     input_data = {}
     for input in session.get_inputs():
-        input_data[input.name] = ...  # Initialize input tensors
+        input_data[input.name] = …  # Initialize input tensors
 
     outputs = session.run(None, input_data) # Run the model
 

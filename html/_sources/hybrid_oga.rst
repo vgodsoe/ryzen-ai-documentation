@@ -208,12 +208,10 @@ The following sample shows the defaults for the AMD pre-optimized Hybrid OGA LLM
 
 .. code-block:: json
 
-   {
        "session_options": {
            "log_id": "onnxruntime-genai",
-           "custom_ops_library": "onnx_custom_ops.dll"
-       }
-   }
+           "custom_ops_library": "onnx_custom_ops.dll",
+           ...
 
 
 The paths is relative to the folder where the program is run from. The model throws an error if the ``onnx_custom_ops.dll`` file cannot be found at the specified location. Replacing the relative path with an absolute path to this file allows running the program from any location.

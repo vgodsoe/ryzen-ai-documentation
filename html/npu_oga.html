@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>OGA NPU Execution Mode &#8212; Ryzen AI Software 1.4 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <script async="async" src="_static/code_word_breaks.js"></script>
+    <script async="async" src="_static/renameVersionLinks.js"></script>
+    <script async="async" src="_static/rdcMisc.js"></script>
+    <script async="async" src="_static/theme_mode_captions.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'npu_oga';</script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/npu_oga.html" />
+    <link rel="shortcut icon" href="https://www.amd.com/themes/custom/amd/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <meta name="google-site-verification" content="ZOn0RZC0Pwzlmf2SaE0bRttWk1YzOhuslbpxUDchQ90" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+                <!-- TODO: Search icon up here maybe? -->
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.4 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="model_quantization.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelrun.html">Model Compilation and Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OnnxRuntime GenAI (OGA) Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oga_model_prepare.html">Preparing OGA Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Features</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_analyzer.html">AI Analyzer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ryzen_ai_libraries.html">Ryzen AI CVML library</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">OGA NPU...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>OGA NPU Execution Mode</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-configurations">Supported Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-optimized-models">Pre-optimized Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-execution-of-oga-models">NPU Execution of OGA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models-from-huggingface">Download Models from HuggingFace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-performance-mode-optional">Enabling Performance Mode (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-c-programs">Sample C++ Programs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-python-scripts">Sample Python Scripts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-fine-tuned-models">Using Fine-Tuned Models</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="oga-npu-execution-mode">
+<h1>OGA NPU Execution Mode<a class="headerlink" href="#oga-npu-execution-mode" title="Permalink to this heading">#</a></h1>
+<p>Ryzen AI Software supports deploying LLMs on Ryzen AI PCs using the native ONNX Runtime Generate (OGA) C++ or Python API. The OGA API is the lowest-level API available for building LLM applications on a Ryzen AI PC. This documentation covers the NPU execution mode for LLMs, which utilizes only the NPU.</p>
+<p><strong>Note</strong>: Refer to <a class="reference internal" href="hybrid_oga.html"><span class="doc">OnnxRuntime GenAI (OGA) Flow</span></a> for Hybrid NPU + GPU execution mode.</p>
+<section id="supported-configurations">
+<h2>Supported Configurations<a class="headerlink" href="#supported-configurations" title="Permalink to this heading">#</a></h2>
+<p>The Ryzen AI OGA flow supports Strix and Krackan Point processors. Phoenix (PHX) and Hawk (HPT) processors are not supported.</p>
+</section>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Install NPU Drivers and Ryzen AI MSI installer according to the <a class="reference internal" href="inst.html"><span class="doc">Installation Instructions</span></a></p></li>
+<li><p>Install Git for Windows (needed to download models from HF): <a class="reference external" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p></li>
+</ul>
+</section>
+<section id="pre-optimized-models">
+<h2>Pre-optimized Models<a class="headerlink" href="#pre-optimized-models" title="Permalink to this heading">#</a></h2>
+<p>AMD provides a set of pre-optimized LLMs ready to be deployed with Ryzen AI Software and the supporting runtime for NPU execution. These models can be found on Hugging Face in the following collection:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/amd/Phi-3-mini-4k-instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Phi-3-mini-4k-instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Phi-3.5-mini-instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Phi-3.5-mini-instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Mistral-7B-Instruct-v0.3-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Mistral-7B-Instruct-v0.3-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Qwen1.5-7B-Chat-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Qwen1.5-7B-Chat-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/chatglm3-6b-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/chatglm3-6b-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama2-7b-chat-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama2-7b-chat-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama-3-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama-3-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama-3.1-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama-3.1-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama-3.2-1B-Instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama-3.2-1B-Instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/Llama-3.2-3B-Instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/Llama-3.2-3B-Instruct-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/DeepSeek-R1-Distill-Llama-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/DeepSeek-R1-Distill-Llama-8B-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/DeepSeek-R1-Distill-Qwen-1.5B-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/DeepSeek-R1-Distill-Qwen-1.5B-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/DeepSeek-R1-Distill-Qwen-7B-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/DeepSeek-R1-Distill-Qwen-7B-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+<li><p><a class="reference external" href="https://huggingface.co/amd/AMD-OLMo-1B-SFT-DPO-awq-g128-int4-asym-bf16-onnx-ryzen-strix">https://huggingface.co/amd/AMD-OLMo-1B-SFT-DPO-awq-g128-int4-asym-bf16-onnx-ryzen-strix</a></p></li>
+</ul>
+<p>The steps for deploying the pre-optimized models using C++ and python are described in the following sections.</p>
+</section>
+<section id="npu-execution-of-oga-models">
+<h2>NPU Execution of OGA Models<a class="headerlink" href="#npu-execution-of-oga-models" title="Permalink to this heading">#</a></h2>
+<section id="setup">
+<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this heading">#</a></h3>
+<p>Activate the Ryzen AI 1.4 Conda environment:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>conda activate ryzen-ai-1.4.0
+</pre></div>
+</div>
+<p>Create a folder to run the LLMs from, and copy the required files:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>mkdir npu_run
+cd npu_run
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\npu-llm\exe&quot; .\libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\npu-llm\libs\vaip_llm.json&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\npu-llm\onnxruntime-genai.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_vitis_ai_custom_ops.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_providers_shared.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_vitisai_ep.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\dyn_dispatch_core.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_providers_vitisai.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\transaction.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\xclbin.dll&quot; libs
+</pre></div>
+</div>
+</section>
+<section id="download-models-from-huggingface">
+<h3>Download Models from HuggingFace<a class="headerlink" href="#download-models-from-huggingface" title="Permalink to this heading">#</a></h3>
+<p>Download the desired models from the list of pre-optimized models on Hugging Face:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Make sure you have git-lfs installed (https://git-lfs.com)
+git lfs install
+git clone &lt;link to hf model&gt;
+</pre></div>
+</div>
+<p>For example, for Llama-2-7b:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git lfs install
+git clone https://huggingface.co/amd/Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: Ensure the models are cloned in the <code class="docutils literal notranslate"><span class="pre">npu_run</span></code> folder.</p>
+</section>
+<section id="enabling-performance-mode-optional">
+<h3>Enabling Performance Mode (Optional)<a class="headerlink" href="#enabling-performance-mode-optional" title="Permalink to this heading">#</a></h3>
+<p>To run the LLMs in the best performance mode, follow these steps:</p>
+<ul class="simple">
+<li><p>Go to <code class="docutils literal notranslate"><span class="pre">Windows</span></code> → <code class="docutils literal notranslate"><span class="pre">Settings</span></code> → <code class="docutils literal notranslate"><span class="pre">System</span></code> → <code class="docutils literal notranslate"><span class="pre">Power</span></code> and set the power mode to Best Performance.</p></li>
+<li><p>Execute the following commands in the terminal:</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd C:\Windows\System32\AMD
+xrt-smi configure --pmode performance
+</pre></div>
+</div>
+</section>
+<section id="sample-c-programs">
+<h3>Sample C++ Programs<a class="headerlink" href="#sample-c-programs" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">run_llm.exe</span></code> test application provides a simple interface to run LLMs. The source code for this application can also be used a reference for how to integrate LLMs using the native OGA C++ APIs.</p>
+<p>It supports the following command line options:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-m: model path
+-f: prompt file
+-n: max new tokens
+-c: use chat template
+-t: input prompt token length
+-l: max length to be set in search options
+-h: help
+</pre></div>
+</div>
+<p>Example usage:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.\libs\run_llm.exe -m &quot;Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix&quot; -f &quot;Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix\prompts.txt&quot; -t &quot;1024&quot; -n 20
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">model_benchmark.exe</span></code> program can be used to profile the execution of LLMs and report various metrics. It supports the following command line options:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-i,--input_folder &lt;path&gt;
+  Path to the ONNX model directory to benchmark, compatible with onnxruntime-genai.
+-l,--prompt_length &lt;numbers separated by commas&gt;
+  List of number of tokens in the prompt to use.
+-p,--prompt_file &lt;filename&gt;
+  Name of prompt file (txt) expected in the input model directory.
+-g,--generation_length &lt;number&gt;
+  Number of tokens to generate. Default: 128
+-r,--repetitions &lt;number&gt;
+  Number of times to repeat the benchmark. Default: 5
+-w,--warmup &lt;number&gt;
+  Number of warmup runs before benchmarking. Default: 1
+-t,--cpu_util_time_interval &lt;number in ms&gt;
+  Sampling time interval for peak cpu utilization calculation, in milliseconds. Default: 250
+-v,--verbose
+  Show more informational output.
+-h,--help
+  Show this help message and exit.
+</pre></div>
+</div>
+<p>For example, for Llama-2-7b:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>.\libs\model_benchmark.exe -i &quot;Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix&quot; -g 20 -p &quot;Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix\prompts.txt&quot; -l &quot;2048,1024,512,256,128&quot;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>NOTE</strong>: The C++ source code for the <code class="docutils literal notranslate"><span class="pre">run_llm.exe</span></code> and <code class="docutils literal notranslate"><span class="pre">model_benchmark.exe</span></code> executables can be found in the <code class="docutils literal notranslate"><span class="pre">%RYZEN_AI_INSTALLATION_PATH%\npu-llm\cpp</span></code> folder. This source code can be modified and recompiled using the commands below.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>:: Copy project files
+xcopy /E /I &quot;%RYZEN_AI_INSTALLATION_PATH%\npu-llm\cpp&quot; .\sources
+
+:: Build project
+cd sources
+cmake -G &quot;Visual Studio 17 2022&quot; -A x64 -S . -B build
+cmake --build build --config Release
+
+:: Copy executables in the &quot;libs&quot; folder
+xcopy /I build\Release .\libs
+
+:: Copy runtime dependencies in the &quot;libs&quot; folder
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\npu-llm\libs\vaip_llm.json&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\npu-llm\onnxruntime-genai.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_vitis_ai_custom_ops.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_providers_shared.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_vitisai_ep.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\dyn_dispatch_core.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime_providers_vitisai.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\transaction.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\onnxruntime.dll&quot; libs
+xcopy /I &quot;%RYZEN_AI_INSTALLATION_PATH%\deployment\voe\xclbin.dll&quot; libs
+</pre></div>
+</div>
+</section>
+<section id="sample-python-scripts">
+<h3>Sample Python Scripts<a class="headerlink" href="#sample-python-scripts" title="Permalink to this heading">#</a></h3>
+<p>In the model directory, open the <code class="docutils literal notranslate"><span class="pre">genai_config.json</span></code> file located in the folder of the downloaded model. Update the value of the “custom_ops_library” key with the path to the <code class="docutils literal notranslate"><span class="pre">onnxruntime_vitis_ai_custom_ops.dll</span></code>, located in the <code class="docutils literal notranslate"><span class="pre">npu_run\libs</span></code> folder:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&quot;session_options&quot;: {
+          ...
+          &quot;custom_ops_library&quot;: &quot;libs\\onnxruntime_vitis_ai_custom_ops.dll&quot;,
+          ...
+}
+</pre></div>
+</div>
+<p>To run LLMs other than ChatGLM, use the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python &quot;%RYZEN_AI_INSTALLATION_PATH%\hybrid-llm\examples\python\llama3\run_model.py&quot; --model_dir &lt;model folder&gt;
+</pre></div>
+</div>
+<p>To run ChatGLM, use the following command:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>pip install transformers==4.44.0
+python &quot;%RYZEN_AI_INSTALLATION_PATH%\hybrid-llm\examples\python\chatglm\model-generate-chatglm3.py&quot; -m &lt;model folder&gt;
+</pre></div>
+</div>
+<p>For example, for Llama-2-7b:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python &quot;%RYZEN_AI_INSTALLATION_PATH%\hybrid-llm\examples\python\llama3\run_model.py&quot; --model_dir Llama-2-7b-hf-awq-g128-int4-asym-bf16-onnx-ryzen-strix
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-fine-tuned-models">
+<h2>Using Fine-Tuned Models<a class="headerlink" href="#using-fine-tuned-models" title="Permalink to this heading">#</a></h2>
+<p>It is also possible to run fine-tuned versions of the pre-optimized OGA models.</p>
+<p>To do this, the fine-tuned models must first be prepared for execution with the OGA NPU-only flow. For instructions on how to do this, refer to the page about <a class="reference internal" href="oga_model_prepare.html"><span class="doc">Preparing OGA Models</span></a>.</p>
+<p>Once a fine-tuned model has been prepared for NPU-only execution, it can be deployed by following the steps described above in this page.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-configurations">Supported Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-optimized-models">Pre-optimized Models</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-execution-of-oga-models">NPU Execution of OGA Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#download-models-from-huggingface">Download Models from HuggingFace</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-performance-mode-optional">Enabling Performance Mode (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-c-programs">Sample C++ Programs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-python-scripts">Sample Python Scripts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-fine-tuned-models">Using Fine-Tuned Models</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on March 24, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        
+                        <li><a href="">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/statement-human-trafficking-forced-labor.pdf" target="_blank">Statement on Forced Labor</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2023 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

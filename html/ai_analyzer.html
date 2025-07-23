@@ -1,0 +1,619 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>AI Analyzer &#8212; Ryzen AI Software 1.5 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=643846e8" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css?v=d34acfde" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css?v=9557e3d1" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css?v=7095035a" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css?v=fcff5274" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9f1c6d22"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script defer="defer" src="_static/search.js?v=90a4452c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ai_analyzer';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/ai_analyzer.html" />
+    <link rel="icon" href="https://www.amd.com/content/dam/code/images/favicon/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Stable Diffusion Demo" href="sd_demo.html" />
+    <link rel="prev" title="NPU Management Interface" href="xrt_smi.html" />
+    <meta name="google-site-verification" content="vo35SZt_GASsTHAEmdww7AYKPCvZyzLvOXBl8guBME4" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+                
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.5 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="model_quantization.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelrun.html">Model Compilation and Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OnnxRuntime GenAI (OGA) Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oga_model_prepare.html">Preparing OGA Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">AI Analyzer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sd_demo.html">Stable Diffusion Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ryzen_ai_libraries.html">Ryzen AI CVML library</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">AI Analyzer</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>AI Analyzer</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-profiling-and-visualization">Enabling Profiling and Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-ai-analyzer">Launching AI Analyzer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User Interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partitioning">PARTITIONING</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-insights">NPU INSIGHTS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance">PERFORMANCE</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="ai-analyzer">
+<h1>AI Analyzer<a class="headerlink" href="#ai-analyzer" title="Link to this heading">#</a></h1>
+<p>AMD AI Analyzer is a tool that supports analysis and visualization of model compilation and inference on Ryzen AI. The primary goal of the tool is to help you better understand how the models are processed by the hardware, and to identify performance bottlenecks that may be present during model inference. Using AI Analyzer, you can visualize graph and operator partitions between the NPU and CPU.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<p>If you installed the Ryzen AI software using automatic installer, AI Analyzer is already installed in the conda environment.</p>
+<p>If you manually installed the software, you need to install the AI Analyzer wheel file in your environment.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>python -m pip install path\to\RyzenAI\installation\files\aianalyzer-&lt;version&gt;.whl
+</pre></div>
+</div>
+</section>
+<section id="enabling-profiling-and-visualization">
+<h2>Enabling Profiling and Visualization<a class="headerlink" href="#enabling-profiling-and-visualization" title="Link to this heading">#</a></h2>
+<p>Profiling and Visualization can be enabled by passing additional provider options to the ONNXRuntime Inference Session. Here is an example:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>provider_options = [{
+             &#39;config_file&#39;: &#39;vaip_config.json&#39;,
+             &#39;cacheDir&#39;: str(cache_dir),
+             &#39;cacheKey&#39;: &#39;modelcachekey&#39;,
+             &#39;ai_analyzer_visualization&#39;: True,
+             &#39;ai_analyzer_profiling&#39;: True,
+         }]
+session = ort.InferenceSession(model.SerializeToString(), providers=providers,
+                            provider_options=provider_options)
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ai_analyzer_profiling</span></code> flag enables generation of artifacts related to the inference profile. The <code class="docutils literal notranslate"><span class="pre">ai_analyzer_visualization</span></code> flag enables generation of artifacts related to graph partitions and operator fusion. These artifacts are generated as JSON files in the current run directory.</p>
+<p>AI Analyzer also supports native ONNX Runtime profiling, which you can use to analyze the parts of the session that run on the CPU. You can enable ONNX Runtime profiling through session options and pass it along with the provider options, as shown here:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> # Configure session options for profiling
+ sess_options = ort.SessionOptions()
+ sess_options.enable_profiling = True
+
+ provider_options = [{
+              &#39;config_file&#39;: &#39;vaip_config.json&#39;,
+              &#39;cacheDir&#39;: str(cache_dir),
+              &#39;cacheKey&#39;: &#39;modelcachekey&#39;,
+              &#39;ai_analyzer_visualization&#39;: True,
+              &#39;ai_analyzer_profiling&#39;: True,
+          }]
+
+session = ort.InferenceSession(model.SerializeToString(), sess_options, providers=providers,
+                             provider_options=provider_options)
+</pre></div>
+</div>
+</section>
+<section id="launching-ai-analyzer">
+<h2>Launching AI Analyzer<a class="headerlink" href="#launching-ai-analyzer" title="Link to this heading">#</a></h2>
+<p>After the artifacts are generated, <cite>aianalyzer</cite> can be invoked through the command line as follows:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>aianalyzer &lt;logdir&gt; &lt;additional options&gt;
+</pre></div>
+</div>
+<p><strong>Positional Arguments</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">logdir</span></code>: Path to the folder containing generated artifacts</p>
+<p>Additional Options</p>
+<p><code class="docutils literal notranslate"><span class="pre">-v</span></code>, <code class="docutils literal notranslate"><span class="pre">--version</span></code>: Show the version info and exit.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-b</span> <span class="pre">ADDR</span></code>, <code class="docutils literal notranslate"><span class="pre">--bind</span> <span class="pre">ADDR</span></code>: Hostname or IP address on which to listen, default is ‘localhost’.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-p</span> <span class="pre">PORT</span></code>, <code class="docutils literal notranslate"><span class="pre">--port</span> <span class="pre">PORT</span></code>: TCP port on which to listen, default is ‘8000’.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-n</span></code>, <code class="docutils literal notranslate"><span class="pre">--no-browser</span></code>: Prevents the opening of the default url in the browser.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-t</span> <span class="pre">TOKEN</span></code>, <code class="docutils literal notranslate"><span class="pre">--token</span> <span class="pre">TOKEN</span></code>: Token used for authenticating first-time connections to the server. The default is to generate a new, random token. Setting to an empty string disables authentication altogether, which is not recommended.</p>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h2>
+<p>AI Analyzer provides visibility into how your AI model is compiled and executed on Ryzen AI hardware. Its two main use cases are:</p>
+<ol class="arabic simple">
+<li><p>Analyzing how the model was partitioned and mapped onto Ryzen AI’s CPU and NPU accelerator</p></li>
+<li><p>Profiling model performance as it executes inferencing workloads</p></li>
+</ol>
+<p>When launched, the AI Analyzer server scans the folder specified with the logdir argument and detect and load all files relevant to compilation and/or inferencing  per the <cite>ai_analyzer_visualization</cite> and <cite>ai_anlayzer_profiling</cite> flags.</p>
+<p>You can instruct the AI Analyzer server to either start a browser on the same host or return an URL that you can then load into a browser on any host.</p>
+</section>
+<section id="user-interface">
+<h2>User Interface<a class="headerlink" href="#user-interface" title="Link to this heading">#</a></h2>
+<p>AI Analyzer has the following three sections as seen in the left-panel navigator:</p>
+<ol class="arabic simple">
+<li><p>PARTITIONING - A breakdown of your model was assigned to execute inference across CPU and NPU</p></li>
+<li><p>NPU INSIGHTS - A detailed look at the how your model was optimized for inference execution on NPU</p></li>
+<li><p>PERFORMANCE - A breakdown of inference execution through the model</p></li>
+</ol>
+<p>These sections are described in more detail in the following sections:</p>
+<section id="partitioning">
+<h3>PARTITIONING<a class="headerlink" href="#partitioning" title="Link to this heading">#</a></h3>
+<p>This section is comprised of two pages: Summary and Graph</p>
+<p><strong>Summary</strong></p>
+<p>The Summary page gives an overview of how the models operators have been assigned to Ryzen’s CPU and NPU along with charts capturing GigaOp (GOP) offloading by operator type .</p>
+<p>There is also table titled “CPU Because” that shows the reasons why certain operators were not offloaded to the NPU.</p>
+<p><strong>Graph</strong></p>
+<p>The graph page shows an interactive diagram of the partitioned ONNX model, showing graphically how the layers are assigned to the Ryzen hardware.</p>
+<p>Toolbar</p>
+<ul class="simple">
+<li><p>You can choose to show/hide individual NPU partitions, if any, with the <strong>Filter by Partition</strong> button</p></li>
+<li><p>You can show or hide a panel that displays properties for selected objects through the <strong>Show Properties</strong> toggle button</p></li>
+<li><p>You can show or hide the model table through the <strong>Show Table</strong> toggle button.</p></li>
+<li><p>Settings</p>
+<ul>
+<li><p>Show Processor separates operators that run on CPU and NPU respectively</p></li>
+<li><p>Show Partition separates operators running on the NPU by their respective NPU partition, if any</p></li>
+<li><p>Show Instance Name displays the full hierarchical name for the operators in the ONNX model</p></li>
+</ul>
+</li>
+</ul>
+<p>All objects in the graph have properties that can be viewed to the right of the graph.</p>
+<p><em>Model Table</em></p>
+<p>This table following the graph lists all objects in the partitioned ONNX model:</p>
+<ul class="simple">
+<li><p>Processor (NPU or CPU)</p></li>
+<li><p>Function (Layer)</p></li>
+<li><p>Operator</p></li>
+<li><p>Ports</p></li>
+<li><p>NPU Partitions</p></li>
+</ul>
+</section>
+<section id="npu-insights">
+<h3>NPU INSIGHTS<a class="headerlink" href="#npu-insights" title="Link to this heading">#</a></h3>
+<p>This section is comprised of three pages: Summary, Original Graph, and Optimized Graph.</p>
+<p><strong>Summary</strong></p>
+<p>The Summary page gives an overview of how your model was mapped to the AMD Ryzen NPU. Charts are displayed showing statistics on the number of operators and total GMACs that have been mapped to the NPU (and if necessary, back to CPU via the <cite>Failsafe CPU</cite> mechanism). The statistics are shown per operator type and NPU partition.</p>
+<p><strong>Original Graph</strong></p>
+<p>This is an interactive graph representing your model, lowered to supported NPU primitive operators and divided into partitions if necessary. As with the PARTITIONING graph, a companion table lists all model elements and supports cross-probing with the graph view. The objects in both the graph and the table also cross-probe with the PARTITIONING graph.</p>
+<p>Toolbar</p>
+<p>You can choose to show/hide individual NPU partitions, if any, with the <strong>Filter by Partition</strong> button
+A panel that displays properties for selected objects can be shown or hidden using the <strong>Show Properties</strong> toggle button
+A code viewer showing the MLIR source code with cross-probing can be shown/hidden through the <strong>Show Code View</strong> button
+The following table can be shown and hidden using the <strong>Show Table</strong> toggle button.
+Display options for the graph can be accessed with the <strong>Settings</strong> button</p>
+<p><strong>Optimized Graph</strong></p>
+<p>This page shows the final model that is mapped to the NPU after all transformations and optimizations such as fusion and chaining. It also reports the operators that had to be moved back to the CPU through the <cite>Failsafe CPU</cite> mechanism. As usual, there is a companion table below that contains all of the graph’s elements, and cross-selection is supported to and from the PARTITIONING graph and the Original Graph.</p>
+<p>Toolbar</p>
+<p>You can choose to show/hide individual NPU partitions, if any, with the <strong>Filter by Partition</strong> button
+A panel that displays properties for selected objects can be shown or hidden using the <strong>Show Properties</strong> toggle button
+The following table can be shown and hidden using the <strong>Show Table</strong> toggle button.
+Display options for the graph can be accessed with the <strong>Settings</strong> button</p>
+</section>
+<section id="performance">
+<h3>PERFORMANCE<a class="headerlink" href="#performance" title="Link to this heading">#</a></h3>
+<p>Use this section to view the performance of your model on RyzenAI when running one or more inferences. It is comprised of two pages: Summary and Timeline.</p>
+<p><strong>Summary</strong></p>
+<p>The performance summary page displays several overall statistics for the inference(s), along with charts that break down operator runtime by operator.
+When the ONNX Runtime profiler is enabled, the total inference time, including layers executed on the CPU, is shown.
+When NPU profiling is enabled using the <cite>ai_analyzer_profiling</cite> flag, additional NPU-specific statistics are displayed, including GOP and MAC efficiency, as well as a chart showing runtime per NPU operator type.</p>
+<p>The clock frequency field shows the assumed NPU clock frequency, but it is editable. When the frequency is changed, all timestamp data—collected as clock cycles but displayed in time units—is adjusted accordingly.</p>
+<p><strong>Timeline</strong></p>
+<p>The Performance timeline shows a layer-by-layer breakdown of your model’s execution.  The upper section is a graphical depiction of layer execution across a timeline, while the lower section shows the same information in tabular format. It is important to note that the Timeline page shows one inference at a time, so if you have captured profiling data for two or more inferences, you can choose which one to display with the <strong>Inferences</strong> chooser.</p>
+<p>Within each inference, you can examine the overall model execution or the detailed NPU execution data by using the <strong>Partition</strong> chooser.</p>
+<p>Toolbar</p>
+<p>A panel that displays properties for selected objects can be shown or hidden using the <strong>Show Properties</strong> toggle button
+The following table can be shown and hidden using the <strong>Show Table</strong> toggle button.
+The graphical timeline can be downloaded to SVG using the <strong>Export to SVG</strong> button</p>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="xrt_smi.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">NPU Management Interface</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sd_demo.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Stable Diffusion Demo</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enabling-profiling-and-visualization">Enabling Profiling and Visualization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#launching-ai-analyzer">Launching AI Analyzer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-interface">User Interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partitioning">PARTITIONING</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-insights">NPU INSIGHTS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance">PERFORMANCE</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on June 29, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://ryzenai.docs.amd.com/en/latest/licenses.html">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/content/dam/amd/en/documents/corporate/cr/supply-chain-transparency.pdf" target="_blank">Supply Chain Transparency</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2025 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>

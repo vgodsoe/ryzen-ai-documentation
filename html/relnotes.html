@@ -1,0 +1,1476 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Release Notes &#8212; Ryzen AI Software 1.5 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=643846e8" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css?v=d34acfde" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css?v=9557e3d1" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css?v=7095035a" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css?v=fcff5274" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9f1c6d22"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script defer="defer" src="_static/search.js?v=90a4452c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'relnotes';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/relnotes.html" />
+    <link rel="icon" href="https://www.amd.com/content/dam/code/images/favicon/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Instructions" href="inst.html" />
+    <link rel="prev" title="Ryzen AI Software" href="index.html" />
+    <meta name="google-site-verification" content="vo35SZt_GASsTHAEmdww7AYKPCvZyzLvOXBl8guBME4" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+                
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.5 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="model_quantization.html">Model Quantization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modelrun.html">Model Compilation and Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OnnxRuntime GenAI (OGA) Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oga_model_prepare.html">Preparing OGA Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_analyzer.html">AI Analyzer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sd_demo.html">Stable Diffusion Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ryzen_ai_libraries.html">Ryzen AI CVML library</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Release Notes</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Release Notes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-configurations">Supported Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-compatibility-table">Model Compatibility Table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5">Version 1.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4">Version 1.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3">Version 1.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2">Version 1.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1">Version 1.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizer">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-and-compiler">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-ep">ONNX Runtime EP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">Misc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1">Version 1.0.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0">Version 1.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnxruntime-execution-provider">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">Known Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9">Version 0.9</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#llm">LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#asr">ASR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Known issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8">Version 0.8</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demos">Demos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Known issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7">Version 0.7</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-execution-provider">ONNX Runtime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu">NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Known issues</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Link to this heading">#</a></h1>
+<section id="supported-configurations">
+<span id="id1"></span><h2>Supported Configurations<a class="headerlink" href="#supported-configurations" title="Link to this heading">#</a></h2>
+<p>Ryzen AI 1.5 Software supports AMD processors codenamed Phoenix, Hawk Point, Strix, Strix Halo, and Krackan Point. These processors can be found in the following Ryzen series:</p>
+<ul class="simple">
+<li><p>Ryzen 200 Series</p></li>
+<li><p>Ryzen 7000 Series, Ryzen PRO 7000 Series</p></li>
+<li><p>Ryzen 8000 Series, Ryzen PRO 8000 Series</p></li>
+<li><p>Ryzen AI 300 Series, Ryzen AI PRO Series, Ryzen AI Max 300 Series</p></li>
+</ul>
+<p>For a complete list of supported devices, refer to the <a class="reference external" href="https://www.amd.com/en/products/specifications/processors.html">processor specifications</a> page (look for the “AMD Ryzen AI” column towards the right side of the table, and select “Available” from the pull-down menu).</p>
+<p>The rest of this document will refer to Phoenix as PHX, Hawk Point as HPT, Strix and Strix Halo as STX, and Krackan Point as KRK.</p>
+</section>
+<section id="model-compatibility-table">
+<h2>Model Compatibility Table<a class="headerlink" href="#model-compatibility-table" title="Link to this heading">#</a></h2>
+<p>The following table lists which types of models are supported on what hardware platforms.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Model Type</p></th>
+<th class="head"><p>PHX/HPT</p></th>
+<th class="head"><p>STX/KRK</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>CNN INT8</p></td>
+<td><p>✅</p></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>CNN BF16</p></td>
+<td></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-even"><td><p>NLP BF16</p></td>
+<td></td>
+<td><p>✅</p></td>
+</tr>
+<tr class="row-odd"><td><p>LLM (OGA)</p></td>
+<td></td>
+<td><p>✅</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="version-1-5">
+<h2>Version 1.5<a class="headerlink" href="#version-1-5" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>EoU Improvement</p>
+<ul>
+<li><p>Application concurrency: improves the resource distribution across applications</p></li>
+<li><p>Model Compilation time: 2x – 8x faster</p></li>
+<li><p>Installation Size: 80% smaller</p></li>
+</ul>
+</li>
+<li><p>Stable Diffusion demo pipelines (preview)</p></li>
+<li><p>4K context length supported (on selected models)</p></li>
+<li><p>LLM Context cache support (on selected models)</p></li>
+<li><p>Bug fixes</p></li>
+<li><p>New LLMs released</p>
+<ul>
+<li><p>Qwen/Qwen2.5-1.5B-Instruct</p></li>
+<li><p>Qwen/Qwen2.5-3B-Instruct</p></li>
+<li><p>Qwen/Qwen2.5-7B-Instruct</p></li>
+</ul>
+</li>
+<li><p>Breaking Changes</p>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">%RYZEN_AI_INSTALLATION_PATH%\deployment</span></code> folder has been reorganized and flattened. Deployment DLLs are no longer organized in subfolders. If you use application build scripts that pull DLLs from the <code class="docutils literal notranslate"><span class="pre">deployment</span></code> folder, you need to update them based on the new paths. Refer to the <a class="reference internal" href="app_development.html#app-packaging"><span class="std std-ref">Application Packaging Requirements</span></a> section for further details.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">1x4.xclbin</span></code> (PHX/HPT) and <code class="docutils literal notranslate"><span class="pre">AMD_AIE2P_Nx4_Overlay.xclbin</span></code> (STX/KRK) NPU binaries are no longer supported and should not be used. You should use the <code class="docutils literal notranslate"><span class="pre">4x4.xclbin</span></code> (PHX/HPT) and <code class="docutils literal notranslate"><span class="pre">AMD_AIE2P_4x4_Overlay.xclbin</span></code> (STX/KRK) NPU binaries instead.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">XLNX_ENABLE_CACHE</span></code>, <code class="docutils literal notranslate"><span class="pre">XLNX_VART_FIRMWARE</span></code>, and <code class="docutils literal notranslate"><span class="pre">XLNX_TARGET_NAME</span></code> environment variables are no longer supported and should not be relied upon.</p></li>
+<li><p>Support for VitisAI EP cache encryption is no longer available. To encrypt the compiled models, use the ONNX Runtime <a class="reference internal" href="modelrun.html#ort-ep-context-cache"><span class="std std-ref">EP Context Cache</span></a> feature instead.</p></li>
+<li><p>For INT8 models, the VitisAI EP does not save the compiled model to disk by default. To save the compiled model, use the ONNX Runtime <a class="reference internal" href="modelrun.html#ort-ep-context-cache"><span class="std std-ref">EP Context Cache</span></a> feature or set the <a class="reference internal" href="modelrun.html#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> provider option to 0.</p></li>
+<li><p>Generation of the <code class="docutils literal notranslate"><span class="pre">vitisai_ep_report.json</span></code> file is no longer automatic and should be manually enabled. See the <a class="reference internal" href="modelrun.html#op-assignment-report"><span class="std std-ref">Operator Assignment Report</span></a> section for details.</p></li>
+<li><p>Changes to the OGA flow for LLMs:</p>
+<ul>
+<li><p>OGA Version is updated to <strong>v0.7.0</strong> (Ryzen AI 1.5) from v0.6.0 (Ryzen AI 1.4).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">hybrid_llm</span></code> and <code class="docutils literal notranslate"><span class="pre">npu_llm</span></code> folders are consolidated into a new folder named <code class="docutils literal notranslate"><span class="pre">LLM</span></code>, which contains the <code class="docutils literal notranslate"><span class="pre">model_benchmark.exe</span></code> and <code class="docutils literal notranslate"><span class="pre">run_model.py</span></code> scripts, along with the necessary C++ headers and .lib files to support both the Hybrid LLM and NPU LLM workflows in C++ and Python.</p></li>
+<li><p>For NPU LLM models, the <code class="docutils literal notranslate"><span class="pre">vaip_llm.json</span></code> file is no longer required. As a result, the <code class="docutils literal notranslate"><span class="pre">vaip_llm.json</span></code> path is removed from the <code class="docutils literal notranslate"><span class="pre">genai_config.json</span></code> for all NPU models. Ensure that you re-download the NPU models from <a class="reference external" href="https://huggingface.co/collections/amd/ryzenai-15-llm-npu-models-6859846d7c13f81298990db0">Hugging Face</a> when using the Ryzen AI 1.5 installer.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="version-1-4">
+<h2>Version 1.4<a class="headerlink" href="#version-1-4" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New Features:</p>
+<ul>
+<li><p><a class="reference external" href="https://www.amd.com/en/products/software/ryzen-ai-software.html#tabs-2733982b05-item-7720bb7a69-tab">New architecture support for Ryzen AI 300 series processors</a></p></li>
+<li><p>Unified support for LLMs, INT8, and BF16 models in a single release package</p></li>
+<li><p>Public release for compilation of BF16 CNN and NLP models on Windows</p></li>
+<li><p><a class="reference external" href="https://ryzenai.docs.amd.com/en/latest/hybrid_oga.html">Public release of the LLM Hybrid OGA flow</a></p></li>
+<li><p><a class="reference external" href="https://ryzenai.docs.amd.com/en/latest/oga_model_prepare.html">LLM building flow for finetuned LLM</a></p></li>
+<li><p>Support for up to 16 hardware contexts on Ryzen AI 300 series processors</p></li>
+<li><p>Vitis AI EP now supports the ONNX Runtime EP context cache feature (for custom handling of pre-compiled models)</p></li>
+<li><p>Ryzen AI environment variables converted to VitisAI EP session options</p></li>
+<li><p>Improved exception handling and fallback to CPU</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://huggingface.co/collections/amd/ryzenai-14-llm-hybrid-models-67da31231bba0f733750a99c">New Hybrid execution mode LLMs</a>:</p>
+<ul>
+<li><p>DeepSeek-R1-Distill-Llama-8B</p></li>
+<li><p>DeepSeek-R1-Distill-Qwen-1.5B</p></li>
+<li><p>DeepSeek-R1-Distill-Qwen-7B</p></li>
+<li><p>Gemma2-2B</p></li>
+<li><p>Qwen2-1.5B</p></li>
+<li><p>Qwen2-7B</p></li>
+<li><p>AMD-OLMO-1B-SFT-DPO</p></li>
+<li><p>Mistral-7B-Instruct-v0.1</p></li>
+<li><p>Mistral-7B-Instruct-v0.2</p></li>
+<li><p>Mistral-7B-v0.3</p></li>
+<li><p>Llama3.1-8B-Instruct</p></li>
+<li><p>Codellama-7B-Instruct</p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="examples.html"><span class="doc">New BF16 model examples</span></a>:</p>
+<ul>
+<li><p>Image classification</p></li>
+<li><p>Finetuned DistilBERT for text classification</p></li>
+<li><p>Text embedding model Alibaba-NLP/gte-large-en-v1.5</p></li>
+</ul>
+</li>
+<li><p>New Tools:</p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/onnx/turnkeyml/blob/main/docs/lemonade/README.md">Lemonade SDK</a></p>
+<ul>
+<li><p><a class="reference external" href="https://github.com/onnx/turnkeyml/blob/main/docs/lemonade/README.md#serving">Lemonade Server</a>: A server interface that uses the standard Open AI API, allowing applications in any language to integrate with Lemonade Server for local LLM deployment and compatibility with existing Open AI apps.</p></li>
+<li><p><a class="reference external" href="https://github.com/onnx/turnkeyml/blob/main/docs/lemonade/README.md#api">Lemonade Python API</a>: Offers High-Level API for easy integration of Lemonade LLMs into Python applications and Low-Level API for custom experiments with specific checkpoints, devices, and tools.</p></li>
+<li><p><a class="reference external" href="https://github.com/onnx/turnkeyml/blob/main/docs/lemonade/getting_started.md#cli-commands">Lemonade Command Line</a> Interface easily benchmark, measure accuracy, prompt or gather memory usage of your LLM.</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://github.com/onnx/turnkeyml">TurnkeyML</a> – Open-source tool that includes low-code APIs for general ONNX workflows.</p></li>
+<li><p><a class="reference external" href="https://github.com/onnx/digestai">Digest AI</a> – A Model Ingestion and Analysis Tool in collaboration with the Linux Foundation.</p></li>
+<li><p><a class="reference external" href="https://github.com/amd/gaia/tree/main">GAIA</a> – An open-source application designed for the quick setup and execution of generative AI applications on local PC hardware.</p></li>
+</ul>
+</li>
+<li><p>Quark-torch:</p>
+<ul>
+<li><p>Added ROUGE and METEOR evaluation metrics for LLMs</p></li>
+<li><p>Support for evaluating ONNX models exported using OGA</p></li>
+<li><p>Support for offline evaluation (evaluation without generation) for LLMs</p></li>
+<li><p>Support for Hugging Face integration</p></li>
+<li><p>Support for Gemma2 quantization using the OGA flow</p></li>
+<li><p>Support for Llama-3.2 quantization with FP8 (weights, activation, and KV-cache) for the vision and language components</p></li>
+</ul>
+</li>
+<li><p>Quark-onnx:</p>
+<ul>
+<li><p>Support compatibility with ONNX Runtime version 1.20.0, and 1.20.1</p></li>
+<li><p>Support for microexponents (MX) data types, including MX4, MX6, and MX9</p></li>
+<li><p>Support for BF16 data type for VAIML</p></li>
+<li><p>Support for excluding pre and post-processing from quantization</p></li>
+<li><p>Support for mixed precision with any data type</p></li>
+<li><p>Support for Quarot rotation R1 algorithm</p></li>
+<li><p>Support for microexponents and microscaling AdaQuant</p></li>
+<li><p>Support for an auto-search algorithm to automatically find the best accuracy quantized model</p></li>
+<li><p>Added tools for evaluating L2, PSNR, VMAF, and cosine</p></li>
+</ul>
+</li>
+<li><p>ONNX Runtime EP:</p>
+<ul>
+<li><p>Support for Chinese characters in the <code class="docutils literal notranslate"><span class="pre">filename/cache_dir/cache_key/xclbin</span></code></p></li>
+<li><p>Support for <code class="docutils literal notranslate"><span class="pre">int4/uint4</span></code> data type</p></li>
+<li><p>Support for configurable failure handling: CPU fallback or exception</p></li>
+<li><p>Update for encrypt/decrypt feature</p></li>
+</ul>
+</li>
+<li><p>Known Issues:</p>
+<ul>
+<li><p>Microsoft Windows Insider Program (WIP) users may see warnings or need to restart when running all applications concurrently.</p>
+<ul>
+<li><p>NPU driver and workloads will continue to work.</p></li>
+</ul>
+</li>
+<li><p>Context creation may appear to be limited when some application do not close contexts quickly.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="version-1-3">
+<h2>Version 1.3<a class="headerlink" href="#version-1-3" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New Features:</p>
+<ul>
+<li><p>Initial release of the Quark quantizer</p></li>
+<li><p>Support for mixed precision data types</p></li>
+<li><p>Compatibility with Copilot+ applications</p></li>
+</ul>
+</li>
+<li><p>Improved support for <a class="reference internal" href="llm/overview.html"><span class="doc">LLMs using OGA</span></a></p></li>
+<li><p>New EoU Tools:</p>
+<ul>
+<li><p>CNN profiling tool for VAI-ML flow</p></li>
+<li><p>Idle detection and suspension of contexts</p></li>
+<li><p>Rebalance feature for AIE hardware resource optimization</p></li>
+</ul>
+</li>
+<li><p>NPU and Compiler:</p>
+<ul>
+<li><p>New Op Support:</p>
+<ul>
+<li><p>MAC</p></li>
+<li><p>QResize Bilinear</p></li>
+<li><p>LUT Q-Power</p></li>
+<li><p>Expand</p></li>
+<li><p>Q-Hsoftmax</p></li>
+<li><p>A16 Q-Pad</p></li>
+<li><p>Q-Reduce-Mean along H/W dimension</p></li>
+<li><p>A16 Q-Global-AvgPool</p></li>
+<li><p>A16 Padding with non-zero values</p></li>
+<li><p>A16 Q-Sqrt</p></li>
+<li><p>Support for XINT8/XINT16 MatMul and A16W16/A8W8 Q-MatMul</p></li>
+</ul>
+</li>
+<li><p>Performance Improvements:</p>
+<ul>
+<li><p>Q-Conv, Q-Pool, Q-Add, Q-Mul, Q-InstanceNorm</p></li>
+<li><p>Enhanced QDQ support for a range of operations</p></li>
+<li><p>Enhanced the tiling algorithm</p></li>
+<li><p>Improved graph-level optimization with extra transpose removal</p></li>
+<li><p>Enhanced AT/MT fusion</p></li>
+<li><p>Optimized memory usage and compile time</p></li>
+<li><p>Improved compilation messages</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Quark for PyTorch:</p>
+<ul>
+<li><p>Model Support:</p>
+<ul>
+<li><p>Examples of LLM PTQ, such as Llama3.2 and Llama3.2-Vision models</p></li>
+<li><p>Example of YOLO-NAS detection model PTQ/QAT</p></li>
+<li><p>Example of SDXL v1.0 with weight INT8 activation INT8</p></li>
+</ul>
+</li>
+<li><p>PyTorch Quantizer Enhancements:</p>
+<ul>
+<li><p>Partial model quantization by user configuration under FX mode</p></li>
+<li><p>Quantization of ConvTranspose2d in Eager Mode and FX mode</p></li>
+<li><p>Advanced Quantization Algorithms with auto-generated configurations</p></li>
+<li><p>Optimized Configuration with DataTypeSpec for ease of use</p></li>
+<li><p>Accelerated in-place replacement under Eager Mode</p></li>
+<li><p>Loading configuration from file of algorithms and pre-optimizations</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Quark for ONNX:</p>
+<ul>
+<li><p>New Features:</p>
+<ul>
+<li><p>Compatibility with ONNX Runtime version 1.18, 1.19</p></li>
+<li><p>Support for int4, uint4, Microscaling data types</p></li>
+<li><p>Quantization for arbitrary specified operators</p></li>
+<li><p>Quantization type alignment of element-wise operators for mixed precision</p></li>
+<li><p>ONNX graph cleaning</p></li>
+<li><p>Int32 bias quantization</p></li>
+</ul>
+</li>
+<li><p>ONNX Quantizer Enhancements:</p>
+<ul>
+<li><p>Fast fine-tuning support for the MatMul operator, BFP data type, and GPU acceleration</p></li>
+<li><p>Improved ONNX quantization of LLM models</p></li>
+<li><p>Optimized quantization of FP16 models</p></li>
+<li><p>Custom operator compilation process</p></li>
+<li><p>Default parameters for auto mixed precision</p></li>
+<li><p>Optimized Ryzen AI workflow by aligning with hardware constraints of the NPU</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ONNX Runtime EP:</p>
+<ul>
+<li><p>Support for ONNX Runtime EP shared libraries</p></li>
+<li><p>Python dependency removal</p></li>
+<li><p>Memory optimization during the compile phase</p></li>
+<li><p>Pattern API enhancement with multiple outputs and commutable arguments support</p></li>
+</ul>
+</li>
+<li><p>Known Issues:</p>
+<ul>
+<li><p>Extended compile time for some models with BF16/BFP16 data types</p></li>
+<li><p>LLM models with 4K sequence length may revert to CPU execution</p></li>
+<li><p>Accuracy drop in some Transformer models using BF16/BFP16 data types, requiring Quark intervention</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="version-1-2">
+<h2>Version 1.2<a class="headerlink" href="#version-1-2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New features:</p>
+<ul>
+<li><p>Support added for Strix Point NPUs</p></li>
+<li><p>Support added for integrated GPU</p></li>
+<li><p>Smart installer for Ryzen AI 1.2</p></li>
+<li><p>NPU DPM based on power slider</p></li>
+</ul>
+</li>
+<li><p>New model support:</p>
+<ul>
+<li><p><a class="reference external" href="https://ryzenai.docs.amd.com/en/latest/llm_flow.html">LLM flow support</a> for multiple models in both PyTorch and ONNX flow (optimized model support will be released asynchronously)</p></li>
+<li><p>SDXL-T with limited performance optimization</p></li>
+</ul>
+</li>
+<li><p>New EoU tools:</p>
+<ul>
+<li><p><a class="reference external" href="https://ryzenai.docs.amd.com/en/latest/ai_analyzer.html">AI Analyzer</a> : Analysis and visualization of model compilation and inference profiling</p></li>
+<li><p>Platform/NPU inspection and management tool (<a class="reference external" href="https://ryzenai.docs.amd.com/en/latest/xrt_smi.html">xrt-smi</a>)</p></li>
+<li><p><a class="reference external" href="https://github.com/amd/RyzenAI-SW/tree/main/onnx-benchmark">Onnx Benchmarking tool</a></p></li>
+</ul>
+</li>
+<li><p>New Demos:</p>
+<ul>
+<li><p>NPU-GPU multi-model pipeline application <a class="reference external" href="https://github.com/amd/RyzenAI-SW/tree/main/demo/NPU-GPU-Pipeline">demo</a></p></li>
+</ul>
+</li>
+<li><p>NPU and Compiler</p>
+<ul>
+<li><p>New device support: Strix Nx4 and 4x4 Overlay</p></li>
+<li><p>New Op support:</p>
+<ul>
+<li><p>InstanceNorm</p></li>
+<li><p>Silu</p></li>
+<li><p>Floating scale quantization operators (INT8, INT16)</p></li>
+</ul>
+</li>
+<li><p>Support new rounding mode (Round to even)</p></li>
+<li><p>Performance Improvement:</p>
+<ul>
+<li><p>Reduced the model compilation time</p></li>
+<li><p>Improved instruction loading</p></li>
+<li><p>Improved synchronization in large overlay</p></li>
+<li><p>Enhanced strided_slice performance</p></li>
+<li><p>Enhanced convolution MT fusion</p></li>
+<li><p>Enhanced convolution AT fusion</p></li>
+<li><p>Enhanced data movement op performance</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>ONNX Quantizer updates</p>
+<ul>
+<li><p>Improved usability with various features and tools, including weights-only quantization, graph optimization, dynamic shape fixing, and format transformations.</p></li>
+<li><p>Improved the accuracy of quantized models through automatic mixed precision and enhanced AdaRound and AdaQuant techniques.</p></li>
+<li><p>Enhanced support for the BFP data type, including more attributes and shape inference capability.</p></li>
+<li><p>Optimized the NPU workflow by aligning with the hardware constraints of the NPU.</p></li>
+<li><p>Supported compilation for Windows and Linux.</p></li>
+<li><p>Bugfix:</p>
+<ul>
+<li><p>Fixed the problem where per-channel quantization is not compatible with onnxruntime 1.17.</p></li>
+<li><p>Fixed the bug of CLE when conv with groups.</p></li>
+<li><p>Fixed the bug of bias correction.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Pytorch Quantizer updates</p>
+<ul>
+<li><p>Tiny value quantization protection.</p></li>
+<li><p>Higher onnx version support in quantized model exporting.</p></li>
+<li><p>Relu6 hardware constrains support.</p></li>
+<li><p>Support of mean operation with keepdim=True.</p></li>
+</ul>
+</li>
+<li><p>Resolved issues:</p>
+<ul>
+<li><p>NPU SW stack will fail to initialize when the system is out of memory. This could impact camera functionality when Microsoft Effect Pack is enabled.</p></li>
+<li><p>If Microsoft Effects Pack is overloaded with other 4+ applications that use NPU to do inference, then camera functionality can be impacted. Can be fixed with a reboot. This will be fixed in the next release.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="version-1-1">
+<h2>Version 1.1<a class="headerlink" href="#version-1-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>New model support:</p>
+<ul>
+<li><p>Llama 2 7B with w4abf16 (3-bit and 4-bit) quantization (Beta)</p></li>
+<li><p>Whisper base (EA access)</p></li>
+</ul>
+</li>
+<li><p>New EoU tools:</p>
+<ul>
+<li><p>CNN Benchmarking tool on RyzenAI-SW Repo</p></li>
+<li><p>Platform/NPU inspection and management tool</p></li>
+</ul>
+</li>
+</ul>
+<section id="quantizer">
+<h3>Quantizer<a class="headerlink" href="#quantizer" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>ONNX Quantizer:</p>
+<ul>
+<li><p>Improved usability with various features and tools, including diverse parameter configurations, graph optimization, shape fixing, and format transformations.</p></li>
+<li><p>Improved quantization accuracy through the implementation of experimental algorithmic improvements, including AdaRound and AdaQuant.</p></li>
+<li><p>Optimized the NPU workflow by distinguishing between different targets and aligning with the hardware constraints of the NPU.</p></li>
+<li><p>Introduced new utilities for model conversion.</p></li>
+</ul>
+</li>
+<li><p>PyTorch Quantizer:</p>
+<ul>
+<li><p>Mixed data type quantization enhancement and bug fix.</p></li>
+<li><p>Corner bug fixes for add, sub, and conv1d operations.</p></li>
+<li><p>Tool for converting the S8S8 model to the U8S8 model.</p></li>
+<li><p>Tool for converting the customized Q/DQ to onnxruntime contributed Q/DQ with the “microsoft” domain.</p></li>
+<li><p>Tool for fixing a dynamic shapes model to fixed shape model.</p></li>
+</ul>
+</li>
+<li><p>Bug fixes</p>
+<ul>
+<li><p>Fix for incorrect logging when simulating the LeakyRelu alpha value.</p></li>
+<li><p>Fix for useless initializers not being cleaned up during optimization.</p></li>
+<li><p>Fix for external data cannot be found when using use_external_data_format.</p></li>
+<li><p>Fix for custom Ops cannot be registered due to GLIBC version mismatch</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="npu-and-compiler">
+<h3>NPU and Compiler<a class="headerlink" href="#npu-and-compiler" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>New op support:</p>
+<ul>
+<li><p>Support Channel-wie Prelu.</p></li>
+<li><p>Gstiling with reverse = false.</p></li>
+</ul>
+</li>
+<li><p>Fixed issues:</p>
+<ul>
+<li><p>Fixed Transpose-convolution and concat optimization issues.</p></li>
+<li><p>Fixed Conv stride 3 corner case hang issue.</p></li>
+</ul>
+</li>
+<li><p>Performance improvement:</p>
+<ul>
+<li><p>Updated Conv 1x1 stride 2x2 optimization.</p></li>
+<li><p>Enhanced Conv 7x7 performance.</p></li>
+<li><p>Improved padding performance.</p></li>
+<li><p>Enhanced convolution MT fusion.</p></li>
+<li><p>Improved the performance for NCHW layout model.</p></li>
+<li><p>Enhanced the performance for eltwise-like op.</p></li>
+<li><p>Enhanced Conv and eltwise AT fusion.</p></li>
+<li><p>Improved the output convolution/transpose-convolution’s performance.</p></li>
+<li><p>Enhanced the logging message for EoU.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="onnx-runtime-ep">
+<h3>ONNX Runtime EP<a class="headerlink" href="#onnx-runtime-ep" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>End-2-End Application support on NPU</p>
+<ul>
+<li><p>Enhanced existing support: Provided high-level APIs to enable seamless incorporation of pre/post-processing operations into the model to run on NPU</p></li>
+<li><p>Two examples (resnet50 and yolov8) published to demonstrate the usage of these APIs to run end-to-end models on the NPU</p></li>
+</ul>
+</li>
+<li><p>Bug fixes for ONNXRT EP to support customers’ models</p></li>
+</ul>
+</section>
+<section id="misc">
+<h3>Misc<a class="headerlink" href="#misc" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Contains mitigation for the following CVEs: CVE-2024-21974, CVE-2024-21975, CVE-2024-21976</p></li>
+</ul>
+</section>
+</section>
+<section id="version-1-0-1">
+<h2>Version 1.0.1<a class="headerlink" href="#version-1-0-1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Minor fix for Single click installation without given env name.</p></li>
+<li><p>Perform improvement in the NPU driver.</p></li>
+<li><p>Bug fix in elementwise subtraction in the compiler.</p></li>
+<li><p>Runtime stability fixes for minor corner cases.</p></li>
+<li><p>Quantizer update to resolve performance drop with default settings.</p></li>
+</ul>
+</section>
+<section id="version-1-0">
+<h2>Version 1.0<a class="headerlink" href="#version-1-0" title="Link to this heading">#</a></h2>
+<section id="id2">
+<h3>Quantizer<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>ONNX Quantizer</p>
+<ul>
+<li><p>Support for ONNXRuntime 1.16.</p></li>
+<li><p>Support for the Cross-Layer-Equalization (CLE) algorithm in quantization, which can balance the weights of consecutive Conv nodes to make it more quantize-friendly in per-tensor quantization.</p></li>
+<li><p>Support for mixed precision quantization including UINT16/INT16/UINT32/INT32/FLOAT16/BFLOAT16, and support asymmetric quantization for BFLOAT16.</p></li>
+<li><p>Support for the MinMSE method for INT16/UINT16/INT32/UINT32 quantization.</p></li>
+<li><p>Support for quantization using the INT16 scale.</p></li>
+<li><p>Support for unsigned ReLU in symmetric activation configuration.</p></li>
+<li><p>Support for converting Float16 to Float32 during quantization.</p></li>
+<li><p>Support for converting NCHW model to NHWC model during quantization.</p></li>
+<li><p>Support for two more modes for MinMSE for better accuracy. The “All” mode computes the scales with all batches while the “MostCommon” mode computes the scale for each batch and uses the most common scales.</p></li>
+<li><p>Support for the quantization of more operations:</p>
+<ul>
+<li><p>PReLU, Sub, Max, DepthToSpace, SpaceToDepth, Slice, InstanceNormalization, and LpNormalization.</p></li>
+<li><p>Non-4D ReduceMean.</p></li>
+<li><p>Leakyrelu with arbitrary alpha.</p></li>
+<li><p>Split by converting it to Slice.</p></li>
+</ul>
+</li>
+<li><p>Support for op fusing of InstanceNormalization and L2Normalization in NPU workflow.</p></li>
+<li><p>Support for converting Clip to ReLU when the minimal value is 0.</p></li>
+<li><p>Updated shift_bias, shift_read, and shift_write constraints in the NPU workflow and added an option “IPULimitationCheck” to disable it.</p></li>
+<li><p>Support for disabling the op fusing of Conv + LeakyReLU/PReLU in the NPU workflow.</p></li>
+<li><p>Support for logging for quantization configurations and summary information.</p></li>
+<li><p>Support for removing initializer from input to support models converted from old version pytorch where weights are stored as inputs.</p></li>
+<li><p>Added a recommended configuration for the IPU_Transformer platform.</p></li>
+<li><p>New utilities:</p>
+<ul>
+<li><p>Tool for converting the float16 model to the float32 model.</p></li>
+<li><p>Tool for converting the NCHW model to the NHWC model.</p></li>
+<li><p>Tool for quantized models with random input.</p></li>
+</ul>
+</li>
+<li><p>Three examples for quantization models from Timm, Torchvision, and ONNXRuntime modelzoo respectively.</p></li>
+<li><p>Bugfixes:</p>
+<ul>
+<li><p>Fix a bug that weights are quantized with the “NonOverflow” method when using the “MinMSE” method.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Pytorch Quantizer</p>
+<ul>
+<li><p>Support of some operations quantization in quantizer: inplace div, inplace sub</p></li>
+<li><p>Log and document enhancement to emphasize fast-finetune</p></li>
+<li><p>Timm models quantization script example</p></li>
+<li><p>Bug fix for operators: clamp and prelu</p></li>
+<li><p>QAT Support quantization of operations with multiple outputs</p></li>
+<li><p>QAT EOU enhancements: significantly reduces the need for network modifications</p></li>
+<li><p>QAT ONNX exporting enhancements: support more configurations</p></li>
+<li><p>New QAT examples</p></li>
+</ul>
+</li>
+<li><p>TF2 Quantizer</p>
+<ul>
+<li><p>Support for Tensorflow 2.11 and 2.12.</p></li>
+<li><p>Support for the ‘tf.linalg.matmul’ operator.</p></li>
+<li><p>Updated shift_bias constraints for NPU workflow.</p></li>
+<li><p>Support for dumping models containing operations with multiple outputs.</p></li>
+<li><p>Added an example of a sequential model.</p></li>
+<li><p>Bugfixes:</p>
+<ul>
+<li><p>Fix a bug that Hardsigmoid and Hardswish are not mapped to DPU without Batch Normalization.</p></li>
+<li><p>Fix a bug when both align_pool and align_concat are used simultaneously.</p></li>
+<li><p>Fix a bug in the sequential model when a layer has multiple consumers.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>TF1 Quantizer</p>
+<ul>
+<li><p>Update shift_bias constraints for NPU workflow.</p></li>
+<li><p>Bugfixes:</p>
+<ul>
+<li><p>Fix a bug in fast_finetune when the ‘input_node’ and ‘quant_node’ are inconsistent.</p></li>
+<li><p>Fix a bug that AddV2 op identified as BiasAdd.</p></li>
+<li><p>Fix a bug when the data type of the concat op is not float.</p></li>
+<li><p>Fix a bug in split_large_kernel_pool when the stride is not equal to 1.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="onnxruntime-execution-provider">
+<h3>ONNXRuntime Execution Provider<a class="headerlink" href="#onnxruntime-execution-provider" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Support new OPs, such as PRelu, ReduceSum, LpNormlization, DepthToSpace(DCR).</p></li>
+<li><p>Increase the percentage of model operators performed on the NPU.</p></li>
+<li><p>Fixed some issues causing model operators allocation to CPU.</p></li>
+<li><p>Improved report summary</p></li>
+<li><p>Support the encryption of the VOE cache</p></li>
+<li><p>End-2-End Application support on NPU</p>
+<ul>
+<li><p>Enable running pre/post/custom ops on NPU, utilizing ONNX feature of E2E extensions.</p></li>
+<li><p>Two examples published for yolov8 and resnet50, in which preprocessing custom op is added and runs on NPU.</p></li>
+</ul>
+</li>
+<li><p>Performance: latency improves by up to 18% and power savings by up to 35% by additionally running preprocessing on NPU apart from inference.</p></li>
+<li><p>Multiple NPU overlays support</p>
+<ul>
+<li><p>VOE configuration that supports both CNN-centric and GEMM-centric NPU overlays.</p></li>
+<li><p>Increases number of ops that run on NPU, especially for models which have both GEMM and CNN ops.</p></li>
+<li><p>Examples published for use with some of the vision transformer models.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id3">
+<h3>NPU and Compiler<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>New operators support</p>
+<ul>
+<li><p>Global average pooling with large spatial dimensions</p></li>
+<li><p>Single Activation (no fusion with conv2d, e.g. relu/single alpha PRelu)</p></li>
+</ul>
+</li>
+<li><p>Operator support enhancement</p>
+<ul>
+<li><p>Enlarge the width dimension support range for depthwise-conv2d</p></li>
+<li><p>Support more generic broadcast for element-wise like operator</p></li>
+<li><p>Support output channel not aligned with 4B GStiling</p></li>
+<li><p>Support Mul and LeakyRelu fusion</p></li>
+<li><p>Concatenation’s redundant input elimination</p></li>
+<li><p>Channel Augmentation for conv2d (3x3, stride=2)</p></li>
+</ul>
+</li>
+<li><p>Performance optimization</p>
+<ul>
+<li><p>PDI partition refine to reduce the overhead for PDI swap</p></li>
+<li><p>Enabled cost model for some specific models</p></li>
+</ul>
+</li>
+<li><p>Fixed asynchronous error in multiple thread scenario</p></li>
+<li><p>Fixed known issue on tanh and transpose-conv2d hang issue</p></li>
+</ul>
+</section>
+<section id="known-issues">
+<h3>Known Issues<a class="headerlink" href="#known-issues" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Support for multiple applications is limited to up to eight</p></li>
+<li><p>Windows Studio Effects should be disabled when using the Latency profile. To disable Windows Studio Effects, open <strong>Settings &gt; Bluetooth &amp; devices &gt; Camera</strong>, select your primary camera, and then disable all camera effects.</p></li>
+</ul>
+</section>
+</section>
+<section id="version-0-9">
+<h2>Version 0.9<a class="headerlink" href="#version-0-9" title="Link to this heading">#</a></h2>
+<section id="id4">
+<h3>Quantizer<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pytorch Quantizer</p>
+<ul>
+<li><p>Dict input/output support for model forward function</p></li>
+<li><p>Keywords argument support for model forward function</p></li>
+<li><p>Matmul subroutine quantization support</p></li>
+<li><p>Support of some operations in quantizer: softmax, div, exp, clamp</p></li>
+<li><p>Support quantization of some non-standard conv2d.</p></li>
+</ul>
+</li>
+<li><p>ONNX Quantizer</p>
+<ul>
+<li><p>Add support for Float16 and BFloat16 quantization.</p></li>
+<li><p>Add C++ kernels for customized QuantizeLinear and DequantizeLinaer operations.</p></li>
+<li><p>Support saving quantizer version info to the quantized models’ producer field.</p></li>
+<li><p>Support conversion of ReduceMean to AvgPool in NPU workflow.</p></li>
+<li><p>Support conversion of BatchNorm to Conv in NPU workflow.</p></li>
+<li><p>Support optimization of large kernel GlobalAvgPool and AvgPool operations in NPU workflow.</p></li>
+<li><p>Supports hardware constraints check and adjustment of Gemm, Add, and Mul operations in NPU workflow.</p></li>
+<li><p>Supports quantization for LayerNormalization, HardSigmoid, Erf, Div, and Tanh for NPU.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id5">
+<h3>ONNXRuntime Execution Provider<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Support new OPs, such as Conv1d, LayerNorm, Clip, Abs, Unsqueeze, ConvTranspose.</p></li>
+<li><p>Support pad and depad based on NPU subgraph’s inputs and outputs.</p></li>
+<li><p>Support for U8S8 models quantized by ONNX quantizer.</p></li>
+<li><p>Improve report summary tools.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>NPU and Compiler<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supported exp/tanh/channel-shuffle/pixel-unshuffle/space2depth</p></li>
+<li><p>Performance uplift of xint8 output softmax</p></li>
+<li><p>Improve the partition messages for CPU/DPU</p></li>
+<li><p>Improve the validation check for some operators</p></li>
+<li><p>Accelerate the speed of compiling large models</p></li>
+<li><p>Fix the elew/pool/dwc/reshape mismatch issue and fix the stride_slice hang issue</p></li>
+<li><p>Fix str_w != str_h issue in Conv</p></li>
+</ul>
+</section>
+<section id="llm">
+<h3>LLM<a class="headerlink" href="#llm" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Smoothquant for OPT1.3b, 2.7b, 6.7b, 13b models.</p></li>
+<li><p>Huggingface Optimum ORT Quantizer for ONNX and Pytorch dynamic quantizer for Pytorch</p></li>
+<li><p>Enabled Flash attention v2 for larger prompts as a custom torch.nn.Module</p></li>
+<li><p>Enabled all CPU ops in bfloat16 or float32 with Pytorch</p></li>
+<li><p>int32 accumulator in AIE (previously int16)</p></li>
+<li><p>DynamicQuantLinear op support in ONNX</p></li>
+<li><p>Support different compute primitives for prefill/prompt and token phases</p></li>
+<li><p>Zero copy of weights shared between different op primitives</p></li>
+<li><p>Model saving after quantization and loading at runtime for both Pytorch and ONNX</p></li>
+<li><p>Enabled profiling prefill/prompt and token time using local copy of OPT Model with additional timer instrumentation</p></li>
+<li><p>Added demo mode script with greedy, stochastic and contrastive search options</p></li>
+</ul>
+</section>
+<section id="asr">
+<h3>ASR<a class="headerlink" href="#asr" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Support Whipser-tiny</p></li>
+<li><p>All GEMMs offloaded to AIE</p></li>
+<li><p>Improved compile time</p></li>
+<li><p>Improved WER</p></li>
+</ul>
+</section>
+<section id="id7">
+<h3>Known issues<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Flow control OPs including “Loop”, “If”, “Reduce” not supported by VOE</p></li>
+<li><p>Resizing OP in ONNX opset 10 or lower is not supported by VOE</p></li>
+<li><p>Tensorflow 2.x quantizer supports models within tf.keras.model only</p></li>
+<li><p>Running quantizer docker in WSL on Ryzen AI laptops may encounter OOM (Out-of-memory) issue</p></li>
+<li><p>Running multiple concurrent models using temporal sharing on the 5x4 binary is not supported</p></li>
+<li><p>Only batch sizes of 1 are supported</p></li>
+<li><p>Only models with the pretrained weights setting = TRUE should be imported</p></li>
+<li><p>Launching multiple processes on 4 1x4 binaries can cause hangs, especially when models have many sub-graphs</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="version-0-8">
+<h2>Version 0.8<a class="headerlink" href="#version-0-8" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h3>Quantizer<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pytorch Quantizer</p>
+<ul>
+<li><p>Pytorch 1.13 and 2.0 support</p></li>
+<li><p>Mixed precision quantization support, supporting float32/float16/bfloat16/intx mixed quantization</p></li>
+<li><p>Support of bit-wise accuracy cross check between quantizer and ONNX-runtime</p></li>
+<li><p>Split and chunk operators were automatically converted to slicing</p></li>
+<li><p>Add support for BFP data type quantization</p></li>
+<li><p>Support of some operations in quantizer: where, less, less_equal, greater, greater_equal, not, and, or, eq, maximum, minimum, sqrt, Elu, Reduction_min, argmin</p></li>
+<li><p>QAT supports training on multiple GPUs</p></li>
+<li><p>QAT supports operations with multiple inputs or outputs</p></li>
+</ul>
+</li>
+<li><p>ONNX Quantizer</p>
+<ul>
+<li><p>Provided Python wheel file for installation</p></li>
+<li><p>Support OnnxRuntime 1.15</p></li>
+<li><p>Supports setting input shapes of random data reader</p></li>
+<li><p>Supports random data reader in the dump model function</p></li>
+<li><p>Supports saving the S8S8 model in U8S8 format for NPU</p></li>
+<li><p>Supports simulation of Sigmoid, Swish, Softmax, AvgPool, GlobalAvgPool, ReduceMean and LeakyRelu for NPU</p></li>
+<li><p>Supports node fusions for NPU</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h3>ONNXRuntime Execution Provider<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Supports for U8S8 quantized ONNX models</p></li>
+<li><p>Improve the function of falling back to CPU EP</p></li>
+<li><p>Improve AIE plugin framework</p>
+<ul>
+<li><p>Supports LLM Demo</p></li>
+<li><p>Supports Gemm ASR</p></li>
+<li><p>Supports E2E AIE acceleration for Pre/Post ops</p></li>
+<li><p>Improve the easy-of-use for partition and  deployment</p></li>
+</ul>
+</li>
+<li><p>Supports  models containing subgraphs</p></li>
+<li><p>Supports report summary about OP assignment</p></li>
+<li><p>Supports report summary about DPU subgraphs falling back to CPU</p></li>
+<li><p>Improve log printing and troubleshooting tools.</p></li>
+<li><p>Upstreamed to ONNX Runtime Github repo for any data type support and bug fix</p></li>
+</ul>
+</section>
+<section id="id10">
+<h3>NPU and Compiler<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Extended the support range of some operators</p>
+<ul>
+<li><p>Larger input size: conv2d, dwc</p></li>
+<li><p>Padding mode: pad</p></li>
+<li><p>Broadcast: add</p></li>
+<li><p>Variant dimension (non-NHWC shape): reshape, transpose, add</p></li>
+</ul>
+</li>
+<li><p>Support new operators, e.g. reducemax(min/sum/avg), argmax(min)</p></li>
+<li><p>Enhanced multi-level fusion</p></li>
+<li><p>Performance enhancement for some operators</p></li>
+<li><p>Add quantization information validation</p></li>
+<li><p>Improvement in device partition</p>
+<ul>
+<li><p>User friendly message</p></li>
+<li><p>Target-dependency check</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="demos">
+<h3>Demos<a class="headerlink" href="#demos" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>New Demos link: <a class="reference external" href="https://account.amd.com/en/forms/downloads/ryzen-ai-software-platform-xef.html?filename=transformers_2308.zip">https://account.amd.com/en/forms/downloads/ryzen-ai-software-platform-xef.html?filename=transformers_2308.zip</a></p>
+<ul>
+<li><p>LLM demo with OPT-1.3B/2.7B/6.7B</p></li>
+<li><p>Automatic speech recognition demo with Whisper-tiny</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id11">
+<h3>Known issues<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Flow control OPs including “Loop”, “If”, “Reduce” not supported by VOE</p></li>
+<li><p>Resize OP in ONNX opset 10 or lower not supported by VOE</p></li>
+<li><p>Tensorflow 2.x quantizer supports models within tf.keras.model only</p></li>
+<li><p>Running quantizer docker in WSL on Ryzen AI laptops may encounter OOM (Out-of-memory) issue</p></li>
+<li><p>Run multiple concurrent models by temporal sharing on the Performance optimized overlay (5x4.xclbin) is not supported</p></li>
+<li><p>Support batch size 1 only for NPU</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="version-0-7">
+<h2>Version 0.7<a class="headerlink" href="#version-0-7" title="Link to this heading">#</a></h2>
+<section id="id12">
+<h3>Quantizer<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Docker Containers</p>
+<ul>
+<li><p>Provided CPU dockers for Pytorch, Tensorflow 1.x, and Tensorflow 2.x quantizer</p></li>
+<li><p>Provided GPU Docker files to build GPU dockers</p></li>
+</ul>
+</li>
+<li><p>Pytorch Quantizer</p>
+<ul>
+<li><p>Supports multiple output conversion to slicing</p></li>
+<li><p>Enhanced transpose OP optimization</p></li>
+<li><p>Inspector support new IP targets for NPU</p></li>
+</ul>
+</li>
+<li><p>ONNX Quantizer</p>
+<ul>
+<li><p>Provided Python wheel file for installation</p></li>
+<li><p>Supports quantizing ONNX models for NPU as a plugin for the ONNX Runtime native quantizer</p></li>
+<li><p>Supports power-of-two quantization with both QDQ and QOP format</p></li>
+<li><p>Supports Non-overflow and Min-MSE quantization methods</p></li>
+<li><p>Supports various quantization configurations in power-of-two quantization in both QDQ and QOP format.</p>
+<ul>
+<li><p>Supports signed and unsigned configurations.</p></li>
+<li><p>Supports symmetry and asymmetry configurations.</p></li>
+<li><p>Supports per-tensor and per-channel configurations.</p></li>
+</ul>
+</li>
+<li><p>Supports bias quantization using int8 datatype for NPU.</p></li>
+<li><p>Supports quantization parameters (scale) refinement for NPU.</p></li>
+<li><p>Supports excluding certain operations from quantization for NPU.</p></li>
+<li><p>Supports ONNX models larger than 2GB.</p></li>
+<li><p>Supports using CUDAExecutionProvider for calibration in quantization</p></li>
+<li><p>Open source and upstreamed to Microsoft Olive Github repo</p></li>
+</ul>
+</li>
+<li><p>TensorFlow 2.x Quantizer</p>
+<ul>
+<li><p>Added support for exporting the quantized model ONNX format.</p></li>
+<li><p>Added support for the keras.layers.Activation(‘leaky_relu’)</p></li>
+</ul>
+</li>
+<li><p>TensorFlow 1.x Quantizer</p>
+<ul>
+<li><p>Added support for folding Reshape and ResizeNearestNeighbor operators.</p></li>
+<li><p>Added support for splitting Avgpool and Maxpool with large kernel sizes into smaller kernel sizes.</p></li>
+<li><p>Added support for quantizing Sum, StridedSlice, and Maximum operators.</p></li>
+<li><p>Added support for setting the input shape of the model, which is useful in deploying models with undefined input shapes.</p></li>
+<li><p>Add support for setting the opset version in exporting ONNX format</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="onnx-runtime-execution-provider">
+<h3>ONNX Runtime Execution Provider<a class="headerlink" href="#onnx-runtime-execution-provider" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Vitis ONNX Runtime Execution Provider (VOE)</p>
+<ul>
+<li><p>Supports ONNX Opset version 18, ONNX Runtime 1.16.0, and ONNX version 1.13</p></li>
+<li><p>Supports both C++ and Python APIs(Python version 3)</p></li>
+<li><p>Supports deploy model with other EPs</p></li>
+<li><p>Supports falling back to CPU EP</p></li>
+<li><p>Open source and upstreamed to ONNX Runtime Github repo</p></li>
+<li><p>Compiler</p>
+<ul>
+<li><p>Multiple Level op fusion</p></li>
+<li><p>Supports the  same muti-output operator like chunk split</p></li>
+<li><p>Supports split big pooling to small pooling</p></li>
+<li><p>Supports 2-channel writeback feature for Hard-Sigmoid and Depthwise-Convolution</p></li>
+<li><p>Supports 1-channel GStiling</p></li>
+<li><p>Explicit pad-fix in CPU subgraph for 4-byte alignment</p></li>
+<li><p>Tuning the performance for multiple models</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="npu">
+<h3>NPU<a class="headerlink" href="#npu" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Two configurations</p>
+<ul>
+<li><p>Power Optimized Overlay</p>
+<ul>
+<li><p>Suitable for smaller AI models (1x4.xclbin)</p></li>
+<li><p>Supports spatial sharing, up to 4 concurrent AI workloads</p></li>
+</ul>
+</li>
+<li><p>Performance Optimized Overlay (5x4.xclbin)</p>
+<ul>
+<li><p>Suitable for larger AI models</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id13">
+<h3>Known issues<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Flow control OPs including “Loop”, “If”, “Reduce” are not supported by VOE</p></li>
+<li><p>Resize OP in ONNX opset 10 or lower not supported by VOE</p></li>
+<li><p>Tensorflow 2.x quantizer supports models within tf.keras.model only</p></li>
+<li><p>Running quantizer docker in WSL on Ryzen AI laptops may encounter OOM (Out-of-memory) issue</p></li>
+<li><p>Run multiple concurrent models by temporal sharing on the Performance optimized overlay (5x4.xclbin) is not supported</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ryzen AI Software</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="inst.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Installation Instructions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supported-configurations">Supported Configurations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-compatibility-table">Model Compatibility Table</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-5">Version 1.5</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-4">Version 1.4</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-3">Version 1.3</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-2">Version 1.2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-1">Version 1.1</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantizer">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu-and-compiler">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-ep">ONNX Runtime EP</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#misc">Misc</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0-1">Version 1.0.1</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-1-0">Version 1.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnxruntime-execution-provider">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#known-issues">Known Issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-9">Version 0.9</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#llm">LLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#asr">ASR</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Known issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-8">Version 0.8</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">ONNXRuntime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">NPU and Compiler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#demos">Demos</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Known issues</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#version-0-7">Version 0.7</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Quantizer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-execution-provider">ONNX Runtime Execution Provider</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#npu">NPU</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">Known issues</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on June 29, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://ryzenai.docs.amd.com/en/latest/licenses.html">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/content/dam/amd/en/documents/corporate/cr/supply-chain-transparency.pdf" target="_blank">Supply Chain Transparency</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2025 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>
