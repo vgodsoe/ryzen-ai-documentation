@@ -1,0 +1,974 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Model Compilation and Deployment &#8212; Ryzen AI Software 1.5 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=643846e8" />
+    <link rel="stylesheet" type="text/css" href="_static/llm-table.css?v=d34acfde" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_header.css?v=9557e3d1" />
+    <link rel="stylesheet" type="text/css" href="_static/rocm_footer.css?v=7095035a" />
+    <link rel="stylesheet" type="text/css" href="_static/fonts.css?v=fcff5274" />
+    <link rel="stylesheet" type="text/css" href="_static/_static/llm-table.css" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9f1c6d22"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="_static/code_word_breaks.js?v=327952c4"></script>
+    <script async="async" src="_static/renameVersionLinks.js?v=929fe5e4"></script>
+    <script async="async" src="_static/rdcMisc.js?v=01f88d96"></script>
+    <script async="async" src="_static/theme_mode_captions.js?v=15f4ec5d"></script>
+    <script defer="defer" src="_static/search.js?v=90a4452c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modelrun';</script>
+    <script async="async" src="https://download.amd.com/js/analytics/analyticsinit.js"></script>
+    <link rel="canonical" href="ryzenai.docs.amd.com/modelrun.html" />
+    <link rel="icon" href="https://www.amd.com/content/dam/code/images/favicon/favicon.ico"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Application Development" href="app_development.html" />
+    <link rel="prev" title="Model Quantization" href="model_quantization.html" />
+    <meta name="google-site-verification" content="vo35SZt_GASsTHAEmdww7AYKPCvZyzLvOXBl8guBME4" />
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+
+<header class="common-header" >
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid main-nav rocm-header">
+            
+            <button class="navbar-toggler collapsed" id="nav-icon" data-tracking-information="mainMenuToggle" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="header-logo">
+                <a class="navbar-brand" href="https://www.amd.com/">
+                    <img src="_static/images/amd-header-logo.svg" alt="AMD Logo" title="AMD Logo" width="90" class="d-inline-block align-text-top hover-opacity"/>
+                </a>
+                <div class="vr vr mx-40 my-25"></div>
+                <a class="klavika-font hover-opacity" href="/">Ryzen AI</a>
+                
+            </div>
+            <div class="icon-nav text-center d-flex ms-auto">
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar navbar-expand-xl second-level-nav">
+        <div class="container-fluid main-nav">
+            <div class="navbar-nav-container collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav nav-mega me-auto mb-2 mb-lg-0 col-xl-10">
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://github.com/vgodsoe/ryzen-ai-documentation" id="navgithub" role="button" aria-expanded="false" target="_blank" >
+                                GitHub
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://community.amd.com/t5/ai/ct-p/amd_ai" id="navcommunity" role="button" aria-expanded="false" target="_blank" >
+                                Community
+                            </a>
+                        </li>
+                    
+                        <li class="nav-item">
+                            <a class="nav-link top-level header-menu-links" href="https://www.amd.com/en/products/ryzen-ai" id="navproducts" role="button" aria-expanded="false" target="_blank" >
+                                Products
+                            </a>
+                        </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</header>
+
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Ryzen AI Software 1.5 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="relnotes.html">Release Notes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="inst.html">Installation Instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples, Demos, Tutorials</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the NPU</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="model_quantization.html">Model Quantization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Compilation and Deployment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="app_development.html">Application Development</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running LLMs on the NPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="llm/overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/server_interface.html">Server Interface (REST API)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="llm/high_level_python.html">High-Level Python SDK</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hybrid_oga.html">OnnxRuntime GenAI (OGA) Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oga_model_prepare.html">Preparing OGA Models</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Models on the GPU</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="gpu/ryzenai_gpu.html">DirectML Flow</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Additional Topics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="xrt_smi.html">NPU Management Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ai_analyzer.html">AI Analyzer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sd_demo.html">Stable Diffusion Demo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ryzen_ai_libraries.html">Ryzen AI CVML library</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://huggingface.co/models?other=RyzenAI">Model Zoo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="licenses.html">Licensing Information</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-angle-right"></span>
+  </label></div>
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Model Compilation and Deployment</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Model Compilation and Deployment</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-models">Loading Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-models">Deploying Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-ep-options-reference-guide">Vitis AI EP Options Reference Guide</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitisai-ep-provider-options">VitisAI EP Provider Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#config-file-options">Config File Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-bf16-models">Using BF16 models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-python-code">Sample Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-c-code">Sample C++ Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-int8-models">Using INT8 models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Sample Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Sample C++ Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-compiled-models">Managing Compiled Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitisai-ep-cache">VitisAI EP Cache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-ep-context-cache">ONNX Runtime EP Context Cache</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ep-context-encryption">EP Context Encryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#user-managed-encryption">User-managed encryption</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ep-managed-encryption">EP-managed encryption</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-assignment-report">Operator Assignment Report</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="model-compilation-and-deployment">
+<h1>Model Compilation and Deployment<a class="headerlink" href="#model-compilation-and-deployment" title="Link to this heading">#</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h2>
+<p>The Ryzen AI Software supports models saved in the ONNX format and uses ONNX Runtime as the primary mechanism to load, compile and run models.</p>
+<p>📝 <strong>NOTE</strong>: Models with ONNX opset 17 are recommended. If your model uses a different opset version, consider converting it using the <a class="reference external" href="https://github.com/onnx/onnx/blob/main/docs/VersionConverter.md">ONNX Version Converter</a></p>
+<p>For a complete list of supported operators, consult this page: <a class="reference internal" href="ops_support.html"><span class="doc">Supported Operators</span></a>.</p>
+<section id="loading-models">
+<h3>Loading Models<a class="headerlink" href="#loading-models" title="Link to this heading">#</a></h3>
+<p>Models are loaded by creating an ONNX Runtime <code class="docutils literal notranslate"><span class="pre">InferenceSession</span></code> using the Vitis AI Execution Provider (VAI EP):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">onnxruntime</span>
+
+<span class="n">session_options</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">SessionOptions</span><span class="p">()</span>
+<span class="n">vai_ep_options</span>  <span class="o">=</span> <span class="p">{}</span>                          <span class="c1"># Vitis AI EP options go here</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="n">path_or_bytes</span> <span class="o">=</span> <span class="n">model</span><span class="p">,</span>                    <span class="c1"># Path to the ONNX model</span>
+    <span class="n">sess_options</span> <span class="o">=</span> <span class="n">session_options</span><span class="p">,</span>           <span class="c1"># Standard ORT options</span>
+    <span class="n">providers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span> <span class="c1"># Use the Vitis AI Execution Provider</span>
+    <span class="n">provider_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>       <span class="c1"># Pass options to the Vitis AI Execution Provider</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">provider_options</span></code> parameter enables the configuration of the Vitis AI Execution Provider (EP). For a comprehensive list of supported provider options, refer to the <a class="reference internal" href="#ep-options-ref-guide"><span class="std std-ref">Vitis AI EP Options Reference Guide</span></a> below.</p>
+<p>When a model is first loaded into an ONNX Runtime (ORT) inference session, it is compiled into the format required by the NPU. The resulting compiled output can be saved as an ORT EP context file or stored in the Vitis AI EP cache directory.</p>
+<p>If a compiled version of the ONNX model is already available — either as an EP context file or within the Vitis AI EP cache — the model will not be recompiled. Instead, the precompiled version will be loaded automatically. This greatly reduces session creation time and improves overall efficiency. For more details, refer to the section on <a class="reference internal" href="#precompiled-models"><span class="std std-ref">Managing Compiled Models</span></a>.</p>
+</section>
+<section id="deploying-models">
+<h3>Deploying Models<a class="headerlink" href="#deploying-models" title="Link to this heading">#</a></h3>
+<p>Once the ONNX Runtime inference session is initialized and the model is compiled, the model is deployed using the ONNX Runtime <code class="docutils literal notranslate"><span class="pre">run()</span></code> API:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">input_data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="nb">input</span> <span class="ow">in</span> <span class="n">session</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">():</span>
+    <span class="n">input_data</span><span class="p">[</span><span class="nb">input</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="err">…</span>  <span class="c1"># Initialize input tensors</span>
+
+<span class="n">outputs</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">input_data</span><span class="p">)</span> <span class="c1"># Run the model</span>
+</pre></div>
+</div>
+<p>The ONNX graph is automatically partitioned into multiple subgraphs by the Vitis AI Execution Provider (EP). During deployment, the subgraph(s) containing operators supported by the NPU are executed on the NPU. The remaining subgraph(s) are executed on the CPU. This graph partitioning and deployment technique across CPU and NPU is fully automated by the VAI EP and is totally transparent to the end-user.</p>
+</section>
+</section>
+<section id="vitis-ai-ep-options-reference-guide">
+<span id="ep-options-ref-guide"></span><h2>Vitis AI EP Options Reference Guide<a class="headerlink" href="#vitis-ai-ep-options-reference-guide" title="Link to this heading">#</a></h2>
+<section id="vitisai-ep-provider-options">
+<h3>VitisAI EP Provider Options<a class="headerlink" href="#vitisai-ep-provider-options" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">provider_options</span></code> parameter of the ORT <code class="docutils literal notranslate"><span class="pre">InferenceSession</span></code> allows passing options to configure the Vitis AI EP. The following options are supported.</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-config_file">
+<span class="sig-name descname"><span class="pre">config_file</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-config_file" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Configuration file to pass additional compilation options for BF16 models. For more details, refer to the section about <a class="reference internal" href="#configuration-file"><span class="std std-ref">Config File Options</span></a>.</p>
+<p>Type: String</p>
+<p>Default: N/A</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-xclbin">
+<span class="sig-name descname"><span class="pre">xclbin</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-xclbin" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Required for INT8 models. NPU binary file to specify NPU configuration to be used for INT8 models. For more details, refer to the section about <a class="reference internal" href="#int8-models"><span class="std std-ref">Using INT8 Models</span></a>.</p>
+<p>Type: String</p>
+<p>Default: N/A.</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-encryption_key">
+<span class="sig-name descname"><span class="pre">encryption_key</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-encryption_key" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. 256-bit key used for encrypting the EP context model. At runtime, you must use the same key to decrypt the model when loading it. For more details, refer to the section about the <a class="reference internal" href="#ort-ep-context-cache"><span class="std std-ref">EP Context Cache</span></a> feature.</p>
+<p>Type: String of 64 hexadecimal values representing the 256-bit encryption key.</p>
+<p>Default: None, the model is not encrypted.</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-opt_level">
+<span class="sig-name descname"><span class="pre">opt_level</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-opt_level" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Applies to INT8 models only. Controls the compiler optimization effort.</p>
+<p>Supported Values: 0, 1, 2, 3, 65536 (maximum effort, experimental)</p>
+<p>Default: 0</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-log_level">
+<span class="sig-name descname"><span class="pre">log_level</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-log_level" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Controls what level of messages are reported by the VitisAI EP.</p>
+<p>Supported Values: “info”, “warning”, “warning”, “error”, “fatal”</p>
+<p>Default: “info”</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-cache_dir">
+<span class="sig-name descname"><span class="pre">cache_dir</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-cache_dir" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. The path and name of the VitisAI cache directory. For INT8 models, for this option to take affect, the <a class="reference internal" href="#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> must be set to 0. For more details, refer to the section about <a class="reference internal" href="#vitisai-ep-cache"><span class="std std-ref">VitisAI cache</span></a>.</p>
+<p>Type: String</p>
+<p>Default: C:\temp\%USERNAME%\vaip\.cache</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-cache_key">
+<span class="sig-name descname"><span class="pre">cache_key</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-cache_key" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. The subfolder in the VitisAI cache directory where the compiled model is stored. For INT8 models, for this option to take affect, the <a class="reference internal" href="#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> must be set to 0. For more details, refer to the section about <a class="reference internal" href="#vitisai-ep-cache"><span class="std std-ref">VitisAI cache</span></a>.</p>
+<p>Type: String</p>
+<p>Default: MD5 hash of the input model.</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-enable_cache_file_io_in_mem">
+<span class="sig-name descname"><span class="pre">enable_cache_file_io_in_mem</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-enable_cache_file_io_in_mem" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Applies to INT8 models only. By default, the VitisAI EP keeps the compiled model in memory. To enable saving the compiled model to disk in the <a class="reference internal" href="#cmdoption-arg-cache_dir"><code class="xref std std-option docutils literal notranslate"><span class="pre">cache_dir</span></code></a> folder, <a class="reference internal" href="#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> must be set to 0.</p>
+<p>Supported Values: 0, 1</p>
+<p>Default: 1</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-ai_analyzer_visualization">
+<span class="sig-name descname"><span class="pre">ai_analyzer_visualization</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-ai_analyzer_visualization" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Enables generation of compile-time analysis data.</p>
+<p>Type: Boolean</p>
+<p>Default: False</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-ai_analyzer_profiling">
+<span class="sig-name descname"><span class="pre">ai_analyzer_profiling</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-ai_analyzer_profiling" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Optional. Enables generation of inference-time analysis data.</p>
+<p>Type: Boolean</p>
+<p>Default: False</p>
+</section>
+<section id="config-file-options">
+<span id="configuration-file"></span><h3>Config File Options<a class="headerlink" href="#config-file-options" title="Link to this heading">#</a></h3>
+<p>When compiling BF16 models, a JSON configuration file can be provided to the VitisAI EP using the <a class="reference internal" href="#cmdoption-arg-config_file"><code class="xref std std-option docutils literal notranslate"><span class="pre">config_file</span></code></a> provider option. This configuration file is used to specify additional options to the compiler.</p>
+<p>The default the configuration file for compiling BF16 models contains the following:</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<span class="w"> </span><span class="nt">&quot;passes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;init&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vaip-pass_init&quot;</span>
+<span class="w">     </span><span class="p">},</span>
+<span class="w">     </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vaiml_partition&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;plugin&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;vaip-pass_vaiml_partition&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;vaiml_config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">             </span><span class="nt">&quot;optimize_level&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">             </span><span class="nt">&quot;preferred_data_storage&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;auto&quot;</span>
+<span class="w">         </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w"> </span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">vaiml_config</span></code> section of the configuration file contains the user options. The supported user options are described below.</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-optimize_level">
+<span class="sig-name descname"><span class="pre">optimize_level</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-optimize_level" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Controls the compiler optimization level.</p>
+<p>Supported values: 1 (default), 2, 3</p>
+<ul>
+<li><dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-preferred_data_storage">
+<span class="sig-name descname"><span class="pre">preferred_data_storage</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-preferred_data_storage" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</li>
+</ul>
+<p>Controls whether intermediate data is stored in vectorized or unvectorized format. Models dominated by convolutions (e.g., CNNs) perform better with vectorized data. Models dominated by GEMMs (e.g., Transformers) perform better with unvectorized data. By default (“auto”) the compiler tries to select the best layout.</p>
+<p>Supported values: “auto” (default), “vectorized”, “unvectorized”</p>
+</section>
+</section>
+<section id="using-bf16-models">
+<span id="bf16-models"></span><h2>Using BF16 models<a class="headerlink" href="#using-bf16-models" title="Link to this heading">#</a></h2>
+<p>When compiling BF16 models, a configuration file must be provided to the VitisAI EP. This file is specified using the <a class="reference internal" href="#cmdoption-arg-config_file"><code class="xref std std-option docutils literal notranslate"><span class="pre">config_file</span></code></a> provider option. For more details, refer to <a class="reference internal" href="#configuration-file"><span class="std std-ref">Config File Options</span></a> section.</p>
+<section id="sample-python-code">
+<h3>Sample Python Code<a class="headerlink" href="#sample-python-code" title="Link to this heading">#</a></h3>
+<p>Python example loading a configuration file called vai_ep_config.json:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">onnxruntime</span>
+
+<span class="n">vai_ep_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;config_file&#39;</span><span class="p">:</span> <span class="s1">&#39;vai_ep_config.json&#39;</span>
+<span class="p">}</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="s2">&quot;resnet50_bf16.onnx&quot;</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sample-c-code">
+<h3>Sample C++ Code<a class="headerlink" href="#sample-c-code" title="Link to this heading">#</a></h3>
+<p>C++ example loading a configuration file called vai_ep_config.json:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;onnxruntime_cxx_api.h&gt;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">onnx_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;resnet50_bf16.onnx&quot;</span>
+<span class="n">Ort</span><span class="o">::</span><span class="n">Env</span><span class="w"> </span><span class="n">env</span><span class="p">(</span><span class="n">ORT_LOGGING_LEVEL_WARNING</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;resnet50_bf16&quot;</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">SessionOptions</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">vai_ep_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unorderd_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">({});</span>
+<span class="n">vai_ep_options</span><span class="p">[</span><span class="s">&quot;config_file&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;vai_ep_config.json&quot;</span><span class="p">;</span>
+<span class="n">session_options</span><span class="p">.</span><span class="n">AppendExecutionProvider_VitisAI</span><span class="p">(</span><span class="n">vai_ep_options</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span>
+<span class="w">    </span><span class="n">env</span><span class="p">,</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="n">ORTCHAR_T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">onnx_model</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">onnx_model</span><span class="p">.</span><span class="n">end</span><span class="p">()).</span><span class="n">c_str</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">session_options</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="using-int8-models">
+<span id="int8-models"></span><h2>Using INT8 models<a class="headerlink" href="#using-int8-models" title="Link to this heading">#</a></h2>
+<p>When compiling INT8 models, the NPU configuration must be specified through the <a class="reference internal" href="#cmdoption-arg-xclbin"><code class="xref std std-option docutils literal notranslate"><span class="pre">xclbin</span></code></a> provider option. This option is not required for BF16 models.</p>
+<p>Setting the NPU configuration involves specifying one of <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> binary files located in the Ryzen AI Software installation tree.</p>
+<p>It is recommended to copy the required xclbin files from the Ryzen AI installation tree into the project folder as the xclbin files used to compile the model must be included in the final version of the application.</p>
+<p>Depending on the target processor type, the following <code class="docutils literal notranslate"><span class="pre">.xclbin</span></code> files should be used:</p>
+<p><strong>For STX/KRK APUs</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%RYZEN_AI_INSTALLATION_PATH%\voe-4.0-win_amd64\xclbins\strix\AMD_AIE2P_4x4_Overlay.xclbin</span></code></p></li>
+</ul>
+<p><strong>For PHX/HPT APUs</strong>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">%RYZEN_AI_INSTALLATION_PATH%\voe-4.0-win_amd64\xclbins\phoenix\4x4.xclbin</span></code></p></li>
+</ul>
+<p>📝 <strong>NOTE</strong>: Starting in Ryzen AI 1.5, the legacy “1x4” and “Nx4” xclbin files are no longer supported and should not be used.</p>
+<section id="id1">
+<h3>Sample Python Code<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Python example selecting the <code class="docutils literal notranslate"><span class="pre">AMD_AIE2P_4x4_Overlay.xclbin</span></code> NPU configuration for STX/KRK located in the Ryzen AI installation folder:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">onnxruntime</span>
+
+<span class="n">vai_ep_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;xclbin&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;RYZEN_AI_INSTALLATION_PATH&#39;</span><span class="p">],</span> <span class="s1">&#39;voe-4.0-win_amd64&#39;</span><span class="p">,</span> <span class="s1">&#39;xclbins&#39;</span><span class="p">,</span> <span class="s1">&#39;strix&#39;</span><span class="p">,</span> <span class="s1">&#39;AMD_AIE2P_4x4_Overlay.xclbin&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="s2">&quot;resnet50_int8.onnx&quot;</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Sample C++ Code<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p>C++ example selecting the <code class="docutils literal notranslate"><span class="pre">AMD_AIE2P_4x4_Overlay.xclbin</span></code> NPU configuration for STX/KRK located in a custom folder:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;onnxruntime_cxx_api.h&gt;</span>
+
+<span class="k">auto</span><span class="w"> </span><span class="n">onnx_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;resnet50_int8.onnx&quot;</span>
+<span class="n">Ort</span><span class="o">::</span><span class="n">Env</span><span class="w"> </span><span class="n">env</span><span class="p">(</span><span class="n">ORT_LOGGING_LEVEL_WARNING</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;resnet50_int8&quot;</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">SessionOptions</span><span class="p">();</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">vai_ep_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unorderd_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">({});</span>
+<span class="n">vai_ep_options</span><span class="p">[</span><span class="s">&quot;xclbin&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/path/to/xclbins/strix/AMD_AIE2P_4x4_Overlay.xclbin&quot;</span><span class="p">;</span>
+<span class="n">session_options</span><span class="p">.</span><span class="n">AppendExecutionProvider_VitisAI</span><span class="p">(</span><span class="n">vai_ep_options</span><span class="p">);</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span>
+<span class="w">    </span><span class="n">env</span><span class="p">,</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="n">ORTCHAR_T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">onnx_model</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">onnx_model</span><span class="p">.</span><span class="n">end</span><span class="p">()).</span><span class="n">c_str</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">session_options</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+<section id="managing-compiled-models">
+<span id="precompiled-models"></span><h2>Managing Compiled Models<a class="headerlink" href="#managing-compiled-models" title="Link to this heading">#</a></h2>
+<p>To avoid the overhead of recompiling models, it is very advantageous to save the compiled models and use these pre-compiled versions in the final application. Pre-compiled models can be loaded instantaneously and immediately executed on the NPU. This greatly improves the session creation time and overall end-user experience.</p>
+<p>The RyzenAI Software supports two mechanisms for saving and reloading compiled models:</p>
+<ul class="simple">
+<li><p>VitisAI EP Cache</p></li>
+<li><p>ONNX Runtime EP Context Cache</p></li>
+</ul>
+<p>💡 <strong>TIP</strong>: The VitisAI EP Cache mechanism is most convenient to quickly iterate during the development cycle. The OnnxRuntime EP Context Cache mechanism is recommended for the final version of the application.</p>
+<section id="vitisai-ep-cache">
+<span id="id3"></span><h3>VitisAI EP Cache<a class="headerlink" href="#vitisai-ep-cache" title="Link to this heading">#</a></h3>
+<p>The VitisAI EP includes a built-in caching mechanism. When a model is compiled for the first time, it is automatically saved in the VitisAI EP cache directory. Any subsequent creation of an ONNX Runtime session using the same model will load the precompiled model from the cache directory, thereby reducing session creation time.</p>
+<p>The VitisAI EP Cache mechanism can be used to quickly iterate during the development cycle, but it is not recommended for the final version of the application.</p>
+<p>Cache directories generated by the Vitis AI Execution Provider should not be reused across different versions of the Vitis AI EP or across different version of the NPU drivers.</p>
+<p>If using the VitisAI EP Cache the application should check the version of the Vitis AI EP and of the NPU drivers. If the application detects a version change, it should delete the cache, or create a new cache directory with a different name.</p>
+<p>The location of the VitisAI EP cache is specified with the <a class="reference internal" href="#cmdoption-arg-cache_dir"><code class="xref std std-option docutils literal notranslate"><span class="pre">cache_dir</span></code></a> and <a class="reference internal" href="#cmdoption-arg-cache_key"><code class="xref std std-option docutils literal notranslate"><span class="pre">cache_key</span></code></a> provider options. For INT8 models, the <a class="reference internal" href="#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> must be set to 0 otherwise the output of the compiler is kept in memory and is not saved to disk.</p>
+<p>Python example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">onnxruntime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">vai_ep_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;cache_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()),</span>
+    <span class="s1">&#39;cache_key&#39;</span><span class="p">:</span> <span class="s1">&#39;compiled_resnet50_int8&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;enable_cache_file_io_in_mem&#39;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="p">}</span>
+
+<span class="n">session</span> <span class="o">=</span> <span class="n">onnxruntime</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="s2">&quot;resnet50_int8.onnx&quot;</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In the example above, the cache directory is set to the absolute path of the folder containing the script being executed. Once the session is created, the compiled model is saved inside a subdirectory named <code class="docutils literal notranslate"><span class="pre">compiled_resnet50_int8</span></code> within the specified cache folder.</p>
+</section>
+<section id="onnx-runtime-ep-context-cache">
+<span id="ort-ep-context-cache"></span><h3>ONNX Runtime EP Context Cache<a class="headerlink" href="#onnx-runtime-ep-context-cache" title="Link to this heading">#</a></h3>
+<p>The Vitis AI EP supports the ONNX Runtime EP context cache feature. This features allows dumping and reloading a snapshot of the EP context before deployment.</p>
+<p>The user can enable dumping of the EP context by setting the <code class="docutils literal notranslate"><span class="pre">ep.context_enable</span></code> session option to 1.</p>
+<p>The following options can be used for additional control:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">ep.context_file_path</span></code> – Specifies the output path for the dumped context model.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ep.context_embed_mode</span></code> – Embeds the EP context into the ONNX model when set to 1.</p></li>
+</ul>
+<p>For further details, refer to the official ONNX Runtime documentation: <a class="reference external" href="https://onnxruntime.ai/docs/execution-providers/EP-Context-Design.html">https://onnxruntime.ai/docs/execution-providers/EP-Context-Design.html</a></p>
+<section id="ep-context-encryption">
+<h4>EP Context Encryption<a class="headerlink" href="#ep-context-encryption" title="Link to this heading">#</a></h4>
+<p>By default, the generated context model is unencrypted and can be used directly during inference. If needed, the context model can be encrypted using one of the methods described below.</p>
+<section id="user-managed-encryption">
+<h5>User-managed encryption<a class="headerlink" href="#user-managed-encryption" title="Link to this heading">#</a></h5>
+<p>After the context model is generated, the developer can encrypt the generated file using a method of choice. At runtime, the encrypted file can be loaded by the application, decrypted in memory and passed as a serialized string to the inference session.</p>
+<p>This method gives complete control to the developer over the encryption process.</p>
+</section>
+<section id="ep-managed-encryption">
+<h5>EP-managed encryption<a class="headerlink" href="#ep-managed-encryption" title="Link to this heading">#</a></h5>
+<p>The VitisAI EP can optionally encrypt the EP context model using AES256. This is enabled by passing an encryption key using the <a class="reference internal" href="#cmdoption-arg-encryption_key"><code class="xref std std-option docutils literal notranslate"><span class="pre">encryption_key</span></code></a> VAI EP provider options. The key is a 256-bit value represented as a 64-digit string. At runtime, the same encryption key must be provided to decrypt and load the context model.</p>
+<p>With this method, encryption and decryption is seamlessly managed by the VitisAI EP.</p>
+<p>Python example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">onnxruntime</span>
+
+<span class="n">vai_ep_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;xclbin&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;/path/to/xclbins/strix/AMD_AIE2P_4x4_Overlay.xclbin&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;encryptionKey&#39;</span><span class="p">:</span> <span class="s1">&#39;89703f950ed9f738d956f6769d7e45a385d3c988ca753838b5afbc569ebf35b2&#39;</span>
+<span class="p">}</span>
+
+<span class="c1"># Compilation session</span>
+<span class="n">session_options</span> <span class="o">=</span> <span class="n">ort</span><span class="o">.</span><span class="n">SessionOptions</span><span class="p">()</span>
+<span class="n">session_options</span><span class="o">.</span><span class="n">add_session_config_entry</span><span class="p">(</span><span class="s1">&#39;ep.context_enable&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="n">session_options</span><span class="o">.</span><span class="n">add_session_config_entry</span><span class="p">(</span><span class="s1">&#39;ep.context_file_path&#39;</span><span class="p">,</span> <span class="s1">&#39;context_model.onnx&#39;</span><span class="p">)</span>
+<span class="n">session_options</span><span class="o">.</span><span class="n">add_session_config_entry</span><span class="p">(</span><span class="s1">&#39;ep.context_embed_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">ort</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="n">path_or_bytes</span><span class="o">=</span><span class="s1">&#39;resnet50_int8.onnx&#39;</span><span class="p">,</span>  <span class="c1"># Load the ONNX model</span>
+    <span class="n">sess_options</span><span class="o">=</span><span class="n">session_options</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Inference session</span>
+<span class="n">session_options</span> <span class="o">=</span> <span class="n">ort</span><span class="o">.</span><span class="n">SessionOptions</span><span class="p">()</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">ort</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span>
+    <span class="n">path_or_bytes</span><span class="o">=</span><span class="s1">&#39;context_model.onnx&#39;</span><span class="p">,</span> <span class="c1"># Load the EP context model</span>
+    <span class="n">sess_options</span><span class="o">=</span><span class="n">session_options</span><span class="p">,</span>
+    <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;VitisAIExecutionProvider&#39;</span><span class="p">],</span>
+    <span class="n">provider_options</span><span class="o">=</span><span class="p">[</span><span class="n">vai_ep_options</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>C++ example:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Ort</span><span class="o">::</span><span class="n">Env</span><span class="w"> </span><span class="n">env</span><span class="p">(</span><span class="n">ORT_LOGGING_LEVEL_WARNING</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ort&quot;</span><span class="p">);</span>
+
+<span class="c1">// VAI EP Provider options</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">vai_ep_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">unorderd_map</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span><span class="p">({});</span>
+<span class="n">vai_ep_options</span><span class="p">[</span><span class="s">&quot;xclbin&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/path/to/xclbins/strix/AMD_AIE2P_4x4_Overlay.xclbin&quot;</span><span class="p">;</span>
+<span class="n">vai_ep_options</span><span class="p">[</span><span class="s">&quot;encryption_key&quot;</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;89703f950ed9f738d956f6769d7e45a385d3c988ca753838b5afbc569ebf35b2&quot;</span><span class="p">;</span>
+
+<span class="c1">// Session options</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session_options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">SessionOptions</span><span class="p">();</span>
+<span class="n">session_options</span><span class="p">.</span><span class="n">AppendExecutionProvider_VitisAI</span><span class="p">(</span><span class="n">vai_ep_options</span><span class="p">);</span>
+
+<span class="c1">// Inference session</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">onnx_model</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;context_model.onnx&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">// The EP context model</span>
+<span class="k">auto</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Ort</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span>
+<span class="w">    </span><span class="n">env</span><span class="p">,</span>
+<span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">basic_string</span><span class="o">&lt;</span><span class="n">ORTCHAR_T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">onnx_model</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="w"> </span><span class="n">onnx_model</span><span class="p">.</span><span class="n">end</span><span class="p">()).</span><span class="n">c_str</span><span class="p">(),</span>
+<span class="w">    </span><span class="n">session_options</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>📝 <strong>NOTE</strong>: It is possible to precompile the EP context model using Python and to deploy it using a C++ program.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="operator-assignment-report">
+<span id="op-assignment-report"></span><h2>Operator Assignment Report<a class="headerlink" href="#operator-assignment-report" title="Link to this heading">#</a></h2>
+<p>The compiler can optionally generate a report on operator assignments across CPU and NPU. To generate this report:</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="#cmdoption-arg-enable_cache_file_io_in_mem"><code class="xref std std-option docutils literal notranslate"><span class="pre">enable_cache_file_io_in_mem</span></code></a> provider option must be set to 0</p></li>
+<li><p>The XLNX_ONNX_EP_REPORT_FILE environment variable must be used to specify the name of the generated report. For instance:</p></li>
+</ul>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set XLNX_ONNX_EP_REPORT_FILE=vitisai_ep_report.json
+</pre></div>
+</div>
+<p>When these conditions are satisfied, the report file is automatically generated in the cache directory. This report includes information such as the total number of nodes, the list of operator types in the model, and which nodes and operators run on the NPU or on the CPU. Additionally, the report includes node statistics, such as input to a node, the applied operation, and output from the node.</p>
+<p>When these conditions are satisified, the report file is automatically generated in the cache directory. This report includes information such as the total number of nodes, the list of operator types in the model, and which nodes and operators runs on the NPU or on the CPU. Additionally, the report includes node statistics, such as input to a node, the applied operation, and output from the node.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{
+ &quot;deviceStat&quot;: [
+ {
+  &quot;name&quot;: &quot;all&quot;,
+  &quot;nodeNum&quot;: 400,
+  &quot;supportedOpType&quot;: [
+   &quot;::Add&quot;,
+   &quot;::Conv&quot;,
+   ...
+  ]
+ },
+ {
+  &quot;name&quot;: &quot;CPU&quot;,
+  &quot;nodeNum&quot;: 2,
+  &quot;supportedOpType&quot;: [
+   &quot;::DequantizeLinear&quot;,
+   &quot;::QuantizeLinear&quot;
+  ]
+ },
+ {
+  &quot;name&quot;: &quot;NPU&quot;,
+  &quot;nodeNum&quot;: 398,
+  &quot;supportedOpType&quot;: [
+   &quot;::Add&quot;,
+   &quot;::Conv&quot;,
+   ...
+  ]
+  ...
+</pre></div>
+</div>
+<p>To disable generation of the report, unset the XLNX_ONNX_EP_REPORT_FILE environment variable:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>set XLNX_ONNX_EP_REPORT_FILE=
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="model_quantization.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Model Quantization</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="app_development.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Application Development</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-models">Loading Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deploying-models">Deploying Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vitis-ai-ep-options-reference-guide">Vitis AI EP Options Reference Guide</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitisai-ep-provider-options">VitisAI EP Provider Options</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#config-file-options">Config File Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-bf16-models">Using BF16 models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-python-code">Sample Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sample-c-code">Sample C++ Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-int8-models">Using INT8 models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Sample Python Code</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Sample C++ Code</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#managing-compiled-models">Managing Compiled Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vitisai-ep-cache">VitisAI EP Cache</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#onnx-runtime-ep-context-cache">ONNX Runtime EP Context Cache</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ep-context-encryption">EP Context Encryption</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#user-managed-encryption">User-managed encryption</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#ep-managed-encryption">EP-managed encryption</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#operator-assignment-report">Operator Assignment Report</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <p>
+      Last updated on June 29, 2025.<br/>
+  </p>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+<footer class="rocm-footer">
+    <div class="container-lg">
+        <section class="bottom-menu menu py-45">
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <ul>
+                        <li><a href="https://www.amd.com/en/corporate/copyright" target="_blank">Terms and Conditions</a></li>
+                        <li><a href="https://ryzenai.docs.amd.com/en/latest/licenses.html">Ryzen AI Licenses and Disclaimers</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/privacy" target="_blank">Privacy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/trademarks" target="_blank">Trademarks</a></li>
+                        <li><a href="https://www.amd.com/content/dam/amd/en/documents/corporate/cr/supply-chain-transparency.pdf" target="_blank">Supply Chain Transparency</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/competition" target="_blank">Fair and Open Competition</a></li>
+                        <li><a href="https://www.amd.com/system/files/documents/amd-uk-tax-strategy.pdf" target="_blank">UK Tax Strategy</a></li>
+                        <li><a href="https://www.amd.com/en/corporate/cookies" target="_blank">Cookie Policy</a></li>
+                        <!-- OneTrust Cookies Settings button start -->
+                        <li><a href="#cookie-settings" id="ot-sdk-btn" class="ot-sdk-show-settings">Cookie Settings</a></li>
+                        <!-- OneTrust Cookies Settings button end -->
+                    </ul>
+                </div>
+            </div>
+            <div class="row d-flex align-items-center">
+                <div class="col-12 text-center">
+                    <div>
+                        <span class="copyright">© 2025 Advanced Micro Devices, Inc</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</footer>
+
+<!-- <div id="rdc-watermark-container">
+    <img id="rdc-watermark" src="_static/images/alpha-watermark.svg" alt="DRAFT watermark"/>
+</div> -->
+  </body>
+</html>
