@@ -377,7 +377,7 @@ pip<span class="w"> </span>install<span class="w"> </span>lemonade-sdk<span clas
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lemonade<span class="w"> </span>-i<span class="w"> </span>amd/Llama-3.2-1B-Instruct-awq-g128-int4-asym-fp16-onnx-hybrid<span class="w"> </span>oga-load<span class="w"> </span>--device<span class="w"> </span>hybrid<span class="w"> </span>--dtype<span class="w"> </span>int4<span class="w"> </span>llm-prompt<span class="w"> </span>--max-new-tokens<span class="w"> </span><span class="m">64</span><span class="w"> </span>-p<span class="w"> </span>PROMPT
 </pre></div>
 </div>
-<p>Each example linked in the <a class="reference internal" href="overview.html#featured-llms"><span class="std std-ref">Featured LLMs</span></a> table also has <a class="reference external" href="https://github.com/amd/RyzenAI-SW/blob/main/example/llm/lemonade/hybrid/Llama_3_2_1B_Instruct.md#validation">example commands</a> for validating the speed and accuracy of each model.</p>
+<p>Each example linked in the <a class="reference internal" href="overview.html#featured-llms"><span class="std std-ref">Supported LLMs</span></a> table also has <a class="reference external" href="https://github.com/amd/RyzenAI-SW/blob/main/example/llm/lemonade/hybrid/Llama_3_2_1B_Instruct.md#validation">example commands</a> for validating the speed and accuracy of each model.</p>
 </section>
 <section id="python-api">
 <h2>Python API<a class="headerlink" href="#python-api" title="Link to this heading">#</a></h2>
@@ -394,18 +394,10 @@ pip<span class="w"> </span>install<span class="w"> </span>lemonade-sdk<span clas
 <span class="nb">print</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 </pre></div>
 </div>
-<p>Each example linked in the <a class="reference internal" href="overview.html#featured-llms"><span class="std std-ref">Featured LLMs</span></a> table also has an <a class="reference external" href="https://github.com/amd/RyzenAI-SW/blob/main/example/llm/lemonade/hybrid/Llama_3_2_1B_Instruct.md#streaming">example script</a> for streaming the text output of the LLM.</p>
 </section>
 <section id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h2>
-<p>From here, you can check out <a class="reference external" href="https://github.com/amd/RyzenAI-SW/blob/main/example/llm/lemonade/hybrid/Llama_3_2_1B_Instruct.md">an example</a> or any of the other <a class="reference internal" href="overview.html#featured-llms"><span class="std std-ref">Featured LLMs</span></a>.</p>
-<p>The examples pages also provide code for:</p>
-<ol class="arabic simple">
-<li><p>Additional validation tools for measuring speed and accuracy.</p></li>
-<li><p>Streaming responses with the API.</p></li>
-<li><p>Integrating the API into applications.</p></li>
-<li><p>Launching the server interface from the Python environment.</p></li>
-</ol>
+<p>From here, you can check out the Jupyter Notebook that provides an end-to-end validation of OGA hybrid and NPU-only execution. To run the notebook, visit the <a class="reference external" href="https://github.com/lemonade-sdk/lemonade/blob/main/examples/notebooks/lemonade_model_validation.ipynb">Lemonade Tools Tutorial</a>.</p>
 </section>
 </section>
 
